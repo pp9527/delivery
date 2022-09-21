@@ -19,10 +19,10 @@ public class CarStation {
     private String name;
     private double longitude;
     private double latitude;
-    private boolean bigCar;
+    private boolean bigCarStatus;
     private int bigCarId;
-    private boolean middleCar;
+    private boolean middleCarStatus;
     private int middleCarId;
-    private boolean smallCar;
+    private boolean smallCarStatus;
     private int smallCarId;
 }

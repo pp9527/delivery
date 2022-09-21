@@ -19,4 +19,10 @@ public class DroneStation {
     private String name;
     private double longitude;
     private double latitude;
+    private boolean bigDroneStatus;
+    private int bigDroneId;
+    private boolean middleDroneStatus;
+    private int middleDroneId;
+    private boolean smallDroneStatus;
+    private int smallDroneId;
 }
