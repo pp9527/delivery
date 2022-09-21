@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,7 +57,7 @@ class DemoApplicationTests {
     @Test
     public void testMap() {
         System.out.println(stationNetMapService.getMapData());
-//        System.out.println(stationNetMapService.getAllStationPath());
+        System.out.println(stationNetMapService.getAllStationPath());
     }
 
     @Test
