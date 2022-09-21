@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50729
 File Encoding         : 65001
 
-Date: 2022-09-21 21:35:18
+Date: 2022-09-21 22:33:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,6 +70,22 @@ INSERT INTO `car_station` VALUES ('3', 'C3', '117.228028', '31.740973', '1', '1'
 INSERT INTO `car_station` VALUES ('4', 'C4', '117.220845', '31.768617', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('5', 'C5', '117.231344', '31.759778', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('6', 'C6', '117.207641', '31.729275', '1', '1', '1', '2', '1', '3');
+
+-- ----------------------------
+-- Table structure for customer
+-- ----------------------------
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `longitude` decimal(10,6) NOT NULL,
+  `latitude` decimal(10,6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for drone
