@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>Dynamic Table</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+
+
+    <div th:include="common::commonheader"></div>
+
+
+    <style>
+        tr, th{
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body class="sticky-header" style="height: 100%;">
+
+<section>
+    <div th:replace="common :: leftmenu"></div>
+
+    <!-- main content start-->
+    <div class="main-content" style="min-height: 100%;top: 50px;">
+        <!--        <div style="width:100%;height: 100%;background-color: #eff0f4">-->
+        <div th:replace="common :: headermenu"></div>
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                All Orders
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="main.html">Home</a>
+                </li>
+                <li>
+                    <a href="#">Order Management</a>
+                </li>
+                <li class="active">All Orders</li>
+            </ul>
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper" style="height: 771px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="newPanel" style="background-color: white">
+
+                        <div class="panel-body">
+                            <div class="adv-table">
+                                <div class="col-md-6">
+                                    <button type="button" style="margin-bottom: 5px;" class="col-md-2 btn btn-info"
+                                            data-toggle="modal" data-target="#myModal">新增
+                                    </button>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text" placeholder="Input ID">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-primary" type="submit">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button"
+                                                class="col-md-12 btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            Filters<span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                                <table class="table table-hover table-bordered">
+
+                                    <thead>
+                                    <tr>
+                                        <th>订单编号</th>
+                                        <th>货品名称</th>
+                                        <th>起始站点</th>
+                                        <th>运输方式</th>
+                                        <th>收件人</th>
+                                        <th>货物长度/cm</th>
+                                        <th>货物宽度/cm</th>
+                                        <th>货物高度/cm</th>
+                                        <th>货物重量/kg</th>
+                                        <th>备注信息</th>
+                                        <th>截止时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order:${orders.getRecords()}">
+                                        <td th:text="${order.orderId}"></td>
+                                        <td th:text="${order.goods}"></td>
+                                        <td th:text="${order.startStation}"></td>
+
+
+                                        <td th:if="${order.model} == 1">协同</td>
+                                        <td th:if="${order.model} == 2">无人机</td>
+                                        <td th:if="${order.model} == 3">无人车</td>
+
+                                        <td th:text="${order.consignee}"></td>
+                                        <td th:text="${order.length}"></td>
+                                        <td th:text="${order.width}"></td>
+                                        <td th:text="${order.height}"></td>
+                                        <td th:text="${order.weight}"></td>
+                                        <td th:text="${order.info}"></td>
+                                        <td th:text="${order.deadline}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <nav class="col-md-3 col-md-offset-9" aria-label="...">
+                                    <ul class="pagination">
+                                        <li><a th:href="@{/orders(pn=1)}">首页</a></li>
+
+                                        <li th:class="${num == orders.current?'active':''}" th:each="num:${navNums}">
+                                            <a th:href="@{/orders(pn=${num})}">[[${num}]]</a></li>
+                                        <li><a th:href="@{/orders(pn=${orders.pages})}">末页</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer style="text-align: center;margin-top: 5px;margin-bottom: 0px;">
+            2022 &copy; AdminEx by AHU ISEC
+        </footer>
+        <!--footer section end-->
+        <!--        </div>-->
+
+
+    </div>
+    <!-- main content end-->
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">创建新订单</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <span>运输模式：</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                                   value="option1"> 无人机
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                                   value="option2"> 无人车
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                                   value="option3"> 协同
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 text-center"><span>起点：</span></div>
+                            <div class="col-md-2 text-center"><span>终点：</span></div>
+                            <div class="col-md-4 text-center"><span>ID：</span></div>
+                            <div class="col-md-4 text-center"><span>收货人：</span></div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="btn-group" style="width: 100%;">
+                                    <button data-toggle="dropdown" class="btn-block btn btn-default dropdown-toggle"
+                                            type="button">Default <span class="caret"></span></button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="btn-group" style="width: 100%;">
+                                    <button data-toggle="dropdown" class="btn-block btn btn-default dropdown-toggle"
+                                            type="button">Default <span class="caret"></span></button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="row">
+                                    <input type="text" class="form-control col-md-5" placeholder="Jane Doe">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="email" class="form-control" placeholder="jane.doe@example.com">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 text-center"><span>物品属性：</span></div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="长/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="宽/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="高/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="重量/kg">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label text-center">备注信息：</label>
+                                <div class="col-md-10">
+                                    <textarea rows="6" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="col-md-1 btn btn-info"
+                            data-toggle="modal" data-target="#myModalNext" data-dismiss="modal">下一步
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+    <!-- 模态框（Modal1） -->
+    <div class="modal fade" id="myModalNext" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabelNext">生成配送方案</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-2 text-center" style="line-height: 34px;"><span>优化目标：</span></div>
+                        <div class="col-md-8">
+                            <select class="form-control">
+                                <option>时间</option>
+                                <option>能耗</option>
+                                <option>时间约束下的能耗优化</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <a th:href="@{/test}"><button class="btn btn-info">生成</button></a>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="col-md-1 btn btn-primary"
+                            data-toggle="modal" data-target="#myModalNext">完成
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+</section>
+
+<div th:replace="common :: commonscript"></div>
+
+
+<!--Dashboard Charts-->
+<script src="js/dashboard-chart-init.js"></script>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+
+</body>
+</html>
