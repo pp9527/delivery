@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.bean.Order;
 import com.example.bean.StationNetMap;
 import com.example.bean.Warehouse;
 import com.example.mapper.OrderMapper;
@@ -9,11 +8,9 @@ import com.example.service.StationNetMapService;
 import com.example.utils.Graph;
 import com.example.utils.PageUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 
