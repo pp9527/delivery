@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -80,28 +81,48 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
 
     /**
      * @Description: 获取地图的逻辑信息，用于路径规划
+     *               返回每个顶点的边的集合 顶点顺序为W1..D1..C1..
      * @author pwz
      * @date 2022/9/20 11:31
-     * @return java.util.List<java.util.List<com.example.bean.StationNetMap>>
+     * @return List<List<StationNetMap>>
      */
     @Override
     public List<List<StationNetMap>> getMapData() {
         List<List<StationNetMap>> pathMap = new ArrayList<>();
-
-        QueryWrapper<StationNetMap> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("start");
-        List<StationNetMap> list = stationNetMapMapper.selectList(queryWrapper);
-        int start = list.get(0).getStart();
-        List<StationNetMap> indexList = new ArrayList<>();
-        for (StationNetMap stationNetMap : list) {
-            if (start != stationNetMap.getStart()) {
-                pathMap.add(indexList);
-                start = stationNetMap.getStart();
-                indexList = new ArrayList<>();
+        QueryWrapper queryWrapper1 = new QueryWrapper();
+        queryWrapper1.orderByAsc("start");
+        List<StationNetMap> stationNetMaps = stationNetMapMapper.selectList(queryWrapper1);
+        QueryWrapper queryWrapper2 = new QueryWrapper();
+        queryWrapper2.groupBy("start");
+        List<StationNetMap> nums = stationNetMapMapper.selectList(queryWrapper2);
+        List<List<StationNetMap>> lists = new ArrayList<>();
+        int start;
+        for (int i = 0; i < nums.size(); i++) {
+            start = nums.get(i).getStart();
+            List<StationNetMap> list = new ArrayList<>();
+            for (StationNetMap stationNetMap : stationNetMaps) {
+                if (stationNetMap.getStart() == start || stationNetMap.getEndDid() == start) {
+                    list.add(stationNetMap);
+                }
             }
-            indexList.add(stationNetMap);
+            lists.add(list);
         }
-        pathMap.add(indexList);
-        return pathMap;
+        QueryWrapper queryWrapper3 = new QueryWrapper();
+        queryWrapper3.gt("end_cid", 0);
+        queryWrapper3.orderByAsc("end_cid");
+        List<StationNetMap> list = stationNetMapMapper.selectList(queryWrapper3);
+        int end = list.get(0).getEndCid();
+        List<StationNetMap> list1 = new ArrayList<>();
+        for (StationNetMap stationNetMap : list) {
+
+            if (end != stationNetMap.getEndCid()) {
+                end = stationNetMap.getEndCid();
+                lists.add(list1);
+                list1 = new ArrayList<>();
+            }
+            list1.add(stationNetMap);
+        }
+        lists.add(list1);
+        return lists;
     }
 }

@@ -43,5 +43,19 @@ class DemoApplicationTests {
         System.out.println(allCarToCustomerPath);
     }
 
+    @Test
+    public void testGetMaps() {
+        List<List<StationNetMap>> maps = Graph.getMaps();
+        System.out.println(maps);
+    }
+
+    @Test
+    public void testGetMapData() {
+        List<List<StationNetMap>> mapData = stationNetMapService.getMapData();
+        System.out.println(mapData.size());
+        for (int i = 0; i < mapData.size(); i++) {
+            System.out.println(mapData.get(i).size());
+        }
+    }
 
 }
