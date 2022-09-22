@@ -1,10 +1,7 @@
 package com.example.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.bean.CarStation;
-import com.example.bean.DroneStation;
-import com.example.bean.Order;
-import com.example.bean.Warehouse;
+import com.example.bean.*;
 import com.example.service.*;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +43,12 @@ public class LoginController {
     @Resource
     StationNetMapService stationNetMapService;
 
+    @Resource
+    CarToCustomerService carToCustomerService;
+
+    @Resource
+    CustomerService customerService;
+
     @GetMapping("/")
     public String loginPage() {
         return "login";
@@ -80,6 +83,11 @@ public class LoginController {
 
 //        查询各站点之间的路径(t_map表id顺序)
         List<List<List<Double>>> path = stationNetMapService.getAllStationPath();
+
+//        查询用户坐标
+
+
+//        查询无人车站点到用户的路径
 
 
         model.addAttribute("activeOrders", activeOrders);
