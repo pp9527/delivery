@@ -15,5 +15,8 @@ public interface StationNetMapService extends IService<StationNetMap> {
 
     List<List<List<Double>>> getAllStationPath();
 
+    @Deprecated
     List<List<StationNetMap>> getMapData();
+
+    int[][] getMatrix();
 }

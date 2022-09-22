@@ -36,7 +36,7 @@ public class RoutePlanning {
      * @date 2022/9/22 20:11
      * @param sourceStationName
      * @param endStationName
-     * @return java.util.List<java.util.List<java.lang.Double>>
+     * @return List<List<Double>>
      */
     public static List<List<Double>> getShortestPath(String sourceStationName, String endStationName) {
 //        无人机站点数量
@@ -61,22 +61,39 @@ public class RoutePlanning {
         minDis[source] = 0;
         List<Integer> visitedVertex = new ArrayList<>();// 已确定最短路径的顶点
         visitedVertex.add(source);
+        stationNames.remove(source);
         int curVertex = source, minDistance = Integer.MAX_VALUE;
         while (!visitedVertex.contains(end)) {
             for (StationNetMap stationNetMap : edges.get(curVertex)) {
+                int startNum = stationNetMap.getStart();
+                int endNum = stationNetMap.getEndDid() == 0
+                        ? (int) (stationNetMap.getEndDid() + droneCount)
+                        : stationNetMap.getEndDid();
+                if (!visitedVertex.contains(startNum) && !visitedVertex.contains(endNum)) {
+                    int min = stationNetMap.getDistance();
+                    int num;
+                    if (stationNetMap.getStart() == curVertex) {
+                        num = stationNetMap.getEndDid() == 0
+                                ? (int) (stationNetMap.getEndDid() + droneCount)
+                                : stationNetMap.getEndDid();
+                    } else if (stationNetMap.getEndDid() == curVertex) {
+                        num = stationNetMap.getStart();
+                    } else {
+                        num = stationNetMap.getEndCid() + droneCount;
+                    }
+                    int minNum;
+                    if (stationNetMap.getDistance() < min) {
+                        minNum = num;
+                    }
+                }
                 if (stationNetMap.getDistance() < minDistance) {
                     minDistance = stationNetMap.getDistance();
-
                 }
             }
         }
-
         for (List<StationNetMap> edge : edges) {
 
         }
-
         return null;
-
     }
-
 }

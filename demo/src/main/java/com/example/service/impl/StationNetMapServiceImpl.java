@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,7 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
      * @date 2022/9/20 11:31
      * @return List<List<StationNetMap>>
      */
+    @Deprecated
     @Override
     public List<List<StationNetMap>> getMapData() {
         List<List<StationNetMap>> pathMap = new ArrayList<>();
@@ -124,5 +126,24 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
         }
         lists.add(list1);
         return lists;
+    }
+
+
+    public int[][] getMatrix() {
+        int droneCount = Math.toIntExact(droneStationMapper.selectCount(null));
+        int carCount = Math.toIntExact(carStationMapper.selectCount(null));
+        int[][] matrix = new int[droneCount + carCount][droneCount + carCount];
+        for (int[] ints : matrix) {
+            Arrays.fill(ints, Integer.MAX_VALUE);
+        }
+        List<StationNetMap> stationNetMaps = stationNetMapMapper.selectList(null);
+        for (StationNetMap stationNetMap : stationNetMaps) {
+            int x = stationNetMap.getStart() - 1;
+            int y = stationNetMap.getEndDid() == 0
+                    ? stationNetMap.getEndCid() - 1 + droneCount
+                    : stationNetMap.getEndDid() - 1;
+            matrix[x][y] = matrix[y][x] = stationNetMap.getDistance();
+        }
+        return matrix;
     }
 }
