@@ -1,7 +1,10 @@
 package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.mapper.CarToCustomerMapper;
+import com.example.bean.CarToCustomer;
+
+import java.util.List;
+
 
 /**
  * @author: pwz
@@ -9,5 +12,8 @@ import com.example.mapper.CarToCustomerMapper;
  * @Description:
  * @FileName: CarToCustomerService
  */
-public interface CarToCustomerService extends IService<CarToCustomerMapper> {
+public interface CarToCustomerService extends IService<CarToCustomer> {
+
+
+    List<List<List<Double>>> getAllCarToCustomerPath();
 }

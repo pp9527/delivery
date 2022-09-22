@@ -1,8 +1,16 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.bean.Customer;
 import com.example.mapper.CustomerMapper;
+import com.example.service.CustomerService;
+import net.sf.json.JSONArray;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: pwz
@@ -10,5 +18,35 @@ import com.example.mapper.CustomerMapper;
  * @Description:
  * @FileName: CustomerServiceImpl
  */
-public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> {
+@Service
+public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer>
+        implements CustomerService {
+
+    @Resource
+    CustomerMapper customerMapper;
+
+    @Override
+    public List<String> getNames() {
+        List<Customer> customers = customerMapper.selectList(null);
+        List<String> list = new ArrayList<>();
+        for (Customer customer : customers) {
+            list.add(customer.getName());
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(list);
+        return jsonArray;
+    }
+
+    @Override
+    public List<List<Double>> getLongitudesAndLatitudes() {
+        List<Customer> customers = customerMapper.selectList(null);
+        JSONArray jsonArray = new JSONArray();
+        for (Customer customer : customers) {
+            List<Double> list = new ArrayList<>();
+            list.add(customer.getLongitude());
+            list.add(customer.getLatitude());
+            jsonArray.add(list);
+        }
+        return jsonArray;
+    }
 }

@@ -61,7 +61,7 @@ public class MainController {
 
 //        根据订单id查询订单路径
         Order order = orderService.getById(id);
-        List<List<Double>> path = pathService.selectPathByOrderId(order.getOrderId());
+        List<List<Double>> path = pathService.getPathByOrderId(order.getOrderId());
         model.addAttribute("pathLists", path);
 
 //        根据订单id查询指定订单终点坐标

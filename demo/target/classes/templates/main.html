@@ -160,6 +160,9 @@
         <input id="stationNames" hidden="hidden" th:value="${stationNames}"/>
         <input id="stationLongitudesAndLatitudes" hidden="hidden" th:value="${stationLongitudesAndLatitudes}"/>
         <input id="pathLists" hidden="hidden" th:value="${pathLists}"/>
+        <input id="customerNames" hidden="hidden" th:value="${customerNames}"/>
+        <input id="customerLongitudesAndLatitudes" hidden="hidden" th:value="${customerLongitudesAndLatitudes}"/>
+        <input id="allCarToCustomerPath" hidden="hidden" th:value="${allCarToCustomerPath}"/>
 
 
     </div>
@@ -179,6 +182,9 @@
     var stationName = JSON.parse($('#stationNames').val());
     var stationLongitudesAndLatitudes = JSON.parse($('#stationLongitudesAndLatitudes').val());
     var path = JSON.parse($('#pathLists').val());
+    var customerNames = JSON.parse($('#customerNames').val());
+    var customerLoAndLa = JSON.parse($('#customerLongitudesAndLatitudes').val());
+    var allCarToCustomerPath = JSON.parse($('#allCarToCustomerPath').val());
     // alert(path.length);
 
     // 地图初始化
@@ -196,6 +202,27 @@
             outlineColor: '#ffeeff',
             borderWeight: 3,
             strokeColor: "#f0f",
+            strokeOpacity: 1,
+            strokeWeight: 6,
+            // 折线样式还支持 'dashed'
+            strokeStyle: "dashed",
+            // strokeStyle是dashed时有效
+            strokeDasharray: [15, 5],
+            lineJoin: 'round',
+            lineCap: 'round',
+            zIndex: 50,
+        })
+        map.add(polyline);
+    }
+
+    // 绘制车站到用户的路径
+    for (var i = 0; i < allCarToCustomerPath.length; i++) {
+        var polyline = new AMap.Polyline({
+            path: allCarToCustomerPath[i],
+            isOutline: true,
+            outlineColor: '#ffeeff',
+            borderWeight: 3,
+            strokeColor: "#000",
             strokeOpacity: 1,
             strokeWeight: 6,
             // 折线样式还支持 'dashed'
@@ -244,10 +271,46 @@
         });
         text1.setMap(map);
 
-        // 标出站点蓝色标记
+        // 标出站点标记
+        var marker = new AMap.Marker({
+            icon: '/icon/poi-marker-' + color + '.png',
+            position: stationLongitudesAndLatitudes[i],
+            offset: new AMap.Pixel(-13, -30)
+        });
+        marker.setMap(map);
+    }
+
+
+    for (var i = 0; i < customerNames.length; i++) {
+
+        // 标出用户名
+        var text1 = new AMap.Text({
+            text:customerNames[i],
+            anchor:'top-left', // 设置文本标记锚点
+            draggable:true,
+            cursor:'pointer',
+            style:{
+                'padding': '.75rem 1.25rem',
+                'margin-bottom': '1rem',
+                'border-radius': '.40rem',
+                'background-color': 'white',
+                'width': '6rem',
+                'border-width': 0,
+                'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                'text-align': 'center',
+                'font-size': '15px',
+                'font-weight': 'bolder',
+                'color': 'blue',
+                'x-index':'10000'
+            },
+            position: customerLoAndLa[i]
+        });
+        text1.setMap(map);
+
+        // 标出用户蓝色标记
         var marker = new AMap.Marker({
             icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
-            position: stationLongitudesAndLatitudes[i],
+            position: customerLoAndLa[i],
             offset: new AMap.Pixel(-13, -30)
         });
         marker.setMap(map);

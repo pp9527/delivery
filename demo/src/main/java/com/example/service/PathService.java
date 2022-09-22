@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface PathService extends IService<Path>{
 
-    List<List<Double>> selectPathByOrderId(int orderId);
+    List<List<Double>> getPathByOrderId(int orderId);
 }

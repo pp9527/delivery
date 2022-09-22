@@ -15,6 +15,7 @@ import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -84,19 +85,21 @@ public class LoginController {
 //        查询各站点之间的路径(t_map表id顺序)
         List<List<List<Double>>> path = stationNetMapService.getAllStationPath();
 
-//        查询用户坐标
-
+//        查询用户坐标和名称
+        List<String> customerNames = customerService.getNames();
+        List<List<Double>> customerLongitudesAndLatitudes = customerService.getLongitudesAndLatitudes();
 
 //        查询无人车站点到用户的路径
+        List<List<List<Double>>> allCarToCustomerPath = carToCustomerService.getAllCarToCustomerPath();
 
 
         model.addAttribute("activeOrders", activeOrders);
         model.addAttribute("stationNames", stationName);
         model.addAttribute("stationLongitudesAndLatitudes", stationLongitudesAndLatitude);
         model.addAttribute("pathLists", path);
-
-//        System.out.println(stationLongitudesAndLatitude);
-//        System.out.println(stationName);
+        model.addAttribute("customerNames", customerNames);
+        model.addAttribute("customerLongitudesAndLatitudes", customerLongitudesAndLatitudes);
+        model.addAttribute("allCarToCustomerPath", allCarToCustomerPath);
 
         return "main";
     }

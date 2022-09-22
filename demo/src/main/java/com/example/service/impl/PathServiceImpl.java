@@ -36,7 +36,7 @@ public class PathServiceImpl extends ServiceImpl<PathMapper, Path> implements Pa
     CarStationMapper carStationMapper;
 
     @Override
-    public List<List<Double>> selectPathByOrderId(int orderId) {
+    public List<List<Double>> getPathByOrderId(int orderId) {
 
         QueryWrapper<Path> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("order_id", orderId).orderByAsc("station_number");

@@ -1,7 +1,10 @@
 package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.mapper.CustomerMapper;
+import com.example.bean.Customer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: pwz
@@ -9,5 +12,9 @@ import com.example.mapper.CustomerMapper;
  * @Description:
  * @FileName: CustomerService
  */
-public interface CustomerService extends IService<CustomerMapper> {
+public interface CustomerService extends IService<Customer> {
+
+    List<String> getNames();
+
+    List<List<Double>> getLongitudesAndLatitudes();
 }
