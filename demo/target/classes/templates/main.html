@@ -317,16 +317,24 @@
     }
 
     // // 计算每条路径的距离，并按顺序在首页打印
-    // for (var i = path.length - 2; i < path.length; i++) {
+    // // var arr1 = new Array()
+    // // var arr2 = new Array()
+    // for (var i = 0; i < path.length; i++) {
     //     var p1 = path[i][0];
     //     var p2 = path[i][1];
     //     // 返回 p1 到 p2 间的地面距离，单位：米
     //     alert(AMap.GeometryUtil.distance(p1, p2));
     // }
 
+    for (var i = 0; i < allCarToCustomerPath.length; i++) {
+        var p1 = allCarToCustomerPath[i][0];
+        var p2 = allCarToCustomerPath[i][1];
+        // 返回 p1 到 p2 间的地面距离，单位：米
+        alert(AMap.GeometryUtil.distance(p1, p2));
+    }
 
     // 视图自动缩放设置
-    map.setFitView(null, true, [40, 20, 10, 10]);
+    map.setFitView(null, true, [50, 50, 30, 30]);
 
 </script>
 
