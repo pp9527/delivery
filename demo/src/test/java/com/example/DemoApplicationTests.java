@@ -10,6 +10,7 @@ import com.example.service.CustomerService;
 import com.example.service.StationNetMapService;
 import com.example.utils.Graph;
 import com.example.utils.PageUtils;
+import com.example.utils.RoutePlanning;
 import net.sf.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,8 +46,10 @@ class DemoApplicationTests {
 
     @Test
     public void testGetMaps() {
-        List<List<StationNetMap>> maps = Graph.getMaps();
-        System.out.println(maps);
+//        List<List<StationNetMap>> maps = Graph.getMaps();
+//        System.out.println(maps);
+        List<String> vertex = Graph.getVertex();
+        System.out.println(vertex);
     }
 
     @Test
@@ -67,5 +70,10 @@ class DemoApplicationTests {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testGetShortestPath() {
+        System.out.println(RoutePlanning.getShortestPath(0, 16));
     }
 }

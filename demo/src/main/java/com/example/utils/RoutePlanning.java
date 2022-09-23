@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Component
 public class RoutePlanning {
+
     private static int[] minDis;// 源点到其他各点的最短距离
     private static int[] pre;// 寻找最短路径时存放前驱节点下表的数组
     public static RoutePlanning routePlanning;
@@ -38,11 +39,12 @@ public class RoutePlanning {
      * @param endStationName
      * @return List<List<Double>>
      */
+    @Deprecated
     public static List<List<Double>> getShortestPath(String sourceStationName, String endStationName) {
 //        无人机站点数量
         int droneCount = (int) routePlanning.droneStationService.count();
 //        当前地图顶点和边的信息
-        List<String> stationNames = Graph.getStationNames();
+        List<String> stationNames = Graph.getVertex();
         List<List<StationNetMap>> edges = Graph.getMaps();
 //        根据站点名找到源点和终点
         int source = stationNames.indexOf(sourceStationName);
@@ -92,8 +94,78 @@ public class RoutePlanning {
             }
         }
         for (List<StationNetMap> edge : edges) {
-
         }
         return null;
+    }
+
+    /**
+     * @Description: 迪杰斯特拉算法求最短路径
+     * @author pwz
+     * @date 2022/9/22 20:11
+     * @param source
+     * @param end
+     * @return List<String> : 数组最后一位为最短距离
+     */
+    public static List<String> getShortestPath(int source, int end) {
+        int[][] matrix = Graph.getMatrix();  //地图的邻接矩阵
+        List<String> vertex = Graph.getVertex();  //顶点数组W1-D1....C1...
+        //最短路径长度
+        int[] shortest = new int[matrix.length];
+        //判断该点的最短路径是否求出
+        int[] visited = new int[matrix.length];
+        //存储输出路径
+        String[] path = new String[matrix.length];
+
+        //初始化输出路径
+        for (int i = 0; i < matrix.length; i++) {
+            path[i] = vertex.get(source) + ',' + vertex.get(i);
+        }
+
+        //初始化起点，将起点放入S
+        shortest[source] = 0;
+        visited[source] = 1;
+
+        for (int i = 1; i < matrix.length; i++) {       //i从1开始，因为起点已经加入S了
+            int min = Graph.maxDis;
+            int index = -1;
+
+            //找出某节点到起点路径最短
+            for (int j = 0; j < matrix.length; j++) {
+                //已经求出最短路径的节点不需要再加入计算并判断加入节点后是否存在更短路径
+                if (visited[j] == 0 && matrix[source][j] < min) {
+                    min = matrix[source][j];
+                    index = j;
+                }
+            }
+
+            //更新最短路径，标记起点到该节点的最短路径已经求出
+            shortest[index] = min;
+            visited[index] = 1;
+
+            //更新从index跳到其它节点的较短路径
+            for (int m = 0; m < matrix.length; m++) {
+                if (visited[m] == 0 && matrix[source][index] + matrix[index][m] < matrix[source][m]) {
+                    matrix[source][m] = matrix[source][index] + matrix[index][m];
+                    path[m] = path[index] + ',' + vertex.get(m);
+                }
+            }
+            if (visited[end - 1] == 1) break;  // 找到目标节点跳出循环
+        }
+
+        String[] split = path[end - 1].split(",");
+        List<String> pathAndDistance = new ArrayList<>(Arrays.asList(split));
+        pathAndDistance.add(String.valueOf(shortest[end - 1]));
+        return pathAndDistance;
+
+        //打印最短路径
+//        for (int i = 0; i < matrix.length; i++) {
+//            if (i != source) {
+//                if (shortest[i] == Graph.maxDis) {
+//                    System.out.println(vertex.get(source) + "到" + vertex.get(i) + "不可达");
+//                } else {
+//                    System.out.println(vertex.get(source) + "到" + vertex.get(i) + "的最短路径为：" + path[i] + "，最短距离是：" + shortest[i]);
+//                }
+//            }
+//        }
     }
 }

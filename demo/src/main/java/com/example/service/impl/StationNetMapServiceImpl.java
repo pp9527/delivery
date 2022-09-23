@@ -9,6 +9,7 @@ import com.example.mapper.CarStationMapper;
 import com.example.mapper.DroneStationMapper;
 import com.example.mapper.StationNetMapMapper;
 import com.example.service.StationNetMapService;
+import com.example.utils.Graph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -128,13 +129,18 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
         return lists;
     }
 
-
+    /**
+     * @Description: 生成邻接矩阵
+     * @author pwz
+     * @date 2022/9/23 9:49
+     * @return int[][]
+     */
     public int[][] getMatrix() {
         int droneCount = Math.toIntExact(droneStationMapper.selectCount(null));
         int carCount = Math.toIntExact(carStationMapper.selectCount(null));
         int[][] matrix = new int[droneCount + carCount][droneCount + carCount];
         for (int[] ints : matrix) {
-            Arrays.fill(ints, Integer.MAX_VALUE);
+            Arrays.fill(ints, Graph.maxDis);
         }
         List<StationNetMap> stationNetMaps = stationNetMapMapper.selectList(null);
         for (StationNetMap stationNetMap : stationNetMaps) {
