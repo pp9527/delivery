@@ -98,17 +98,17 @@
                             <div class="panel newPanel" th:each="order:${activeOrders}">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-9" style="height: 60px;">
-                                            <h4 class="col-md-4 text-center" style="line-height: 60px;"><strong >ID: [[${order.orderId}]]</strong></h4>
-                                            <h4 class="col-md-8 text-center" style="line-height: 60px;color: #1CAF9A" th:if="${order.privacyStatus} == true"><strong>Privacy Protecting</strong></h4>
+                                        <div class="col-md-9" style="height: 70px;">
+                                            <h4 class="col-md-4 text-center" style="line-height: 70px;margin:0;"><strong >ID: [[${order.orderId}]]</strong></h4>
+                                            <h4 class="col-md-8 text-center" style="line-height: 70px;margin:0;color: #1CAF9A" th:if="${order.privacyStatus} == true"><strong>Privacy Protecting</strong></h4>
                                         </div>
 
-                                        <h4 class="col-md-3" style="padding: 0px;height: 60px;">
+                                        <h4 class="col-md-3" style="padding: 0px;height: 70px;margin-top: 0;">
                                             <div class="row" style="margin-bottom: 5px;">
                                                 <div class="dropdown">
-                                                    <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenu1"
+                                                    <button style="font-size: 15px;" type="button" class="col-md-10 btn btn-primary dropdown-toggle" id="dropdownMenu1"
                                                             data-toggle="dropdown">
-                                                        Enable Privacy
+                                                        Enable
                                                         <span class="caret"></span>
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -129,8 +129,8 @@
 <!--                                                </a>-->
                                             </div>
                                             <div class="row">
-                                                <a th:href="@{'/safe/' + ${order.id} + '?type=0'}" class="btn btn-danger col-md-10" style="border-radius: 5px;font-size: 16px;padding: 2px;">
-                                                    Disable Privacy
+                                                <a th:href="@{'/safe/' + ${order.id} + '?type=0'}" class="btn btn-danger col-md-10" style="border-radius: 5px;font-size: 15px;">
+                                                    Disable
                                                 </a>
                                             </div>
 
