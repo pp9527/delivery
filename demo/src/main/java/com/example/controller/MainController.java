@@ -69,14 +69,28 @@ public class MainController {
         desLocation.add(order.getDesLongitude());
         desLocation.add(order.getDesLatitude());
         model.addAttribute("desLocation", desLocation);
-//        return "redirect:/main";
         return "active_order";
     }
 
 
 
     @GetMapping("/safety")
-    public String toSafety() {
-        return "safety";
+    public String toSafety(Model model) {
+
+        //        查询当前活跃订单
+        List<Order> activeOrders = orderService.selectActiveOrders();
+        model.addAttribute("activeOrders", activeOrders);
+
+        //        根据订单id查询订单路径
+        Order order = orderService.getById(1);
+        List<List<Double>> path = pathService.getPathByOrderId(order.getOrderId());
+        model.addAttribute("pathLists", path);
+
+//        根据订单id查询指定订单终点坐标
+        JSONArray desLocation = new JSONArray();
+        desLocation.add(order.getDesLongitude());
+        desLocation.add(order.getDesLatitude());
+        model.addAttribute("desLocation", desLocation);
+        return "safe_order";
     }
 }

@@ -29,7 +29,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.inSql("status", "select status from order_record where status != 3");
         List<Order> list = orderMapper.selectList(queryWrapper);
-//        System.out.println(list.size());
         return list;
     }
 }
