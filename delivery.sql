@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/9/22 20:58:44
+Date: 2022/9/23 20:56:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,8 +108,10 @@ CREATE TABLE `order_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model` int(11) DEFAULT '1',
   `start_station` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `des_latitude` decimal(10,6) NOT NULL,
   `des_longitude` decimal(10,6) NOT NULL,
+  `des_latitude` decimal(10,6) NOT NULL,
+  `privacy_longitude` decimal(10,6) NOT NULL,
+  `privacy_latitude` decimal(10,6) NOT NULL,
   `order_id` int(11) NOT NULL,
   `consignee` varchar(255) CHARACTER SET utf8 NOT NULL,
   `length` int(11) NOT NULL,
@@ -120,8 +122,9 @@ CREATE TABLE `order_record` (
   `deadline` datetime NOT NULL,
   `status` int(11) DEFAULT '0',
   `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `privacy_status` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for path
@@ -201,9 +204,10 @@ INSERT INTO `drone_station` VALUES ('10', 'D9', '117.231199', '31.747284', null,
 INSERT INTO `drone_station` VALUES ('11', 'D10', '117.205524', '31.740505', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('12', 'D11', '117.180692', '31.751023', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('13', 'D12', '117.231273', '31.753442', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `order_record` VALUES ('1', '1', 'W1', '31.753708', '117.219950', '23456', '张三', '20', '20', '20', '1.20000', '西瓜', '2022-09-24 15:04:34', '0', '好吃');
-INSERT INTO `order_record` VALUES ('2', '1', 'W1', '31.765488', '117.205724', '24980', '李四', '20', '33', '12', '1.80000', '棉被', '2022-09-21 11:00:08', '1', '暖和');
-INSERT INTO `order_record` VALUES ('3', '1', 'W1', '31.728819', '117.228605', '24567', '张三', '22', '22', '22', '1.30000', '西瓜', '2022-09-23 11:24:29', '2', '的');
+INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.220262', '31.756386', '117.220787', '31.757642', '23456', 'U1', '22', '22', '22', '1.00000', 'goods', '2022-09-24 15:04:34', '1', '000', '1');
+INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.205997', '31.766555', '117.207057', '31.766482', '24980', 'U2', '22', '22', '22', '2.00000', 'goods', '2022-09-21 11:00:08', '0', '000', '1');
+INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.228605', '31.728819', '117.228605', '31.728819', '24567', 'U3', '22', '22', '22', '1.30000', 'goods', '2022-09-23 11:24:29', '2', '000', '0');
+INSERT INTO `order_record` VALUES ('4', '1', 'W1', '117.228605', '31.728819', '117.228605', '31.728819', '34587', 'U4', '22', '22', '22', '2.00000', 'goods', '2022-10-01 16:02:50', '0', '000', '0');
 INSERT INTO `path` VALUES ('1', '23456', '1', '0', '1');
 INSERT INTO `path` VALUES ('2', '23456', '0', '1', '3');
 INSERT INTO `path` VALUES ('3', '23456', '2', '0', '2');
