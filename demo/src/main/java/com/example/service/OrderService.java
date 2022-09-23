@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface OrderService extends IService<Order> {
 
-    List<Order> selectActiveOrders();
+    List<Order> getActiveOrders();
 
 }

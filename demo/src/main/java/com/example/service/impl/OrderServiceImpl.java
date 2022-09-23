@@ -25,7 +25,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
     OrderMapper orderMapper;
 
     @Override
-    public List<Order> selectActiveOrders() {
+    public List<Order> getActiveOrders() {
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.inSql("status", "select status from order_record where status != 3");
         List<Order> list = orderMapper.selectList(queryWrapper);

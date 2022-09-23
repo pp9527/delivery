@@ -24,6 +24,8 @@ public class Order {
     private String startStation;
     private double desLongitude;
     private double desLatitude;
+    private double privacyLongitude;
+    private double privacyLatitude;
     private int orderId;
     private String consignee;
     private int length;

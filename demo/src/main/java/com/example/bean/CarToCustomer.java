@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CarToCustomer {
 
-    private int id;
+    private Integer id;
     private int start;
     private int end;
     private int distance;

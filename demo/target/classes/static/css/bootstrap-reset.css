@@ -41,7 +41,7 @@
     box-shadow: none;
 }
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background-color: #424F63;
+    background-color: #47a447;
     color: #FFFFFF;
     text-decoration: none;
 }

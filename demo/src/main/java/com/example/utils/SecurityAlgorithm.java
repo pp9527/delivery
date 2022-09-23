@@ -1,5 +1,7 @@
 package com.example.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
 /**
@@ -8,16 +10,17 @@ import java.util.Random;
  * @Description:
  * @FileName: SecurityAlgorithm
  */
+@Component
 public class SecurityAlgorithm {
 
-    public static void main(String[] args) {
-        double[] location = new double[2];
-
-        location[0] = 117.220599;
-        location[1] = 31.730276;
-        geo_dp(location);
-
-    }
+//    public static void main(String[] args) {
+//        double[] location = new double[2];
+//
+//        location[0] = 117.220599;
+//        location[1] = 31.730276;
+//        geoDp(location);
+//
+//    }
 
     /**
      *
@@ -26,7 +29,7 @@ public class SecurityAlgorithm {
      * @param location 传入的原始位置坐标
      * @return location_dp 返回加入DP噪声扰动后的坐标
      */
-    public static double[] geo_dp(double[] location){
+    public static double[] geoDp(double[] location){
         double theta ;
         double p;
         double radius;

@@ -13,7 +13,6 @@
     <!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />-->
     <link rel="stylesheet" type="text/css" href="https://a.amap.com/jsapi_demos/static/demo-center/css/prety-json.css">
 
-
     <script type="text/javascript">
         window._AMapSecurityConfig = {
             securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
@@ -101,17 +100,36 @@
                                     <div class="row">
                                         <div class="col-md-9" style="height: 60px;">
                                             <h4 class="col-md-4 text-center" style="line-height: 60px;"><strong >ID: [[${order.orderId}]]</strong></h4>
-                                            <h4 class="col-md-8 text-center" style="line-height: 60px;" th:if="${order.privacyStatus} == true"><strong>Privacy Protecting</strong></h4>
+                                            <h4 class="col-md-8 text-center" style="line-height: 60px;color: #1CAF9A" th:if="${order.privacyStatus} == true"><strong>Privacy Protecting</strong></h4>
                                         </div>
 
                                         <h4 class="col-md-3" style="padding: 0px;height: 60px;">
                                             <div class="row" style="margin-bottom: 5px;">
-                                                <a class="btn btn-success col-md-10" style="border-radius: 5px;font-size: 16px;padding: 2px;" th:href="@{'/main/'+${order.id}}">
-                                                    Enable Privacy
-                                                </a>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenu1"
+                                                            data-toggle="dropdown">
+                                                        Enable Privacy
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                        <li role="presentation">
+                                                            <a th:href="@{'/safe/' + ${order.id} + '?type=1'}" role="menuitem" tabindex="-1" href="#">privacy encryption</a>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <a role="menuitem" tabindex="-1" href="#">#</a>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <a role="menuitem" tabindex="-1" href="#">#</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+<!--                                                <a class="btn btn-primary col-md-10" style="border-radius: 5px;font-size: 16px;padding: 2px;" th:href="@{'/main/'+${order.id}}">-->
+<!--                                                    Enable Privacy-->
+<!--                                                </a>-->
                                             </div>
                                             <div class="row">
-                                                <a class="btn btn-danger col-md-10" style="border-radius: 5px;font-size: 16px;padding: 2px;" th:href="@{'/main/'+${order.id}}">
+                                                <a th:href="@{'/safe/' + ${order.id} + '?type=0'}" class="btn btn-danger col-md-10" style="border-radius: 5px;font-size: 16px;padding: 2px;">
                                                     Disable Privacy
                                                 </a>
                                             </div>

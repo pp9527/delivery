@@ -65,7 +65,7 @@ public class LoginController {
     public String mainPage(Model model) {
 //        Order order = orderService.getById(id);
 //        查询当前活跃订单
-        List<Order> activeOrders = orderService.selectActiveOrders();
+        List<Order> activeOrders = orderService.getActiveOrders();
 //        List<List<Double>> path = pathService.selectPathByOrderId(order.getOrderId());
 
 //        查询所有站点名称(drone_station表+car_station表id顺序)
