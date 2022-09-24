@@ -11,16 +11,16 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet">
+    <link href="/css/jquery.stepy.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
 
 
     <div th:include="common::commonheader"></div>
 
 
     <style>
-        tr, th{
+        tr, th {
             text-align: center;
         }
     </style>
@@ -64,7 +64,7 @@
                             <div class="adv-table">
                                 <div class="col-md-6">
                                     <button type="button" style="margin-bottom: 5px;" class="col-md-2 btn btn-info"
-                                            data-toggle="modal" data-target="#myModal">新增
+                                            data-toggle="modal" data-target="#myModal2">新增
                                     </button>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -164,105 +164,82 @@
     <!-- 模态框（Modal） -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content" style="border-radius: 10px;font-size: 18px;font-weight: bolder">
+                <div class="modal-header" style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">创建新订单</h4>
+                    <h4 class="modal-title" id="myModalLabel">Creating a New Order</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <span>运输模式：</span>
+                            <div class="col-md-10">
+                                <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-md-4">
+                                        <span>transportation mode：</span>
                                     </div>
-                                    <div class="col-md-7">
-                                        <label class="radio-inline">
+                                    <div class="col-md-7" style="color: green">
+                                        <label class="radio-inline" style="font-weight: bold">
                                             <input type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                                   value="option1"> 无人机
+                                                   value="option1"> only uav
                                         </label>
-                                        <label class="radio-inline">
+                                        <label class="radio-inline" style="font-weight: bold">
                                             <input type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                                   value="option2"> 无人车
+                                                   value="option2"> only ugv
                                         </label>
-                                        <label class="radio-inline">
+                                        <label class="radio-inline" style="font-weight: bold">
                                             <input type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                                                   value="option3"> 协同
+                                                   value="option3"> uav and ugv
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-2 text-center"><span>起点：</span></div>
-                            <div class="col-md-2 text-center"><span>终点：</span></div>
-                            <div class="col-md-4 text-center"><span>ID：</span></div>
-                            <div class="col-md-4 text-center"><span>收货人：</span></div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="btn-group" style="width: 100%;">
-                                    <button data-toggle="dropdown" class="btn-block btn btn-default dropdown-toggle"
-                                            type="button">Default <span class="caret"></span></button>
-                                    <ul role="menu" class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="btn-group" style="width: 100%;">
-                                    <button data-toggle="dropdown" class="btn-block btn btn-default dropdown-toggle"
-                                            type="button">Default <span class="caret"></span></button>
-                                    <ul role="menu" class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="row">
-                                    <input type="text" class="form-control col-md-5" placeholder="Jane Doe">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="email" class="form-control" placeholder="jane.doe@example.com">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2 text-center"><span>物品属性：</span></div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-md-3 text-center"><span>start station：</span></div>
+                            <div class="col-md-3 text-center"><span>destination：</span></div>
+                            <div class="col-md-3 text-center"><span>orderID：</span></div>
+                            <div class="col-md-3 text-center"><span>consignee：</span></div>
 
 
                         </div>
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="长/cm">
+                                <input type="email" class="form-control" placeholder="W1">
                             </div>
                             <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="宽/cm">
+                                <input type="email" class="form-control" placeholder="U1 to U5">
                             </div>
                             <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="高/cm">
+                                <input type="email" class="form-control" placeholder="five figure">
                             </div>
                             <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="重量/kg">
+                                <input type="email" class="form-control" placeholder="name">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-md-2 text-center"><span>goods info：</span></div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="length/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="width/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="height/cm">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="email" class="form-control" placeholder="weight/kg">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-md-2 control-label text-center">备注信息：</label>
+                                <label class="col-md-2 control-label text-center" style="font-weight: bold;">order
+                                    note：</label>
                                 <div class="col-md-10">
                                     <textarea rows="6" class="form-control"></textarea>
                                 </div>
@@ -272,9 +249,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                     <button type="button" class="col-md-1 btn btn-info"
-                            data-toggle="modal" data-target="#myModalNext" data-dismiss="modal">下一步
+                            data-toggle="modal" data-target="#myModalNext" data-dismiss="modal">next
                     </button>
                 </div>
             </div><!-- /.modal-content -->
@@ -286,34 +263,173 @@
     <div class="modal fade" id="myModalNext" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content" style="border-radius: 10px;font-size: 18px;font-weight: bolder">
+                <div class="modal-header" style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabelNext">生成配送方案</h4>
+                    <h4 class="modal-title" id="myModalLabelNext">Generate Distribution Scheme</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-2 text-center" style="line-height: 34px;"><span>优化目标：</span></div>
-                        <div class="col-md-8">
+                        <div class="col-md-4 text-center" style="line-height: 34px;">
+                            <span>optimization objective：</span></div>
+                        <div class="col-md-6">
                             <select class="form-control">
-                                <option>时间</option>
-                                <option>能耗</option>
-                                <option>时间约束下的能耗优化</option>
+                                <option>time</option>
+                                <option>energy</option>
+                                <option>energy consumption optimization under time constraint</option>
                             </select>
                         </div>
                         <div class="col-md-2 text-center">
-                            <a th:href="@{/test}"><button class="btn btn-info">生成</button></a>
+                            <a th:href="@{/test}">
+                                <button class="btn btn-info">generate</button>
+                            </a>
                         </div>
                     </div>
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                     <button type="button" class="col-md-1 btn btn-primary"
-                            data-toggle="modal" data-target="#myModalNext">完成
+                            data-toggle="modal" data-target="#myModalNext">confirm
                     </button>
                 </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal2） -->
+    <div class="modal fade form-horizontal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 10px;font-size: 18px;font-weight: bolder">
+                <div class="modal-header" style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel2" style="font-weight: bolder">Creating a New Order</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="square-widget">
+                                <div class="widget-container">
+                                    <div class="stepy-tab"></div>
+                                    <form id="default">
+                                        <fieldset title="Order Info">
+                                            <legend>Detailed Information</legend>
+                                            <div class="row" style="margin-bottom: 15px;">
+                                                <div class="col-md-4" style="vertical-align: middle">
+                                                    <span>transportation mode：</span>
+                                                </div>
+                                                <div class="col-md-8" style="color: green;vertical-align: middle">
+                                                    <label class="radio-inline;"
+                                                           style="padding: 0;font-weight: bold;display: inline-block">
+                                                        <input style="vertical-align: middle;margin: 0" type="radio"
+                                                               name="inlineRadioOptions"
+                                                               id="Radio1"
+                                                               value="option2">
+                                                        <span>only uav</span>
+                                                    </label>
+                                                    <label class="radio-inline;"
+                                                           style="padding: 0;font-weight: bold;display: inline-block">
+                                                        <input style="vertical-align: middle;margin: 0" type="radio"
+                                                               name="inlineRadioOptions"
+                                                               id="Radio2"
+                                                               value="option2">
+                                                        <span>only ugv</span>
+                                                    </label>
+                                                    <label class="radio-inline;"
+                                                           style="padding: 0;font-weight: bold;display: inline-block">
+                                                        <input style="vertical-align: middle;margin: 0" type="radio"
+                                                               name="inlineRadioOptions"
+                                                               id="Radio3"
+                                                               value="option2">
+                                                        <span>uav and ugv</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col-md-3 text-center"><span>start station：</span></div>
+                                                <div class="col-md-3 text-center"><span>destination：</span></div>
+                                                <div class="col-md-3 text-center"><span>orderID：</span></div>
+                                                <div class="col-md-3 text-center"><span>consignee：</span></div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="W1">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="U1 to U5">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="five figure">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="name">
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col-md-2 text-center"><span>goods info：</span></div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="length/cm">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="width/cm">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="height/cm">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="email" class="form-control" placeholder="weight/kg">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label text-center"
+                                                           style="font-weight: bold;">order note：</label>
+                                                    <div class="col-md-10">
+                                                        <textarea rows="6" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset title="Strategy Info">
+                                            <legend>Distribution Strategy Information</legend>
+                                            <div class="row" style="margin-bottom: 20px;">
+                                                    <div class="col-md-4 text-center" style="line-height: 34px;">
+                                                        <span>optimization objective：</span></div>
+                                                    <div class="col-md-6">
+                                                        <select class="form-control">
+                                                            <option>time</option>
+                                                            <option>energy</option>
+                                                            <option>energy consumption optimization under time constraint</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 text-center">
+                                                        <a th:href="@{/test}">
+                                                            <button class="btn btn-primary">generate</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+
+                                        </fieldset>
+                                        <button class="btn btn-success finish">
+                                            Finish
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
@@ -324,9 +440,54 @@
 
 
 <!--Dashboard Charts-->
-<script src="js/dashboard-chart-init.js"></script>
+<script src="/js/dashboard-chart-init.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.stepy.js"></script>
+<!--<script src="/js/jquery-3.4.1.min.js"></script>-->
+<script>
+    /*=====STEPY WIZARD====*/
+    $(function () {
+        $('#default').stepy({
+            backLabel: 'Previous',
+            block: true,
+            nextLabel: 'Next',
+            titleClick: true,
+            titleTarget: '.stepy-tab'
+        });
+    });
+    /*=====STEPY WIZARD WITH VALIDATION====*/
+    $(function () {
+        $('#stepy_form').stepy({
+            backLabel: 'Back',
+            nextLabel: 'Next',
+            errorImage: true,
+            block: true,
+            description: true,
+            legend: false,
+            titleClick: true,
+            titleTarget: '#top_tabby',
+            validate: true
+        });
+        $('#stepy_form').validate({
+            errorPlacement: function (error, element) {
+                $('#stepy_form div.stepy-error').append(error);
+            },
+            rules: {
+                'name': 'required',
+                'email': 'required'
+            },
+            messages: {
+                'name': {
+                    required: 'Name field is required!'
+                },
+                'email': {
+                    required: 'Email field is requerid!'
+                }
+            }
+        });
+    });
+</script>
 
-<script src="js/jquery-3.4.1.min.js"></script>
 
 </body>
 </html>
