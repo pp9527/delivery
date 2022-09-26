@@ -15,6 +15,13 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
 
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
+        }
+    </script>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 
     <div th:include="common::commonheader"></div>
 
@@ -416,10 +423,11 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 text-center">
-                                                    <a th:href="@{/test}">
-                                                        <button class="btn btn-primary">generate</button>
-                                                    </a>
+                                                        <button type="button" onclick="sendAjax()" class="btn btn-primary">generate</button>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-12" style="background-color: white;height: 400px;padding: 10px;border-radius: 10px;">
+                                                <div id="container" style="position: relative;width: 100%;height: 100%;border-radius: 10px;"></div>
                                             </div>
 
 
@@ -448,6 +456,20 @@
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/jquery.stepy.js"></script>
 <!--<script src="/js/jquery-3.4.1.min.js"></script>-->
+
+<!--<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js" ></script>-->
+<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js" ></script>
+<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
+<script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
+
+<script>
+    var map = new AMap.Map("container", {
+        // center: [112.187017,31.763388],
+        resizeEnable: true,
+        zoom: 16
+    });
+</script>
+
 <script>
     /*=====STEPY WIZARD====*/
     $(function () {
@@ -496,23 +518,27 @@
     // objective
 
 
-    $(function () {
-        $('#default').on('submit', function (e) {
-            e.preventDefault();
-            var model = $("input[name='model']:checked ").val();
+    function sendAjax () {
+            const model = $("[name='model']:checked").val();
+            const startStation = $("[name='startStation']").val();
+            const consignee = $("[name='consignee']").val();
+            const objective = $("[name='objective']").val();
             $.ajax({
                 url: "/ajax/generate",
                 type: "post",
-                data: "model=" + model,
+                data: {
+                    model:model,
+                    startStation:startStation,
+                    consignee:consignee,
+                    objective:objective
+                },
                 dataType: "text",
                 success: function (data) {
                     alert(data);
                 }
             })
             // var data = $('#default').serialize()
-
-        })
-    })
+    }
 </script>
 
 

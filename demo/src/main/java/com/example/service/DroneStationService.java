@@ -16,4 +16,6 @@ public interface DroneStationService extends IService<DroneStation> {
     List<String> getNames();
 
     List<List<Double>> getLongitudesAndLatitudes();
+
+    List<Double> getLocationByName(String name);
 }

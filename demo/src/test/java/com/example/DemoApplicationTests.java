@@ -74,6 +74,6 @@ class DemoApplicationTests {
 
     @Test
     public void testGetShortestPath() {
-        System.out.println(RoutePlanning.getShortestPath(0, 16));
+//        System.out.println(RoutePlanning.getShortestPath(0, 16));
     }
 }

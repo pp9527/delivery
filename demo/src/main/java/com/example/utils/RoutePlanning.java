@@ -2,7 +2,10 @@ package com.example.utils;
 
 
 import com.example.bean.StationNetMap;
+import com.example.service.CarStationService;
+import com.example.service.CarToCustomerService;
 import com.example.service.DroneStationService;
+import net.sf.json.JSONArray;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -31,8 +34,14 @@ public class RoutePlanning {
     @Resource
     DroneStationService droneStationService;
 
+    @Resource
+    CarStationService carStationService;
+
+    @Resource
+    CarToCustomerService carToCustomerService;
+
     /**
-     * @Description: 迪杰斯特拉算法求最短路径
+     * @Description: 迪杰斯特拉算法求最短路径(方法未完成，太复杂，已舍弃)
      * @author pwz
      * @date 2022/9/22 20:11
      * @param sourceStationName
@@ -40,7 +49,7 @@ public class RoutePlanning {
      * @return List<List<Double>>
      */
     @Deprecated
-    public static List<List<Double>> getShortestPath(String sourceStationName, String endStationName) {
+    private static List<List<Double>> getShortestPath(String sourceStationName, String endStationName) {
 //        无人机站点数量
         int droneCount = (int) routePlanning.droneStationService.count();
 //        当前地图顶点和边的信息
@@ -99,14 +108,14 @@ public class RoutePlanning {
     }
 
     /**
-     * @Description: 迪杰斯特拉算法求最短路径
+     * @Description: 迪杰斯特拉算法求最短路径 邻接矩阵下标从0开始  0对应顶点W1
      * @author pwz
      * @date 2022/9/22 20:11
      * @param source
      * @param end
-     * @return List<String> : 数组最后一位为最短距离
+     * @return List<String> : 返回最短路径经过的站点，数组最后一位为最短距离，例：[W1, D7, C3, 2836]
      */
-    public static List<String> getShortestPath(int source, int end) {
+    private static List<String> getShortestPath(int source, int end) {
         int[][] matrix = Graph.getMatrix();  //地图的邻接矩阵
         List<String> vertex = Graph.getVertex();  //顶点数组W1-D1....C1...
         //最短路径长度
@@ -149,12 +158,12 @@ public class RoutePlanning {
                     path[m] = path[index] + ',' + vertex.get(m);
                 }
             }
-            if (visited[end - 1] == 1) break;  // 找到目标节点跳出循环
+            if (visited[end] == 1) break;  // 找到目标节点跳出循环
         }
 
-        String[] split = path[end - 1].split(",");
+        String[] split = path[end].split(",");
         List<String> pathAndDistance = new ArrayList<>(Arrays.asList(split));
-        pathAndDistance.add(String.valueOf(shortest[end - 1]));
+        pathAndDistance.add(String.valueOf(shortest[end]));
         return pathAndDistance;
 
         //打印最短路径
@@ -167,5 +176,31 @@ public class RoutePlanning {
 //                }
 //            }
 //        }
+    }
+
+    /**
+     * @Description: 输入两站点名，返回最短路径经过的站点坐标集合
+     * @author pwz
+     * @date 2022/9/26 17:14
+     * @param startStation : 出发站点
+     * @param consignee : 到达站点
+     * @return List<List<Double>>
+     */
+    public static List<List<Double>> getShortestPaths(String startStation, String consignee) {
+        int source = Graph.getSequenceByName(startStation);
+        int end = routePlanning.carToCustomerService.getShortestCarStationNum(consignee);
+        List<String> stations = RoutePlanning.getShortestPath(source, end);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < stations.size() - 1; i++) {
+            char[] chars = stations.get(i).toCharArray();
+            List<Double> location;
+            if (chars[0] == 'W' || chars[0] == 'D') {
+                location = routePlanning.droneStationService.getLocationByName(stations.get(i));
+            } else {
+                location = routePlanning.carStationService.getLocationByName(stations.get(i));
+            }
+            jsonArray.add(location);
+        }
+        return jsonArray;
     }
 }

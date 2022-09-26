@@ -45,7 +45,7 @@ public class Graph {
     CarStationService carStationService;
 
     /**
-     * @Description: 求图的顶点（站点）集合，与边集合一一对应
+     * @Description: 求图的顶点（站点）集合，与边集合一一对应 W1..D1..C1..
      * @author pwz
      * @date 2022/9/22 19:39
      * @return java.lang.String[]
@@ -80,5 +80,16 @@ public class Graph {
     public static int[][] getMatrix() {
         int[][] matrix = graph.netMapService.getMatrix();
         return matrix;
+    }
+
+    /**
+     * @Description: 根据站点名返回顺序 W1:0、D1:1...
+     * @author pwz
+     * @date 2022/9/26 16:01
+     * @param name
+     * @return int
+     */
+    public static int getSequenceByName(String name) {
+        return Graph.getVertex().indexOf(name);
     }
 }

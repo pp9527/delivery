@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class CarToCustomer {
 
     private Integer id;
-    private int start;
-    private int end;
+    private int start; //起始无人车站点
+    private int end; //到达用户地点
     private int distance;
 }

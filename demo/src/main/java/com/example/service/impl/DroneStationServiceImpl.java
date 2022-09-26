@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -44,5 +46,16 @@ public class DroneStationServiceImpl extends ServiceImpl<DroneStationMapper, Dro
             longitudesAndLatitudes.add(list);
         }
         return longitudesAndLatitudes;
+    }
+
+    @Override
+    public List<Double> getLocationByName(String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        List<DroneStation> droneStation = droneStationMapper.selectByMap(map);
+        List<Double> location = new ArrayList<>();
+        location.add(droneStation.get(0).getLongitude());
+        location.add(droneStation.get(0).getLatitude());
+        return location;
     }
 }

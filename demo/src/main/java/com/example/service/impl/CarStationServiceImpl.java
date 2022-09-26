@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.bean.CarStation;
+import com.example.bean.DroneStation;
 import com.example.mapper.CarStationMapper;
 import com.example.service.CarStationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -51,5 +54,16 @@ public class CarStationServiceImpl extends ServiceImpl<CarStationMapper, CarStat
             longitudesAndLatitudes.add(list);
         }
         return longitudesAndLatitudes;
+    }
+
+    @Override
+    public List<Double> getLocationByName(String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        List<CarStation> carStation = carStationMapper.selectByMap(map);
+        List<Double> location = new ArrayList<>();
+        location.add(carStation.get(0).getLongitude());
+        location.add(carStation.get(0).getLatitude());
+        return location;
     }
 }

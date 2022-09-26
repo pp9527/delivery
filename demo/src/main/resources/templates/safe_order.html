@@ -11,7 +11,7 @@
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />-->
-    <link rel="stylesheet" type="text/css" href="https://a.amap.com/jsapi_demos/static/demo-center/css/prety-json.css">
+<!--    <link rel="stylesheet" type="text/css" href="https://a.amap.com/jsapi_demos/static/demo-center/css/prety-json.css">-->
 
     <script type="text/javascript">
         window._AMapSecurityConfig = {
@@ -173,8 +173,43 @@
     </div>
     <!-- main content end-->
 </section>
+
+<div th:replace="common :: commonscript"></div>
+
+<!--easy pie chart-->
+<script src="/js/easypiechart/jquery.easypiechart.js"></script>
+<script src="/js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="/js/sparkline/jquery.sparkline.js"></script>
+<script src="/js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="/js/iCheck/jquery.icheck.js"></script>
+<script src="/js/icheck-init.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/js/flot-chart/jquery.flot.js"></script>
+<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/js/flot-chart/jquery.flot.resize.js"></script>
+
+
+<!--Morris Chart-->
+<script src="/js/morris-chart/morris.js"></script>
+<script src="/js/morris-chart/raphael-min.js"></script>
+
+<!--Calendar-->
+<script src="/js/calendar/clndr.js"></script>
+<script src="/js/calendar/evnt.calendar.init.js"></script>
+<script src="/js/calendar/moment-2.2.1.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+
+<!--Dashboard Charts-->
+<!--<script src="/js/dashboard-chart-init.js"></script>-->
+
 <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723"></script>-->
-<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js" ></script>
+<!--<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js" ></script>-->
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js" ></script>
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
@@ -354,40 +389,6 @@
     map.setFitView(null, true, [150, 150, 50, 50]);
 
 </script>
-
-<div th:replace="common :: commonscript"></div>
-
-<!--easy pie chart-->
-<script src="/js/easypiechart/jquery.easypiechart.js"></script>
-<script src="/js/easypiechart/easypiechart-init.js"></script>
-
-<!--Sparkline Chart-->
-<script src="/js/sparkline/jquery.sparkline.js"></script>
-<script src="/js/sparkline/sparkline-init.js"></script>
-
-<!--icheck -->
-<script src="/js/iCheck/jquery.icheck.js"></script>
-<script src="/js/icheck-init.js"></script>
-
-<!-- jQuery Flot Chart-->
-<script src="/js/flot-chart/jquery.flot.js"></script>
-<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
-<script src="/js/flot-chart/jquery.flot.resize.js"></script>
-
-
-<!--Morris Chart-->
-<script src="/js/morris-chart/morris.js"></script>
-<script src="/js/morris-chart/raphael-min.js"></script>
-
-<!--Calendar-->
-<script src="/js/calendar/clndr.js"></script>
-<script src="/js/calendar/evnt.calendar.init.js"></script>
-<script src="/js/calendar/moment-2.2.1.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-
-
-<!--Dashboard Charts-->
-<script src="/js/dashboard-chart-init.js"></script>
 
 
 </body>
