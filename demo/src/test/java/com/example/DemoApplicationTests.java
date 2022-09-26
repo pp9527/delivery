@@ -54,11 +54,11 @@ class DemoApplicationTests {
 
     @Test
     public void testGetMapData() {
-        List<List<StationNetMap>> mapData = stationNetMapService.getMapData();
-        System.out.println(mapData.size());
-        for (int i = 0; i < mapData.size(); i++) {
-            System.out.println(mapData.get(i).size());
-        }
+//        List<List<StationNetMap>> mapData = stationNetMapService.getMapData();
+//        System.out.println(mapData.size());
+//        for (int i = 0; i < mapData.size(); i++) {
+//            System.out.println(mapData.get(i).size());
+//        }
     }
 
     @Test

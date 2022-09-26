@@ -16,5 +16,7 @@ public interface CustomerService extends IService<Customer> {
 
     List<String> getNames();
 
+    List<Double> getLocationByName(String name);
+
     List<List<Double>> getLongitudesAndLatitudes();
 }

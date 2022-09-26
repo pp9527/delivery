@@ -361,7 +361,7 @@
     // ];
 
 
-    var polyline2 = new AMap.Polyline({
+    var polyline = new AMap.Polyline({
         path: path,
         isOutline: true,
         outlineColor: '#ffeeff',
@@ -377,7 +377,7 @@
         lineCap: 'round',
         zIndex: 50,
     })
-    map.add(polyline2);
+    map.add(polyline);
 
     var text1 = new AMap.Text({
         text:'终点',
@@ -430,7 +430,6 @@
 
 
     map.setFitView(null, true, [150, 300, 30, 80]);
-
 </script>
 
 

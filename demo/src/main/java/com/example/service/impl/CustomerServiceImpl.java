@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -35,6 +37,17 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer>
         JSONArray jsonArray = new JSONArray();
         jsonArray.addAll(list);
         return jsonArray;
+    }
+
+    @Override
+    public List<Double> getLocationByName(String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        List<Customer> customer = customerMapper.selectByMap(map);
+        List<Double> list = new ArrayList<>();
+        list.add(customer.get(0).getLongitude());
+        list.add(customer.get(0).getLatitude());
+        return list;
     }
 
     @Override
