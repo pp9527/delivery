@@ -314,7 +314,7 @@
                                 <div class="widget-container">
                                     <div class="stepy-tab"></div>
                                     <form id="default">
-                                        <fieldset title="Order Info">
+                                        <fieldset title="Order Info" style="margin: 0;padding-bottom: 20px;">
                                             <legend>Detailed Information</legend>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-4" style="vertical-align: middle">
@@ -324,103 +324,107 @@
                                                     <label class="radio-inline;"
                                                            style="padding: 0;font-weight: bold;display: inline-block">
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
-                                                               name="inlineRadioOptions"
+                                                               name="model"
                                                                id="Radio1"
-                                                               value="option2">
+                                                               value="uav">
                                                         <span>only uav</span>
                                                     </label>
                                                     <label class="radio-inline;"
                                                            style="padding: 0;font-weight: bold;display: inline-block">
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
-                                                               name="inlineRadioOptions"
+                                                               name="model"
                                                                id="Radio2"
-                                                               value="option2">
+                                                               value="ugv">
                                                         <span>only ugv</span>
                                                     </label>
                                                     <label class="radio-inline;"
                                                            style="padding: 0;font-weight: bold;display: inline-block">
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
-                                                               name="inlineRadioOptions"
+                                                               name="model"
                                                                id="Radio3"
-                                                               value="option2">
+                                                               value="both">
                                                         <span>uav and ugv</span>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-bottom: 10px;">
-                                                <div class="col-md-3 text-center"><span>start station：</span></div>
-                                                <div class="col-md-3 text-center"><span>destination：</span></div>
-                                                <div class="col-md-3 text-center"><span>orderID：</span></div>
-                                                <div class="col-md-3 text-center"><span>consignee：</span></div>
-
-
+                                                <div class="col-md-3"><span>start station：</span></div>
+                                                <div class="col-md-3"><span>consignee：</span></div>
+                                                <div class="col-md-3"><span>orderID：</span></div>
+                                                <div class="col-md-3"><span>type：</span></div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="W1">
+                                            <div class="row" style="margin-bottom: 15px;">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="startStation" class="form-control"
+                                                           placeholder="W1">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="U1 to U5">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="consignee" class="form-control"
+                                                           placeholder="U1 to U5">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="five figure">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="orderId" class="form-control"
+                                                           placeholder="five figure">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="name">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="type" class="form-control"
+                                                           placeholder="type of goods">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-bottom: 10px;">
                                                 <div class="col-md-2 text-center"><span>goods info：</span></div>
-
-
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="length/cm">
+                                            <div class="row" style="margin-bottom: 15px;">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="length" class="form-control"
+                                                           placeholder="length/cm">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="width/cm">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="width" class="form-control"
+                                                           placeholder="width/cm">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="height/cm">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="height" class="form-control"
+                                                           placeholder="height/cm">
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <input type="email" class="form-control" placeholder="weight/kg">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="weight" class="form-control"
+                                                           placeholder="weight/kg">
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label text-center"
-                                                           style="font-weight: bold;">order note：</label>
-                                                    <div class="col-md-10">
-                                                        <textarea rows="6" class="form-control"></textarea>
-                                                    </div>
+                                            <div class="row" style="margin-bottom: 30px;">
+                                                <label class="col-md-2 control-label"
+                                                       style="font-weight: bold;">order note：</label>
+                                                <div class="col-md-10">
+                                                    <textarea name="info" rows="6" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <fieldset title="Strategy Info">
+                                        <fieldset title="Strategy Info" style="margin: 0;padding-bottom: 20px;">
                                             <legend>Distribution Strategy Information</legend>
-                                            <div class="row" style="margin-bottom: 20px;">
-                                                    <div class="col-md-4 text-center" style="line-height: 34px;">
-                                                        <span>optimization objective：</span></div>
-                                                    <div class="col-md-6">
-                                                        <select class="form-control">
-                                                            <option>time</option>
-                                                            <option>energy</option>
-                                                            <option>energy consumption optimization under time constraint</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2 text-center">
-                                                        <a th:href="@{/test}">
-                                                            <button class="btn btn-primary">generate</button>
-                                                        </a>
-                                                    </div>
+                                            <div class="row" style="margin-bottom: 30px;">
+                                                <div class="col-md-4 text-center" style="line-height: 34px;">
+                                                    <span>optimization objective：</span></div>
+                                                <div class="col-md-6">
+                                                    <select class="form-control" name="objective">
+                                                        <option>time</option>
+                                                        <option>energy</option>
+                                                        <option value="energyInTime">energy consumption optimization
+                                                            under time constraint
+                                                        </option>
+                                                    </select>
                                                 </div>
+                                                <div class="col-md-2 text-center">
+                                                    <a th:href="@{/test}">
+                                                        <button class="btn btn-primary">generate</button>
+                                                    </a>
+                                                </div>
+                                            </div>
 
 
                                         </fieldset>
-                                        <button class="btn btn-success finish">
+                                        <button type="submit" class="btn btn-success finish">
                                             Finish
                                         </button>
                                     </form>
@@ -440,7 +444,7 @@
 
 
 <!--Dashboard Charts-->
-<script src="/js/dashboard-chart-init.js"></script>
+<!--<script src="/js/dashboard-chart-init.js"></script>-->
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/jquery.stepy.js"></script>
 <!--<script src="/js/jquery-3.4.1.min.js"></script>-->
@@ -456,36 +460,59 @@
         });
     });
     /*=====STEPY WIZARD WITH VALIDATION====*/
+    // $(function () {
+    //     $('#stepy_form').stepy({
+    //         backLabel: 'Back',
+    //         nextLabel: 'Next',
+    //         errorImage: true,
+    //         block: true,
+    //         description: true,
+    //         legend: false,
+    //         titleClick: true,
+    //         titleTarget: '#top_tabby',
+    //         validate: true
+    //     });
+    //     $('#stepy_form').validate({
+    //         errorPlacement: function (error, element) {
+    //             $('#stepy_form div.stepy-error').append(error);
+    //         },
+    //         rules: {
+    //             'name': 'required',
+    //             'email': 'required'
+    //         },
+    //         messages: {
+    //             'name': {
+    //                 required: 'Name field is required!'
+    //             },
+    //             'email': {
+    //                 required: 'Email field is requerid!'
+    //             }
+    //         }
+    //     });
+    // });
+
+    // 参数列表
+    // model、startStation、consignee、orderId、type、length、width、height、weight、info、
+    // objective
+
+
     $(function () {
-        $('#stepy_form').stepy({
-            backLabel: 'Back',
-            nextLabel: 'Next',
-            errorImage: true,
-            block: true,
-            description: true,
-            legend: false,
-            titleClick: true,
-            titleTarget: '#top_tabby',
-            validate: true
-        });
-        $('#stepy_form').validate({
-            errorPlacement: function (error, element) {
-                $('#stepy_form div.stepy-error').append(error);
-            },
-            rules: {
-                'name': 'required',
-                'email': 'required'
-            },
-            messages: {
-                'name': {
-                    required: 'Name field is required!'
-                },
-                'email': {
-                    required: 'Email field is requerid!'
+        $('#default').on('submit', function (e) {
+            e.preventDefault();
+            var model = $("input[name='model']:checked ").val();
+            $.ajax({
+                url: "/ajax/generate",
+                type: "post",
+                data: "model=" + model,
+                dataType: "text",
+                success: function (data) {
+                    alert(data);
                 }
-            }
-        });
-    });
+            })
+            // var data = $('#default').serialize()
+
+        })
+    })
 </script>
 
 
