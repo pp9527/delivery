@@ -538,6 +538,10 @@
                 dataType: "json",
                 success: function (data) {
 
+                    // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
+                    var t = document.getElementById('map_container');
+                    t.style.display = 'block';
+
                     var map = new AMap.Map("container", {
                         // center: [112.187017,31.763388],
                         resizeEnable: true,
@@ -652,8 +656,8 @@
                     map.add([marker1,marker2])
                     map.setFitView(null, true, [40, 40, 50, 50]);
 
-                    var t = document.getElementById('map_container');
-                    t.style.display = 'block';
+                    // var t = document.getElementById('map_container');
+                    // t.style.display = 'block';
                 }
             })
             // var data = $('#default').serialize()
