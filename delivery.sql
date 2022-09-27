@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/9/23 20:56:38
+Date: 2022/9/27 15:51:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -115,7 +115,7 @@ CREATE TABLE `order_record` (
   `order_id` int(11) NOT NULL,
   `consignee` varchar(255) CHARACTER SET utf8 NOT NULL,
   `length` int(11) NOT NULL,
-  `width` double(11,0) NOT NULL,
+  `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `weight` double(7,5) NOT NULL,
   `goods` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE `order_record` (
   `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privacy_status` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for path
@@ -136,7 +136,7 @@ CREATE TABLE `path` (
   `cid` int(11) DEFAULT '0',
   `station_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_map
@@ -204,19 +204,39 @@ INSERT INTO `drone_station` VALUES ('10', 'D9', '117.231199', '31.747284', null,
 INSERT INTO `drone_station` VALUES ('11', 'D10', '117.205524', '31.740505', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('12', 'D11', '117.180692', '31.751023', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('13', 'D12', '117.231273', '31.753442', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.220262', '31.756386', '117.220787', '31.757642', '23456', 'U1', '22', '22', '22', '1.00000', 'goods', '2022-09-24 15:04:34', '1', '000', '1');
-INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.205997', '31.766555', '117.207057', '31.766482', '24980', 'U2', '22', '22', '22', '2.00000', 'goods', '2022-09-21 11:00:08', '0', '000', '1');
-INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.228605', '31.728819', '117.228605', '31.728819', '24567', 'U3', '22', '22', '22', '1.30000', 'goods', '2022-09-23 11:24:29', '2', '000', '0');
-INSERT INTO `order_record` VALUES ('4', '1', 'W1', '117.228605', '31.728819', '117.228605', '31.728819', '34587', 'U4', '22', '22', '22', '2.00000', 'goods', '2022-10-01 16:02:50', '0', '000', '0');
-INSERT INTO `path` VALUES ('1', '23456', '1', '0', '1');
-INSERT INTO `path` VALUES ('2', '23456', '0', '1', '3');
-INSERT INTO `path` VALUES ('3', '23456', '2', '0', '2');
-INSERT INTO `path` VALUES ('4', '24980', '1', '0', '1');
-INSERT INTO `path` VALUES ('5', '24980', '2', '0', '2');
-INSERT INTO `path` VALUES ('7', '24980', '0', '2', '3');
-INSERT INTO `path` VALUES ('8', '24567', '1', '0', '1');
-INSERT INTO `path` VALUES ('9', '24567', '10', '0', '2');
-INSERT INTO `path` VALUES ('10', '24567', '0', '3', '3');
+INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.220599', '31.730276', '117.220599', '31.730276', '12345', 'U1', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:33:49', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.240855', '31.759800', '117.240855', '31.759800', '23456', 'U4', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:34:16', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.240769', '31.740787', '117.240769', '31.740787', '34567', 'U3', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:35:10', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('4', '1', 'D1', '117.220599', '31.730276', '117.220599', '31.730276', '56234', 'U1', '18', '15', '20', '1.50000', 'book', '2022-09-27 15:36:01', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('5', '1', 'D1', '117.240855', '31.759800', '117.240855', '31.759800', '13456', 'U4', '12', '15', '12', '1.50000', 'book', '2022-09-27 15:36:27', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('6', '1', 'D3', '117.240855', '31.759800', '117.240297', '31.760660', '10001', 'U4', '18', '15', '20', '1.50000', 'apple', '2022-09-27 15:37:07', '0', '...', '1');
+INSERT INTO `order_record` VALUES ('7', '1', 'D3', '117.231199', '31.770856', '117.232021', '31.770285', '10002', 'U2', '18', '12', '20', '1.20000', 'book', '2022-09-27 15:42:23', '0', '...', '1');
+INSERT INTO `path` VALUES ('1', '12345', '1', '0', '1');
+INSERT INTO `path` VALUES ('2', '12345', '8', '0', '2');
+INSERT INTO `path` VALUES ('3', '12345', '0', '3', '3');
+INSERT INTO `path` VALUES ('4', '23456', '1', '0', '1');
+INSERT INTO `path` VALUES ('5', '23456', '6', '0', '2');
+INSERT INTO `path` VALUES ('6', '23456', '13', '0', '3');
+INSERT INTO `path` VALUES ('7', '23456', '0', '2', '4');
+INSERT INTO `path` VALUES ('8', '34567', '1', '0', '1');
+INSERT INTO `path` VALUES ('9', '34567', '8', '0', '2');
+INSERT INTO `path` VALUES ('10', '34567', '0', '3', '3');
+INSERT INTO `path` VALUES ('11', '56234', '2', '0', '1');
+INSERT INTO `path` VALUES ('12', '56234', '5', '0', '2');
+INSERT INTO `path` VALUES ('13', '56234', '8', '0', '3');
+INSERT INTO `path` VALUES ('14', '56234', '0', '3', '4');
+INSERT INTO `path` VALUES ('15', '13456', '2', '0', '1');
+INSERT INTO `path` VALUES ('16', '13456', '1', '0', '2');
+INSERT INTO `path` VALUES ('17', '13456', '6', '0', '3');
+INSERT INTO `path` VALUES ('18', '13456', '13', '0', '4');
+INSERT INTO `path` VALUES ('19', '13456', '0', '2', '5');
+INSERT INTO `path` VALUES ('20', '10001', '4', '0', '1');
+INSERT INTO `path` VALUES ('21', '10001', '0', '4', '2');
+INSERT INTO `path` VALUES ('22', '10001', '7', '0', '3');
+INSERT INTO `path` VALUES ('23', '10001', '13', '0', '4');
+INSERT INTO `path` VALUES ('24', '10001', '0', '2', '5');
+INSERT INTO `path` VALUES ('25', '10002', '4', '0', '1');
+INSERT INTO `path` VALUES ('26', '10002', '0', '4', '2');
 INSERT INTO `t_map` VALUES ('1', '9', '0', '7', '1197');
 INSERT INTO `t_map` VALUES ('2', '1', '2', '0', '1357');
 INSERT INTO `t_map` VALUES ('3', '1', '3', '0', '1249');
