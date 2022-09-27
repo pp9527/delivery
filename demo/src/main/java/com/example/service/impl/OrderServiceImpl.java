@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.bean.Order;
 import com.example.mapper.OrderMapper;
 import com.example.service.OrderService;
+import com.example.utils.Graph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
     public List<Order> getActiveOrders() {
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.inSql("status", "select status from order_record where status != 3");
+        queryWrapper.orderByDesc("id");
         List<Order> list = orderMapper.selectList(queryWrapper);
         return list;
     }
+
+
 }

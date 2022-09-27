@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @FileName: testGraph
  */
 @SpringBootTest
-public class testGraph {
+public class GraphTest {
 
     @Test
     public void testGetSequenceByName() {

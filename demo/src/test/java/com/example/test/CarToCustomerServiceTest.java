@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @FileName: testCarToCustomerService
  */
 @SpringBootTest
-public class testCarToCustomerService {
+public class CarToCustomerServiceTest {
 
 
     @Resource

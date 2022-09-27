@@ -315,7 +315,7 @@
                             <div class="square-widget">
                                 <div class="widget-container">
                                     <div class="stepy-tab"></div>
-                                    <form id="default" th:action="@{/test}" method="post">
+                                    <form id="default" th:action="@{/insertOrder}" method="post">
                                         <fieldset title="Order Info" style="margin: 0;padding-bottom: 20px;">
                                             <legend>Detailed Information</legend>
                                             <div class="row" style="margin-bottom: 15px;">
@@ -328,7 +328,7 @@
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
                                                                name="model"
                                                                id="Radio1"
-                                                               value="uav">
+                                                               value="2">
                                                         <span>only uav</span>
                                                     </label>
                                                     <label class="radio-inline;"
@@ -336,7 +336,7 @@
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
                                                                name="model"
                                                                id="Radio2"
-                                                               value="ugv">
+                                                               value="3">
                                                         <span>only ugv</span>
                                                     </label>
                                                     <label class="radio-inline;"
@@ -344,7 +344,7 @@
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
                                                                name="model"
                                                                id="Radio3"
-                                                               value="both">
+                                                               value="1">
                                                         <span>uav and ugv</span>
                                                     </label>
                                                 </div>
@@ -353,7 +353,7 @@
                                                 <div class="col-md-3"><span>start station：</span></div>
                                                 <div class="col-md-3"><span>consignee：</span></div>
                                                 <div class="col-md-3"><span>orderID：</span></div>
-                                                <div class="col-md-3"><span>type：</span></div>
+                                                <div class="col-md-3"><span>goods：</span></div>
                                             </div>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-3">
@@ -369,7 +369,7 @@
                                                            placeholder="five figure">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" name="type" class="form-control"
+                                                    <input type="text" name="goods" class="form-control"
                                                            placeholder="type of goods">
                                                 </div>
                                             </div>

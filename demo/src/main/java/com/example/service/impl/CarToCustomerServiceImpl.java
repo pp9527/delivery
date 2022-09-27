@@ -43,6 +43,12 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
     @Resource
     DroneStationService droneStationService;
 
+    /**
+     * @Description: 查询所有无人车站点到用户的路线集合
+     * @author pwz
+     * @date 2022/9/27 14:31
+     * @return List<List<List<Double>>>
+     */
     @Override
     public List<List<List<Double>>> getAllCarToCustomerPath() {
         List<CarToCustomer> paths = carToCustomerMapper.selectList(null);
@@ -67,11 +73,12 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
      * @author pwz
      * @date 2022/9/26 16:17
      * @param customerName
-     * @return int ：无人车站点在地图中的顺序
+     * @return int ：无人车站点在地图中的顺序 从0开始
      */
     @Override
     public int getShortestCarStationNum(String customerName) {
-        char customerId = customerName.toCharArray()[1];
+        String customerId = customerName.substring(1);
+//        char customerId = customerName.toCharArray()[1];
         Map<String, Object> map = new HashMap<>();
         map.put("end", customerId);
         List<CarToCustomer> paths = carToCustomerMapper.selectByMap(map);

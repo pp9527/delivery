@@ -9,6 +9,7 @@ import com.example.mapper.CarStationMapper;
 import com.example.mapper.DroneStationMapper;
 import com.example.mapper.PathMapper;
 import com.example.service.PathService;
+import com.example.utils.Graph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +59,19 @@ public class PathServiceImpl extends ServiceImpl<PathMapper, Path> implements Pa
             pathLists.add(list);
         }
         return pathLists;
+    }
+
+    @Override
+    public void insertPaths(List<String> stationNames, int orderId) {
+        int stationNumber = 1;
+        for (String stationName : stationNames) {
+            int did = 0, cid = 0;
+            if (stationName.charAt(0) == 'D' || stationName.charAt(0) == 'W') {
+                did = Graph.getSequenceByName(stationName) + 1; // 返回的顺序从0开始，path表中有效路径从1开始，所以加1
+            } else {
+                cid = Integer.valueOf(stationName.substring(1));
+            }
+            pathMapper.insert(new Path(orderId, did, cid, stationNumber++));
+        }
     }
 }

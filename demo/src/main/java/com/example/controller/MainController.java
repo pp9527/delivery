@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.bean.Order;
 import com.example.service.OrderService;
@@ -44,7 +45,9 @@ public class MainController {
 //        List<Order> list = orderService.list();
 //        分页查询
         Page<Order> orderPage = new Page<>(pn, 12);
-        Page<Order> page = orderService.page(orderPage, null);
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id");
+        Page<Order> page = orderService.page(orderPage, wrapper);
         int[] pageNav = PageUtils.pageNav(pn, (int) page.getPages(), 5);
         model.addAttribute("orders", page);
         model.addAttribute("navNums", pageNav);

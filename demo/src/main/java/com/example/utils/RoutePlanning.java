@@ -179,12 +179,13 @@ public class RoutePlanning {
     }
 
     /**
-     * @Description: 输入两站点名，返回最短路径经过的站点坐标集合
+     * @Description: 输入出发站点和目的地站点名，返回最短路径经过的站点坐标集合
      * @author pwz
      * @date 2022/9/26 17:14
      * @param startStation : 出发站点
      * @param consignee : 到达站点
      * @return List<List<Double>>
+     *     例：[[117.214161,31.75153],[117.213935,31.742092],[117.231156,31.735532]]
      */
     public static List<List<Double>> getShortestPaths(String startStation, String consignee) {
         int source = Graph.getSequenceByName(startStation);
@@ -202,5 +203,22 @@ public class RoutePlanning {
             jsonArray.add(location);
         }
         return jsonArray;
+    }
+
+    /**
+     * @Description: 返回最短路径经过的站点集合
+     * @author pwz
+     * @date 2022/9/27 14:44
+     * @param startStation
+     * @param consignee
+     * @return List<String>
+     *     例：[W1, D7, C3]
+     */
+    public static List<String> getShortestStationName(String startStation, String consignee) {
+        int source = Graph.getSequenceByName(startStation);
+        int end = routePlanning.carToCustomerService.getShortestCarStationNum(consignee);
+        List<String> stations = RoutePlanning.getShortestPath(source, end);
+        stations.remove(stations.size() - 1);
+        return stations;
     }
 }

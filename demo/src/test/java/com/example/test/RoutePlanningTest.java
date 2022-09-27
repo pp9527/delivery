@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest
-public class testRoutePlanning {
+public class RoutePlanningTest {
 
     @Resource
     CarToCustomerService carToCustomerService;
@@ -33,5 +33,10 @@ public class testRoutePlanning {
     @Test
     public void testGetShortestPaths() {
         System.out.println(RoutePlanning.getShortestPaths("W1", "U1"));
+    }
+
+    @Test
+    public void testGetShortestStationName() {
+        System.out.println(RoutePlanning.getShortestStationName("W1", "U1"));
     }
 }

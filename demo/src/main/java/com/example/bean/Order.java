@@ -1,5 +1,7 @@
 package com.example.bean;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +21,7 @@ import java.util.Date;
 @TableName("order_record")
 public class Order {
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private int model;
     private String startStation;

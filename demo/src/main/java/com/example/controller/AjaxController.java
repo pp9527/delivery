@@ -24,9 +24,6 @@ import java.util.List;
 public class AjaxController {
 
     @Resource
-    CarToCustomerService carToCustomerService;
-
-    @Resource
     CustomerService customerService;
 
     @ResponseBody

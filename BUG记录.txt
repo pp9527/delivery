@@ -1,0 +1,9 @@
+*****新增订单模块、 首次生成路径时地图自适应属性失效的问题（第二次加载之后均正常）
+解决：将显示隐藏div  放在地图加载之前  可能是加载顺序的问题
+*****插入订单时自增id变得很大，且正负都有
+解决：id未标识@TableId注解   mybatis-plus默认使用IdType.ASSIGN_ID（雪花算法）主键策略
+主键策略：ASSIGN_ID（雪花算法）
+	ASSIGN_UUID（排除中划线的UUID）
+	AUTO（数据库ID自增）
+	INPUT（插入前自行设置主键值）
+重置AOTU_INCREMENT为当前表中最大id+1
