@@ -34,5 +34,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
         return list;
     }
 
+    @Override
+    public int getMaxId() {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id").last("limit 1");
+        Order one = orderMapper.selectOne(wrapper);
+        return one.getId();
+    }
+
 
 }

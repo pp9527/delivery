@@ -6,11 +6,13 @@ import com.example.service.OrderService;
 import com.example.service.PathService;
 import com.example.utils.SecurityAlgorithm;
 import net.sf.json.JSONArray;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -30,14 +32,17 @@ public class SafetyController {
 
 
     @GetMapping("/safety")
-    public String toSafety(@RequestParam(value = "id", defaultValue = "1")int id, Model model) {
+    public String toSafety(Model model) {
+
+        //查询表中最大的id
+        int maxId = orderService.getMaxId();
 
         //        查询当前活跃订单
         List<Order> activeOrders = orderService.getActiveOrders();
         model.addAttribute("activeOrders", activeOrders);
 
         //        根据订单id查询订单路径
-        Order order = orderService.getById(id);
+        Order order = orderService.getById(maxId);
         List<List<Double>> path = pathService.getPathByOrderId(order.getOrderId());
         model.addAttribute("pathLists", path);
 
@@ -51,7 +56,7 @@ public class SafetyController {
 
     @GetMapping(value = "/safe/{id}")
     public String safeOrder(@PathVariable("id")Integer id,
-                            @RequestParam(value = "type", defaultValue = "1")int type) {
+                            @RequestParam(value = "type")int type) {
         Order order = orderService.getById(id);
         double[] location = {order.getDesLongitude(), order.getDesLatitude()};
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();

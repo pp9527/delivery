@@ -15,4 +15,6 @@ public interface OrderService extends IService<Order> {
 
     List<Order> getActiveOrders();
 
+    int getMaxId();
+
 }
