@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -30,11 +32,26 @@ public class AjaxController {
     @PostMapping("/generate")
     public List<List<Double>> generatePath(String model, String startStation,
                                            String consignee, String objective) {
-        List<List<Double>> shortestPaths = RoutePlanning.getShortestPaths(startStation, consignee);
+        List<List<Double>> shortestPaths = RoutePlanning.
+                selectStrategyByObjective(model, startStation, consignee, objective, 2, 2);
         List<Double> desLocation = customerService.getLocationByName(consignee);
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(shortestPaths);
         jsonArray.add(desLocation);
         return jsonArray;
     }
+
+    @ResponseBody
+    @PostMapping("/getRoute")
+    public List<List<Double>> getRoute(String model, String startStation
+            , int uavType, int ugvType, String consignee, String objective) {
+        List<List<Double>> shortestPaths = RoutePlanning.
+                selectStrategyByObjective(model, startStation, consignee, objective, uavType, ugvType);
+        List<Double> desLocation = customerService.getLocationByName(consignee);
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(shortestPaths);
+        jsonArray.add(desLocation);
+        return jsonArray;
+    }
+
 }

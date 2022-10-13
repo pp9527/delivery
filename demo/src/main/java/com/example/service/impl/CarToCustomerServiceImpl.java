@@ -69,7 +69,7 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
     }
 
     /**
-     * @Description: 根据用户名查询距离最近的无人车站点
+     * @Description: 根据用户名查询距离用户最近的无人车站点
      * @author pwz
      * @date 2022/9/26 16:17
      * @param customerName
@@ -90,5 +90,25 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
             }
         }
         return (int) (carNum + droneStationService.count() - 1);
+    }
+
+    /**
+     * @Description: 根据用户名查询能够到达指定用户的所有车站集合
+     * @author pwz
+     * @date 2022/10/13 18:58
+     * @param customerName
+     * @return int[]
+     */
+    @Override
+    public List<Integer> getAllCarStationByCustomerName(String customerName) {
+        String customerId = customerName.substring(1);
+        Map<String, Object> map = new HashMap<>();
+        map.put("end", customerId);
+        List<CarToCustomer> paths = carToCustomerMapper.selectByMap(map);
+        List<Integer> list = new ArrayList<>();
+        for (CarToCustomer path : paths) {
+            list.add(path.getStart());
+        }
+        return list;
     }
 }

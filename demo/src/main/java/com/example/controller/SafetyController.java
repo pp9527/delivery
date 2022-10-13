@@ -56,7 +56,7 @@ public class SafetyController {
 
     @GetMapping(value = "/safe/{id}")
     public String safeOrder(@PathVariable("id")Integer id,
-                            @RequestParam(value = "type")int type) {
+                            @RequestParam(value = "type", required = false, defaultValue = "0")int type) {
         Order order = orderService.getById(id);
         double[] location = {order.getDesLongitude(), order.getDesLatitude()};
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();

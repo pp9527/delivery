@@ -1,10 +1,10 @@
 package com.example.utils;
 
 
+import com.example.bean.Car;
+import com.example.bean.Drone;
 import com.example.bean.StationNetMap;
-import com.example.service.CarStationService;
-import com.example.service.CarToCustomerService;
-import com.example.service.DroneStationService;
+import com.example.service.*;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * @author: pwz
  * @create: 2022/9/22 16:39
@@ -23,7 +24,6 @@ import java.util.List;
 public class RoutePlanning {
 
     private static int[] minDis;// 源点到其他各点的最短距离
-    private static int[] pre;// 寻找最短路径时存放前驱节点下表的数组
     public static RoutePlanning routePlanning;
 
     @PostConstruct
@@ -40,13 +40,19 @@ public class RoutePlanning {
     @Resource
     CarToCustomerService carToCustomerService;
 
+    @Resource
+    DroneService droneService;
+
+    @Resource
+    CarService carService;
+
     /**
-     * @Description: 迪杰斯特拉算法求最短路径(方法未完成，太复杂，已舍弃)
-     * @author pwz
-     * @date 2022/9/22 20:11
      * @param sourceStationName
      * @param endStationName
-     * @return List<List<Double>>
+     * @return List<List < Double>>
+     * @Description: 迪杰斯特拉算法求最短路径(方法未完成、数据结构未处理好、太复杂、已舍弃由getShortestPath()代替 )
+     * @author pwz
+     * @date 2022/9/22 20:11
      */
     @Deprecated
     private static List<List<Double>> getShortestPath(String sourceStationName, String endStationName) {
@@ -108,12 +114,12 @@ public class RoutePlanning {
     }
 
     /**
-     * @Description: 迪杰斯特拉算法求最短路径 邻接矩阵下标从0开始  0对应顶点W1
-     * @author pwz
-     * @date 2022/9/22 20:11
      * @param source
      * @param end
      * @return List<String> : 返回最短路径经过的站点，数组最后一位为最短距离，例：[W1, D7, C3, 2836]
+     * @Description: 迪杰斯特拉算法求最短路径 邻接矩阵下标从0开始  0对应顶点W1
+     * @author pwz
+     * @date 2022/9/22 20:11
      */
     private static List<String> getShortestPath(int source, int end) {
         int[][] matrix = Graph.getMatrix();  //地图的邻接矩阵
@@ -179,15 +185,16 @@ public class RoutePlanning {
     }
 
     /**
-     * @Description: 输入出发站点和目的地站点名，返回最短路径经过的站点坐标集合
+     * @param startStation : 出发站点
+     * @param consignee    : 到达站点
+     * @return List<List < Double>>
+     * 例：[[117.214161,31.75153],[117.213935,31.742092],[117.231156,31.735532]]
+     * @Description: 优化目标：distance
+     * 输入出发站点和目的地站点名，返回最短路径经过的站点坐标集合
      * @author pwz
      * @date 2022/9/26 17:14
-     * @param startStation : 出发站点
-     * @param consignee : 到达站点
-     * @return List<List<Double>>
-     *     例：[[117.214161,31.75153],[117.213935,31.742092],[117.231156,31.735532]]
      */
-    public static List<List<Double>> getShortestPaths(String startStation, String consignee) {
+    public static List<List<Double>> getShortestDistanceRoute(String startStation, String consignee) {
         int source = Graph.getSequenceByName(startStation);
         int end = routePlanning.carToCustomerService.getShortestCarStationNum(consignee);
         List<String> stations = RoutePlanning.getShortestPath(source, end);
@@ -206,13 +213,108 @@ public class RoutePlanning {
     }
 
     /**
-     * @Description: 返回最短路径经过的站点集合
+     * @Description: 根据不同优化目标选择对应路径规划算法
+     * @param model
+     * @param startStation
+     * @param consignee
+     * @param objective
+     * @return List<List<Double>>
      * @author pwz
-     * @date 2022/9/27 14:44
+     * @date 2022/10/13 16:46
+     */
+    public static List<List<Double>> selectStrategyByObjective(String model, String startStation
+            , String consignee, String objective, int uavType, int ugvType) {
+        List<List<Double>> Paths = null;
+        switch (objective) {
+            case "distance":
+                // 地杰斯特拉最短路径
+                Paths = RoutePlanning.getShortestDistanceRoute(startStation, consignee);
+                break;
+            case "time":
+                Paths = RoutePlanning.getShortestTimeRoute(model, startStation, consignee, uavType, ugvType);
+                // 选择总时间最短的路线
+                break;
+            case "energy":
+                // 选择总能耗最小的路线
+                break;
+            case "energyInTime":
+                // 选择时间约束下总能耗最小的路线
+                break;
+            default:
+                break;
+        }
+        return Paths;
+    }
+
+    /**
+     * @Description: 总时间最短的路线规划 优化目标：time
+     * @author pwz
+     * @date 2022/10/13 16:52
+     */
+    public static List<List<Double>> getShortestTimeRoute(String model, String startStation
+            , String consignee, int uavType, int ugvType) {
+        Drone drone = routePlanning.droneService.getById(uavType);
+        Car car = routePlanning.carService.getById(ugvType);
+        int source = Graph.getSequenceByName(startStation);
+        // 遍历各个车站，计算总时间，选择最短时间的路径
+        List<Integer> ends = routePlanning.carToCustomerService.getAllCarStationByCustomerName(consignee);
+
+        // 获取各个车站名
+        List<String> carStationNames = routePlanning.carStationService.getNameByIds(ends);
+
+        for (int i = 0; i < ends.size(); i++) {
+            // 获取车站在邻接矩阵中的顺序
+            ends.set(i, (int) (ends.get(i) + routePlanning.droneStationService.count() - 1));
+        }
+        int totalTime = Integer.MAX_VALUE;
+        // 保存时间最短路径
+        List<String> res = null;
+        for (int i = 0; i < ends.size(); i++) {
+            List<String> path = RoutePlanning.getShortestPath(source, ends.get(i));
+            // 无人机部分总时间 dTime
+            int dTime = Integer.parseInt(path.get(path.size() - 1)) / drone.getSpeed();
+            int carRouteDistance = GuideRoutePlanUtils.getDistanceOfPlanFromGuide(carStationNames.get(i), consignee);
+            // 无人车部分总时间 cTime
+            int cTime = carRouteDistance / car.getSpeed();
+//            System.out.println(path.remove(path.size()) + "===" + dTime + " " + cTime + " " + (dTime + cTime));
+            if ((cTime + dTime) < totalTime) {
+                totalTime = cTime + dTime;
+                res = path;
+            }
+        }
+        res.remove(res.size() - 1);
+//        System.out.println("时间最短" + res);
+        return null;
+    }
+
+    /**
+     * @return List<List<Double>>
+     * @Description: 总能耗最小的路线规划
+     * @author pwz
+     * @date 2022/10/13 16:53
+     */
+    public static List<List<Double>> getShortestEnergyRoute() {
+        return null;
+    }
+
+    /**
+     * @return List<List<Double>>
+     * @Description: 时间约束下总能耗最小的路线规划
+     * @author pwz
+     * @date 2022/10/13 16:53
+     */
+    public static List<List<Double>> getShortestEnergyRouteUnderTimeConstraint() {
+        return null;
+    }
+
+    /**
      * @param startStation
      * @param consignee
      * @return List<String>
-     *     例：[W1, D7, C3]
+     * 例：[W1, D7, C3]
+     * @Description: 返回最短路径经过的站点集合
+     * @author pwz
+     * @date 2022/9/27 14:44
      */
     public static List<String> getShortestStationName(String startStation, String consignee) {
         int source = Graph.getSequenceByName(startStation);

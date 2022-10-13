@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/9/27 15:51:26
+Date: 2022/10/13 21:12:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -12,13 +12,13 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for car
 -- ----------------------------
 CREATE TABLE `car` (
-  `cid` int(11) NOT NULL,
-  `no_load_power` double NOT NULL,
-  `max_power` double NOT NULL,
+  `id` int(11) NOT NULL,
+  `no_load_power` int(11) NOT NULL,
+  `max_power` int(11) NOT NULL,
   `speed` int(11) NOT NULL,
   `max_load` int(11) NOT NULL,
-  `battery` double NOT NULL,
-  PRIMARY KEY (`cid`)
+  `battery` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -40,10 +40,10 @@ CREATE TABLE `car_station` (
   KEY `middle_car_id` (`middle_car_id`),
   KEY `small_car_id` (`small_car_id`),
   KEY `name` (`name`),
-  CONSTRAINT `big_car_id` FOREIGN KEY (`big_car_id`) REFERENCES `car` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `middle_car_id` FOREIGN KEY (`middle_car_id`) REFERENCES `car` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `small_car_id` FOREIGN KEY (`small_car_id`) REFERENCES `car` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  CONSTRAINT `big_car_id` FOREIGN KEY (`big_car_id`) REFERENCES `car` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `middle_car_id` FOREIGN KEY (`middle_car_id`) REFERENCES `car` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `small_car_id` FOREIGN KEY (`small_car_id`) REFERENCES `car` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for car_to_customer
@@ -54,7 +54,7 @@ CREATE TABLE `car_to_customer` (
   `end` int(11) NOT NULL,
   `distance` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for customer
@@ -71,13 +71,13 @@ CREATE TABLE `customer` (
 -- Table structure for drone
 -- ----------------------------
 CREATE TABLE `drone` (
-  `did` int(11) NOT NULL,
-  `speed` double NOT NULL,
-  `no_load_power` double NOT NULL,
-  `max_power` double NOT NULL,
+  `id` int(11) NOT NULL,
+  `speed` int(11) NOT NULL,
+  `no_load_power` int(11) NOT NULL,
+  `max_power` int(11) NOT NULL,
   `max_load` int(11) NOT NULL,
   `battery` int(11) NOT NULL,
-  PRIMARY KEY (`did`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -99,7 +99,7 @@ CREATE TABLE `drone_station` (
   KEY `wid_warehouse_id` (`wid`),
   KEY `name` (`name`),
   CONSTRAINT `wid_warehouse_id` FOREIGN KEY (`wid`) REFERENCES `warehouse` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for order_record
@@ -124,7 +124,7 @@ CREATE TABLE `order_record` (
   `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privacy_status` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for path
@@ -136,7 +136,7 @@ CREATE TABLE `path` (
   `cid` int(11) DEFAULT '0',
   `station_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_map
@@ -149,7 +149,7 @@ CREATE TABLE `t_map` (
   `distance` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `start_car_station` (`end_did`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for warehouse
@@ -165,32 +165,33 @@ CREATE TABLE `warehouse` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `car` VALUES ('1', '1', '1.2', '1', '1', '1.2');
-INSERT INTO `car` VALUES ('2', '1', '1.2', '1', '1', '1.2');
-INSERT INTO `car` VALUES ('3', '1', '1.2', '1', '1', '1.2');
+INSERT INTO `car` VALUES ('1', '30', '80', '2', '5000', '1500');
+INSERT INTO `car` VALUES ('2', '50', '100', '3', '12000', '2100');
+INSERT INTO `car` VALUES ('3', '80', '130', '4', '20000', '2500');
 INSERT INTO `car_station` VALUES ('1', 'C1', '117.192553', '31.759471', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('2', 'C2', '117.244588', '31.753487', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('3', 'C3', '117.231156', '31.735532', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('3', 'C3', '117.240604', '31.724750', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('4', 'C4', '117.220845', '31.768617', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('5', 'C5', '117.231344', '31.759778', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('6', 'C6', '117.207641', '31.729275', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('6', 'C6', '117.231085', '31.713368', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('7', 'C7', '117.187768', '31.732940', '1', '1', '1', '2', '1', '3');
 INSERT INTO `car_station` VALUES ('8', 'C8', '117.169658', '31.742174', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_to_customer` VALUES ('1', '3', '1', '1158');
-INSERT INTO `car_to_customer` VALUES ('2', '6', '1', '1231');
+INSERT INTO `car_station` VALUES ('9', 'C9', '117.231054', '31.724756', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('10', 'C10', '117.246237', '31.740925', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_to_customer` VALUES ('1', '3', '1', '1279');
+INSERT INTO `car_to_customer` VALUES ('2', '6', '1', '889');
 INSERT INTO `car_to_customer` VALUES ('3', '4', '2', '1011');
 INSERT INTO `car_to_customer` VALUES ('4', '5', '2', '1233');
-INSERT INTO `car_to_customer` VALUES ('5', '3', '3', '1081');
-INSERT INTO `car_to_customer` VALUES ('6', '2', '3', '1459');
 INSERT INTO `car_to_customer` VALUES ('7', '5', '4', '900');
 INSERT INTO `car_to_customer` VALUES ('8', '2', '4', '786');
-INSERT INTO `customer` VALUES ('1', 'U1', '117.220599', '31.730276');
+INSERT INTO `car_to_customer` VALUES ('9', '9', '1', '1560');
+INSERT INTO `car_to_customer` VALUES ('10', '10', '1', '3128');
+INSERT INTO `customer` VALUES ('1', 'U1', '117.240473', '31.713253');
 INSERT INTO `customer` VALUES ('2', 'U2', '117.231199', '31.770856');
-INSERT INTO `customer` VALUES ('3', 'U3', '117.240769', '31.740787');
 INSERT INTO `customer` VALUES ('4', 'U4', '117.240855', '31.759800');
-INSERT INTO `drone` VALUES ('1', '12', '150', '320', '1500', '400');
-INSERT INTO `drone` VALUES ('2', '9', '120', '280', '1000', '320');
-INSERT INTO `drone` VALUES ('3', '8', '80', '170', '500', '180');
+INSERT INTO `drone` VALUES ('1', '10', '80', '170', '500', '180');
+INSERT INTO `drone` VALUES ('2', '12', '120', '280', '1000', '320');
+INSERT INTO `drone` VALUES ('3', '15', '150', '320', '1500', '400');
 INSERT INTO `drone_station` VALUES ('1', 'W1', '117.214161', '31.751530', '1', '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('2', 'D1', '117.200029', '31.753592', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('3', 'D2', '117.209581', '31.762060', null, '1', '1', '1', '2', '1', '3');
@@ -204,13 +205,20 @@ INSERT INTO `drone_station` VALUES ('10', 'D9', '117.231199', '31.747284', null,
 INSERT INTO `drone_station` VALUES ('11', 'D10', '117.205524', '31.740505', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('12', 'D11', '117.180692', '31.751023', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('13', 'D12', '117.231273', '31.753442', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('14', 'D13', '117.231244', '31.735506', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('15', 'D14', '117.220604', '31.730322', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('16', 'D15', '117.222616', '31.717974', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('17', 'D16', '117.207786', '31.729351', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.220599', '31.730276', '117.220599', '31.730276', '12345', 'U1', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:33:49', '0', '...', '0');
 INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.240855', '31.759800', '117.240855', '31.759800', '23456', 'U4', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:34:16', '0', '...', '0');
 INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.240769', '31.740787', '117.240769', '31.740787', '34567', 'U3', '12', '12', '12', '1.20000', 'apple', '2022-09-27 15:35:10', '0', '...', '0');
 INSERT INTO `order_record` VALUES ('4', '1', 'D1', '117.220599', '31.730276', '117.220599', '31.730276', '56234', 'U1', '18', '15', '20', '1.50000', 'book', '2022-09-27 15:36:01', '0', '...', '0');
 INSERT INTO `order_record` VALUES ('5', '1', 'D1', '117.240855', '31.759800', '117.240855', '31.759800', '13456', 'U4', '12', '15', '12', '1.50000', 'book', '2022-09-27 15:36:27', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('6', '1', 'D3', '117.240855', '31.759800', '117.240297', '31.760660', '10001', 'U4', '18', '15', '20', '1.50000', 'apple', '2022-09-27 15:37:07', '0', '...', '1');
-INSERT INTO `order_record` VALUES ('7', '1', 'D3', '117.231199', '31.770856', '117.232021', '31.770285', '10002', 'U2', '18', '12', '20', '1.20000', 'book', '2022-09-27 15:42:23', '0', '...', '1');
+INSERT INTO `order_record` VALUES ('6', '1', 'D3', '117.240855', '31.759800', '117.240855', '31.759800', '10001', 'U4', '18', '15', '20', '1.50000', 'apple', '2022-09-27 15:37:07', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('7', '1', 'D3', '117.231199', '31.770856', '117.230798', '31.769938', '10002', 'U2', '18', '12', '20', '1.20000', 'book', '2022-09-27 15:42:23', '0', '...', '1');
+INSERT INTO `order_record` VALUES ('8', '1', 'D7', '117.240769', '31.740787', '117.240769', '31.740787', '10011', 'U3', '12', '12', '12', '1.20000', 'apple', '2022-09-27 16:11:50', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('9', '1', 'D6', '117.220599', '31.730276', '117.220599', '31.730276', '95271', 'U1', '12', '12', '12', '1.20000', 'apple', '2022-09-27 16:41:26', '0', '...', '0');
+INSERT INTO `order_record` VALUES ('10', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '45242', 'U1', '12', '12', '12', '1.20000', 'apple', '2022-10-13 16:26:02', '0', '2', '0');
 INSERT INTO `path` VALUES ('1', '12345', '1', '0', '1');
 INSERT INTO `path` VALUES ('2', '12345', '8', '0', '2');
 INSERT INTO `path` VALUES ('3', '12345', '0', '3', '3');
@@ -237,6 +245,25 @@ INSERT INTO `path` VALUES ('23', '10001', '13', '0', '4');
 INSERT INTO `path` VALUES ('24', '10001', '0', '2', '5');
 INSERT INTO `path` VALUES ('25', '10002', '4', '0', '1');
 INSERT INTO `path` VALUES ('26', '10002', '0', '4', '2');
+INSERT INTO `path` VALUES ('27', '10011', '8', '0', '1');
+INSERT INTO `path` VALUES ('28', '10011', '0', '3', '2');
+INSERT INTO `path` VALUES ('29', '95271', '7', '0', '1');
+INSERT INTO `path` VALUES ('30', '95271', '13', '0', '2');
+INSERT INTO `path` VALUES ('31', '95271', '10', '0', '3');
+INSERT INTO `path` VALUES ('32', '95271', '0', '3', '4');
+INSERT INTO `path` VALUES ('33', '95271', '7', '0', '1');
+INSERT INTO `path` VALUES ('34', '95271', '13', '0', '2');
+INSERT INTO `path` VALUES ('35', '95271', '10', '0', '3');
+INSERT INTO `path` VALUES ('36', '95271', '0', '3', '4');
+INSERT INTO `path` VALUES ('37', '95271', '7', '0', '1');
+INSERT INTO `path` VALUES ('38', '95271', '13', '0', '2');
+INSERT INTO `path` VALUES ('39', '95271', '10', '0', '3');
+INSERT INTO `path` VALUES ('40', '95271', '0', '3', '4');
+INSERT INTO `path` VALUES ('41', '45242', '1', '0', '1');
+INSERT INTO `path` VALUES ('42', '45242', '8', '0', '2');
+INSERT INTO `path` VALUES ('43', '45242', '15', '0', '3');
+INSERT INTO `path` VALUES ('44', '45242', '16', '0', '4');
+INSERT INTO `path` VALUES ('45', '45242', '0', '6', '5');
 INSERT INTO `t_map` VALUES ('1', '9', '0', '7', '1197');
 INSERT INTO `t_map` VALUES ('2', '1', '2', '0', '1357');
 INSERT INTO `t_map` VALUES ('3', '1', '3', '0', '1249');
@@ -266,13 +293,22 @@ INSERT INTO `t_map` VALUES ('26', '3', '0', '4', '1292');
 INSERT INTO `t_map` VALUES ('27', '6', '0', '4', '1392');
 INSERT INTO `t_map` VALUES ('28', '7', '0', '4', '1043');
 INSERT INTO `t_map` VALUES ('29', '3', '4', '0', '1439');
-INSERT INTO `t_map` VALUES ('30', '8', '0', '3', '1786');
-INSERT INTO `t_map` VALUES ('31', '10', '0', '3', '1308');
-INSERT INTO `t_map` VALUES ('32', '8', '0', '6', '1546');
 INSERT INTO `t_map` VALUES ('33', '3', '0', '1', '1637');
-INSERT INTO `t_map` VALUES ('34', '11', '0', '6', '1266');
 INSERT INTO `t_map` VALUES ('35', '5', '9', '0', '1598');
 INSERT INTO `t_map` VALUES ('36', '4', '0', '4', '1257');
 INSERT INTO `t_map` VALUES ('37', '13', '0', '2', '1260');
 INSERT INTO `t_map` VALUES ('38', '12', '0', '8', '1435');
+INSERT INTO `t_map` VALUES ('39', '8', '14', '0', '1795');
+INSERT INTO `t_map` VALUES ('40', '8', '15', '0', '1454');
+INSERT INTO `t_map` VALUES ('41', '10', '14', '0', '1311');
+INSERT INTO `t_map` VALUES ('42', '15', '16', '0', '1196');
+INSERT INTO `t_map` VALUES ('43', '14', '0', '9', '1167');
+INSERT INTO `t_map` VALUES ('44', '15', '0', '9', '951');
+INSERT INTO `t_map` VALUES ('45', '16', '0', '6', '1099');
+INSERT INTO `t_map` VALUES ('46', '16', '0', '9', '1489');
+INSERT INTO `t_map` VALUES ('47', '14', '0', '3', '1533');
+INSERT INTO `t_map` VALUES ('48', '8', '17', '0', '1890');
+INSERT INTO `t_map` VALUES ('49', '16', '17', '0', '1936');
+INSERT INTO `t_map` VALUES ('50', '17', '0', '7', '1589');
+INSERT INTO `t_map` VALUES ('51', '10', '0', '10', '1387');
 INSERT INTO `warehouse` VALUES ('1', 'W1', '117.180692', '31.751023');

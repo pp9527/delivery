@@ -403,13 +403,15 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <fieldset title="Strategy Info" style="margin: 0;padding-bottom: 20px;">
-                                            <legend>Distribution Strategy Information</legend>
+                                        <fieldset title="Service Composition Strategy"
+                                                  style="margin: 0;padding-bottom: 20px;">
+                                            <legend>Service Composition Strategy Details</legend>
                                             <div class="row" style="margin-bottom: 30px;">
                                                 <div class="col-md-4 text-center" style="line-height: 34px;">
                                                     <span>optimization objective：</span></div>
                                                 <div class="col-md-6">
                                                     <select class="form-control" name="objective">
+                                                        <option>distance</option>
                                                         <option>time</option>
                                                         <option>energy</option>
                                                         <option value="energyInTime">energy consumption optimization
@@ -418,11 +420,51 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 text-center">
-                                                        <button type="button" onclick="sendAjax()" class="btn btn-primary">generate</button>
+                                                    <button type="button" onclick="sendAjax()" class="btn btn-primary">
+                                                        generate
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <div id="map_container" class="col-md-12" style="display: none;background-color: white;height: 500px;padding: 10px;border-radius: 10px;">
-                                                <div id="container" style="position: relative;width: 100%;height: 100%;border-radius: 10px;"></div>
+                                            <div id="map_container" class="col-md-12"
+                                                 style="display: none;background-color: white;height: 500px;padding: 10px;border-radius: 10px;">
+                                                <div id="container"
+                                                     style="position: relative;width: 100%;height: 100%;border-radius: 10px;"></div>
+                                            </div>
+
+
+                                        </fieldset>
+                                        <fieldset title="Service Distribution Strategy"
+                                                  style="margin: 0;padding-bottom: 20px;">
+                                            <legend>Service Distribution Strategy Details</legend>
+                                            <div class="row" style="margin-bottom: 30px;">
+                                                <div class="col-md-2 text-center" style="line-height: 34px;">
+                                                    <span>uav type：</span></div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="uavType">
+                                                        <option value="1">small</option>
+                                                        <option value="2">middle</option>
+                                                        <option value="3">large</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 text-center" style="line-height: 34px;">
+                                                    <span>ugv type：</span></div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="ugvType">
+                                                        <option value="1">small</option>
+                                                        <option value="2">middle</option>
+                                                        <option value="3">large</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <button type="button" onclick="getRoute()" class="btn btn-primary">
+                                                        generate
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="map_container_1" class="col-md-12"
+                                                 style="display: none;background-color: white;height: 500px;padding: 10px;border-radius: 10px;">
+                                                <div id="container_1"
+                                                     style="position: relative;width: 100%;height: 100%;border-radius: 10px;"></div>
                                             </div>
 
 
@@ -453,8 +495,8 @@
 <!--<script src="/js/jquery-3.4.1.min.js"></script>-->
 
 <!--<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js" ></script>-->
-<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js" ></script>
-<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
+<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js"></script>
+<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js"></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 
 <script>
@@ -466,7 +508,7 @@
 </script>
 <script type="text/javascript">
     window._AMapSecurityConfig = {
-        securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
+        securityJsCode: '2f8af7c5b6908ba48f1e68c3fe9744ce',
     }
 </script>
 <script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
@@ -520,149 +562,291 @@
     // objective
 
 
+    function sendAjax() {
+        const model = $("[name='model']:checked").val();
+        const startStation = $("[name='startStation']").val();
+        const consignee = $("[name='consignee']").val();
+        const objective = $("[name='objective']").val();
+        $.ajax({
+            url: "/ajax/generate",
+            type: "post",
+            data: {
+                model: model,
+                startStation: startStation,
+                consignee: consignee,
+                objective: objective
+            },
+            dataType: "json",
+            success: function (data) {
 
-    function sendAjax () {
-            const model = $("[name='model']:checked").val();
-            const startStation = $("[name='startStation']").val();
-            const consignee = $("[name='consignee']").val();
-            const objective = $("[name='objective']").val();
-            $.ajax({
-                url: "/ajax/generate",
-                type: "post",
-                data: {
-                    model:model,
-                    startStation:startStation,
-                    consignee:consignee,
-                    objective:objective
-                },
-                dataType: "json",
-                success: function (data) {
+                // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
+                var t = document.getElementById('map_container');
+                t.style.display = 'block';
 
-                    // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
-                    var t = document.getElementById('map_container');
-                    t.style.display = 'block';
+                var map = new AMap.Map("container", {
+                    // center: [112.187017,31.763388],
+                    resizeEnable: true,
+                    zoom: 14
+                });
 
-                    var map = new AMap.Map("container", {
-                        // center: [112.187017,31.763388],
-                        resizeEnable: true,
-                        zoom: 14
-                    });
+                var polyline = new AMap.Polyline({
+                    path: data[0],
+                    isOutline: true,
+                    outlineColor: '#ffeeff',
+                    borderWeight: 3,
+                    strokeColor: "#f0f",
+                    strokeOpacity: 1,
+                    strokeWeight: 6,
+                    // 折线样式还支持 'dashed'
+                    strokeStyle: "dashed",
+                    // strokeStyle是dashed时有效
+                    strokeDasharray: [15, 5],
+                    lineJoin: 'round',
+                    lineCap: 'round',
+                    zIndex: 50,
+                })
+                map.add(polyline);
 
-                    var polyline = new AMap.Polyline({
-                        path: data[0],
-                        isOutline: true,
-                        outlineColor: '#ffeeff',
-                        borderWeight: 3,
-                        strokeColor: "#f0f",
-                        strokeOpacity: 1,
-                        strokeWeight: 6,
-                        // 折线样式还支持 'dashed'
-                        strokeStyle: "dashed",
-                        // strokeStyle是dashed时有效
-                        strokeDasharray: [15, 5],
-                        lineJoin: 'round',
-                        lineCap: 'round',
-                        zIndex: 50,
-                    })
-                    map.add(polyline);
+                var text1 = new AMap.Text({
+                    text: '起点',
+                    anchor: 'top-left', // 设置文本标记锚点
+                    draggable: true,
+                    cursor: 'pointer',
+                    style: {
+                        'padding': '.75rem 1.25rem',
+                        'margin-bottom': '1rem',
+                        'border-radius': '.40rem',
+                        'background-color': 'white',
+                        'width': '8rem',
+                        'border-width': 0,
+                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                        'text-align': 'center',
+                        'font-size': '20px',
+                        'color': 'green',
+                        'x-index': '10000'
+                    },
+                    // position: [location1[0],location1[1]]
+                    position: data[0][0]
+                });
+                var text2 = new AMap.Text({
+                    text: '终点',
+                    anchor: 'top-left', // 设置文本标记锚点
+                    draggable: true,
+                    cursor: 'pointer',
+                    style: {
+                        'padding': '.75rem 1.25rem',
+                        'margin-bottom': '1rem',
+                        'border-radius': '.40rem',
+                        'background-color': 'white',
+                        'width': '8rem',
+                        'border-width': 0,
+                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                        'text-align': 'center',
+                        'font-size': '20px',
+                        'color': 'red',
+                        'x-index': '10000'
+                    },
+                    position: data[1]
+                });
+                text1.setMap(map);
+                text2.setMap(map);
 
-                    var text1 = new AMap.Text({
-                        text:'起点',
-                        anchor:'top-left', // 设置文本标记锚点
-                        draggable:true,
-                        cursor:'pointer',
-                        style:{
-                            'padding': '.75rem 1.25rem',
-                            'margin-bottom': '1rem',
-                            'border-radius': '.40rem',
-                            'background-color': 'white',
-                            'width': '8rem',
-                            'border-width': 0,
-                            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-                            'text-align': 'center',
-                            'font-size': '20px',
-                            'color': 'green',
-                            'x-index':'10000'
-                        },
-                        // position: [location1[0],location1[1]]
-                        position: data[0][0]
-                    });
-                    var text2 = new AMap.Text({
-                        text:'终点',
-                        anchor:'top-left', // 设置文本标记锚点
-                        draggable:true,
-                        cursor:'pointer',
-                        style:{
-                            'padding': '.75rem 1.25rem',
-                            'margin-bottom': '1rem',
-                            'border-radius': '.40rem',
-                            'background-color': 'white',
-                            'width': '8rem',
-                            'border-width': 0,
-                            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-                            'text-align': 'center',
-                            'font-size': '20px',
-                            'color': 'red',
-                            'x-index':'10000'
-                        },
-                        position: data[1]
-                    });
-                    text1.setMap(map);
-                    text2.setMap(map);
-
-                    var drivingOption = {
-                        policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
-                        ferry: 1, // 是否可以使用轮渡
-                        map: map,
-                        autoFitView: false,
-                        // panel: 'panel'
-                    }
-                    var driving = new AMap.Driving(drivingOption)
-                    // 根据起终点经纬度规划驾车导航路线
-                    driving.search(new AMap.LngLat(data[0][data[0].length - 1][0],data[0][data[0].length - 1][1]), new AMap.LngLat(data[1][0],data[1][1]), function(status, result) {
-                        // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-                        if (status === 'complete') {
-                        } else {
-                            log.error('获取驾车数据失败：' + result)
-                        }
-                    });
-
-                    var startIcon = new AMap.Icon({
-                        size: new AMap.Size(25, 34),
-                        image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
-                        imageSize: new AMap.Size(135, 40),
-                        imageOffset: new AMap.Pixel(-9, -3)
-                    });
-                    // var content1 = '<div class="marker-route marker-marker-bus-from"></div>';
-                    var marker1 = new AMap.Marker({
-                        // content: markerContent,
-                        icon: startIcon,
-                        // icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png",
-                        position: data[0][0],
-                        offset: new AMap.Pixel(-17, -25),
-                    });
-                    var endIcon = new AMap.Icon({
-                        size: new AMap.Size(25, 34),
-                        image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
-                        imageSize: new AMap.Size(135, 40),
-                        imageOffset: new AMap.Pixel(-50, -3)
-                    });
-                    var marker2 = new AMap.Marker({
-                        icon: endIcon,
-                        // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-                        position: data[0][data[0].length-1],
-                        offset: new AMap.Pixel(-14, -29),
-                    });
-                    map.add([marker1,marker2])
-                    map.setFitView(null, true, [40, 40, 50, 50]);
-
-                    // var t = document.getElementById('map_container');
-                    // t.style.display = 'block';
+                var drivingOption = {
+                    policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
+                    ferry: 1, // 是否可以使用轮渡
+                    map: map,
+                    autoFitView: false,
+                    // panel: 'panel'
                 }
-            })
-            // var data = $('#default').serialize()
+                var driving = new AMap.Driving(drivingOption)
+                // 根据起终点经纬度规划驾车导航路线
+                driving.search(new AMap.LngLat(data[0][data[0].length - 1][0], data[0][data[0].length - 1][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                    // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                    if (status === 'complete') {
+                    } else {
+                        log.error('获取驾车数据失败：' + result)
+                    }
+                });
+
+                var startIcon = new AMap.Icon({
+                    size: new AMap.Size(25, 34),
+                    image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                    imageSize: new AMap.Size(135, 40),
+                    imageOffset: new AMap.Pixel(-9, -3)
+                });
+                // var content1 = '<div class="marker-route marker-marker-bus-from"></div>';
+                var marker1 = new AMap.Marker({
+                    // content: markerContent,
+                    icon: startIcon,
+                    // icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png",
+                    position: data[0][0],
+                    offset: new AMap.Pixel(-17, -25),
+                });
+                var endIcon = new AMap.Icon({
+                    size: new AMap.Size(25, 34),
+                    image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                    imageSize: new AMap.Size(135, 40),
+                    imageOffset: new AMap.Pixel(-50, -3)
+                });
+                var marker2 = new AMap.Marker({
+                    icon: endIcon,
+                    // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
+                    position: data[0][data[0].length - 1],
+                    offset: new AMap.Pixel(-14, -29),
+                });
+                map.add([marker1, marker2])
+                map.setFitView(null, true, [40, 40, 50, 50]);
+
+                // var t = document.getElementById('map_container');
+                // t.style.display = 'block';
+            }
+        })
     }
 
+    function getRoute() {
+        const model = $("[name='model']:checked").val();
+        const startStation = $("[name='startStation']").val();
+        const consignee = $("[name='consignee']").val();
+        const objective = $("[name='objective']").val();
+        const uavType = $("[name='uavType']").val();
+        const ugvType = $("[name='ugvType']").val();
+        $.ajax({
+            url: "/ajax/getRoute",
+            type: "post",
+            data: {
+                model: model,
+                startStation: startStation,
+                consignee: consignee,
+                objective: objective,
+                uavType: uavType,
+                ugvType: ugvType
+            },
+            dataType: "json",
+            success: function (data) {
+
+                // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
+                var t = document.getElementById('map_container_1');
+                t.style.display = 'block';
+
+                var map = new AMap.Map("container_1", {
+                    // center: [112.187017,31.763388],
+                    resizeEnable: true,
+                    zoom: 14
+                });
+
+                var polyline = new AMap.Polyline({
+                    path: data[0],
+                    isOutline: true,
+                    outlineColor: '#ffeeff',
+                    borderWeight: 3,
+                    strokeColor: "#f0f",
+                    strokeOpacity: 1,
+                    strokeWeight: 6,
+                    // 折线样式还支持 'dashed'
+                    strokeStyle: "dashed",
+                    // strokeStyle是dashed时有效
+                    strokeDasharray: [15, 5],
+                    lineJoin: 'round',
+                    lineCap: 'round',
+                    zIndex: 50,
+                })
+                map.add(polyline);
+
+                var text1 = new AMap.Text({
+                    text: '起点',
+                    anchor: 'top-left', // 设置文本标记锚点
+                    draggable: true,
+                    cursor: 'pointer',
+                    style: {
+                        'padding': '.75rem 1.25rem',
+                        'margin-bottom': '1rem',
+                        'border-radius': '.40rem',
+                        'background-color': 'white',
+                        'width': '8rem',
+                        'border-width': 0,
+                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                        'text-align': 'center',
+                        'font-size': '20px',
+                        'color': 'green',
+                        'x-index': '10000'
+                    },
+                    // position: [location1[0],location1[1]]
+                    position: data[0][0]
+                });
+                var text2 = new AMap.Text({
+                    text: '终点',
+                    anchor: 'top-left', // 设置文本标记锚点
+                    draggable: true,
+                    cursor: 'pointer',
+                    style: {
+                        'padding': '.75rem 1.25rem',
+                        'margin-bottom': '1rem',
+                        'border-radius': '.40rem',
+                        'background-color': 'white',
+                        'width': '8rem',
+                        'border-width': 0,
+                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                        'text-align': 'center',
+                        'font-size': '20px',
+                        'color': 'red',
+                        'x-index': '10000'
+                    },
+                    position: data[1]
+                });
+                text1.setMap(map);
+                text2.setMap(map);
+
+                var drivingOption = {
+                    policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
+                    ferry: 1, // 是否可以使用轮渡
+                    map: map,
+                    autoFitView: false,
+                    // panel: 'panel'
+                }
+                var driving = new AMap.Driving(drivingOption)
+                // 根据起终点经纬度规划驾车导航路线
+                driving.search(new AMap.LngLat(data[0][data[0].length - 1][0], data[0][data[0].length - 1][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                    // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                    if (status === 'complete') {
+                    } else {
+                        log.error('获取驾车数据失败：' + result)
+                    }
+                });
+
+                var startIcon = new AMap.Icon({
+                    size: new AMap.Size(25, 34),
+                    image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                    imageSize: new AMap.Size(135, 40),
+                    imageOffset: new AMap.Pixel(-9, -3)
+                });
+                // var content1 = '<div class="marker-route marker-marker-bus-from"></div>';
+                var marker1 = new AMap.Marker({
+                    // content: markerContent,
+                    icon: startIcon,
+                    // icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png",
+                    position: data[0][0],
+                    offset: new AMap.Pixel(-17, -25),
+                });
+                var endIcon = new AMap.Icon({
+                    size: new AMap.Size(25, 34),
+                    image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                    imageSize: new AMap.Size(135, 40),
+                    imageOffset: new AMap.Pixel(-50, -3)
+                });
+                var marker2 = new AMap.Marker({
+                    icon: endIcon,
+                    // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
+                    position: data[0][data[0].length - 1],
+                    offset: new AMap.Pixel(-14, -29),
+                });
+                map.add([marker1, marker2])
+                map.setFitView(null, true, [40, 40, 50, 50]);
+
+                // var t = document.getElementById('map_container');
+                // t.style.display = 'block';
+            }
+        })
+    }
 
 
 </script>

@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootTest
 public class RoutePlanningTest {
@@ -32,7 +31,7 @@ public class RoutePlanningTest {
 
     @Test
     public void testGetShortestPaths() {
-        System.out.println(RoutePlanning.getShortestPaths("W1", "U1"));
+        System.out.println(RoutePlanning.getShortestDistanceRoute("W1", "U1"));
     }
 
     @Test

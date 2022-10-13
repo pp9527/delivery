@@ -66,4 +66,14 @@ public class CarStationServiceImpl extends ServiceImpl<CarStationMapper, CarStat
         location.add(carStation.get(0).getLatitude());
         return location;
     }
+
+    @Override
+    public List<String> getNameByIds(List<Integer> ids) {
+        List<CarStation> carStations = carStationMapper.selectBatchIds(ids);
+        List<String> list = new ArrayList<>();
+        for (CarStation carStation : carStations) {
+            list.add(carStation.getName());
+        }
+        return list;
+    }
 }

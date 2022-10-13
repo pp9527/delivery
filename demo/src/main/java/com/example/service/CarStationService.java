@@ -21,4 +21,6 @@ public interface CarStationService extends IService<CarStation> {
     List<List<Double>> getLongitudesAndLatitudes();
 
     List<Double> getLocationByName(String name);
+
+    List<String> getNameByIds(List<Integer> ids);
 }
