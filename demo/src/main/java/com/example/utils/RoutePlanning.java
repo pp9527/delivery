@@ -198,18 +198,8 @@ public class RoutePlanning {
         int source = Graph.getSequenceByName(startStation);
         int end = routePlanning.carToCustomerService.getShortestCarStationNum(consignee);
         List<String> stations = RoutePlanning.getShortestPath(source, end);
-        JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < stations.size() - 1; i++) {
-            char[] chars = stations.get(i).toCharArray();
-            List<Double> location;
-            if (chars[0] == 'W' || chars[0] == 'D') {
-                location = routePlanning.droneStationService.getLocationByName(stations.get(i));
-            } else {
-                location = routePlanning.carStationService.getLocationByName(stations.get(i));
-            }
-            jsonArray.add(location);
-        }
-        return jsonArray;
+        stations.remove(stations.size() - 1);
+        return routePlanning.StationNameToRouteLocation(stations);
     }
 
     /**
@@ -283,8 +273,7 @@ public class RoutePlanning {
             }
         }
         res.remove(res.size() - 1);
-//        System.out.println("时间最短" + res);
-        return null;
+        return routePlanning.StationNameToRouteLocation(res);
     }
 
     /**
@@ -322,5 +311,27 @@ public class RoutePlanning {
         List<String> stations = RoutePlanning.getShortestPath(source, end);
         stations.remove(stations.size() - 1);
         return stations;
+    }
+
+    /**
+     * @description: 统一把路径规划的结果站点名字集合转换成坐标集合
+     * @author: pwz
+     * @date: 2022/10/13 22:47
+     * @param: [stations]
+     * @return: java.util.List<java.lang.Double>
+     **/
+    private List<List<Double>> StationNameToRouteLocation(List<String> stations) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < stations.size(); i++) {
+            char[] chars = stations.get(i).toCharArray();
+            List<Double> location;
+            if (chars[0] == 'W' || chars[0] == 'D') {
+                location = routePlanning.droneStationService.getLocationByName(stations.get(i));
+            } else {
+                location = routePlanning.carStationService.getLocationByName(stations.get(i));
+            }
+            jsonArray.add(location);
+        }
+        return jsonArray;
     }
 }
