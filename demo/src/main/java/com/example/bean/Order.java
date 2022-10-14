@@ -33,10 +33,9 @@ public class Order {
     private String consignee;
     private int length;
     private int width;
-    private int height;
     private double weight;
     private String goods;
-    private Date deadline;
+    private int deadline;  //   单位s
     private int status; // 默认0:未发货  1:运输中  2:超时  3:已完成
     private String info;
     private boolean privacyStatus; //隐私保护状态 启用为1

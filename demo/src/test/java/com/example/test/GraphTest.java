@@ -17,4 +17,15 @@ public class GraphTest {
     public void testGetSequenceByName() {
         System.out.println(Graph.getSequenceByName("C3"));
     }
+
+    @Test
+    public void testGetMatrix() {
+        int[][] matrix = Graph.getMatrix();
+        for (int[] ints : matrix) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
+        }
+    }
 }

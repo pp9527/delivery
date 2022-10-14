@@ -195,7 +195,7 @@
     });
 
     // 百度坐标转换高德坐标
-    // var gps = [117.252646,31.747258];
+    // var gps = [117.246897,31.730813];
     // AMap.convertFrom(gps, 'baidu', function (status, result) {
     //     if (result.info === 'ok') {
     //         var lnglats = result.locations; // Array.<LngLat>
@@ -327,14 +327,14 @@
 
     // 计算每条路径的距离，并按顺序在首页打印
     // 站点之间的路径
-    // for (var i = path.length - 14; i < path.length; i++) {
+    // for (var i = path.length - 1; i < path.length; i++) {
     //     var p1 = path[i][0];
     //     var p2 = path[i][1];
     //     // 返回 p1 到 p2 间的地面距离，单位：米
     //     alert(AMap.GeometryUtil.distance(p1, p2));
     // }
-    // 车站到用户的距离
-    // for (var i = 0; i < allCarToCustomerPath.length; i++) {
+    // // 车站到用户的距离
+    // for (var i = allCarToCustomerPath.length - 1; i < allCarToCustomerPath.length; i++) {
     //     var p1 = allCarToCustomerPath[i][0];
     //     var p2 = allCarToCustomerPath[i][1];
     //     // 返回 p1 到 p2 间的地面距离，单位：米

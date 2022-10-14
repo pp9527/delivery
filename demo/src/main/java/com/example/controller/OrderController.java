@@ -40,7 +40,7 @@ public class OrderController {
         order.setDesLatitude(locationByName.get(1));
         order.setPrivacyLongitude(locationByName.get(0));
         order.setPrivacyLatitude(locationByName.get(1));
-        order.setDeadline(new Date());
+        order.setDeadline(order.getDeadline());
         orderService.save(order);
 //        2、根据订单规划路径，结果插入path表
         List<String> stationName = RoutePlanning.getShortestStationName(order.getStartStation(),

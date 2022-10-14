@@ -98,17 +98,16 @@
 
                                     <thead>
                                     <tr>
-                                        <th>订单编号</th>
-                                        <th>货品名称</th>
-                                        <th>起始站点</th>
-                                        <th>运输方式</th>
-                                        <th>收件人</th>
-                                        <th>货物长度/cm</th>
-                                        <th>货物宽度/cm</th>
-                                        <th>货物高度/cm</th>
-                                        <th>货物重量/kg</th>
-                                        <th>备注信息</th>
-                                        <th>截止时间</th>
+                                        <th>orderID</th>
+                                        <th>goods</th>
+                                        <th>start station</th>
+                                        <th>transportation model</th>
+                                        <th>consignee</th>
+                                        <th>length/cm</th>
+                                        <th>width/cm</th>
+                                        <th>weight/kg</th>
+                                        <th>order info</th>
+                                        <th>time/min</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -118,28 +117,27 @@
                                         <td th:text="${order.startStation}"></td>
 
 
-                                        <td th:if="${order.model} == 1">协同</td>
-                                        <td th:if="${order.model} == 2">无人机</td>
-                                        <td th:if="${order.model} == 3">无人车</td>
+                                        <td th:if="${order.model} == 1">cooperate</td>
+                                        <td th:if="${order.model} == 2">uav</td>
+                                        <td th:if="${order.model} == 3">ugv</td>
 
                                         <td th:text="${order.consignee}"></td>
                                         <td th:text="${order.length}"></td>
                                         <td th:text="${order.width}"></td>
-                                        <td th:text="${order.height}"></td>
                                         <td th:text="${order.weight}"></td>
                                         <td th:text="${order.info}"></td>
-                                        <td th:text="${order.deadline}"></td>
+                                        <td th:text="${order.deadline/60}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
 
                                 <nav class="col-md-3 col-md-offset-9" aria-label="...">
                                     <ul class="pagination">
-                                        <li><a th:href="@{/orders(pn=1)}">首页</a></li>
+                                        <li><a th:href="@{/orders(pn=1)}">first</a></li>
 
                                         <li th:class="${num == orders.current?'active':''}" th:each="num:${navNums}">
                                             <a th:href="@{/orders(pn=${num})}">[[${num}]]</a></li>
-                                        <li><a th:href="@{/orders(pn=${orders.pages})}">末页</a></li>
+                                        <li><a th:href="@{/orders(pn=${orders.pages})}">last</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -375,6 +373,7 @@
                                             </div>
                                             <div class="row" style="margin-bottom: 10px;">
                                                 <div class="col-md-2 text-center"><span>goods info：</span></div>
+                                                <div class="col-md-3 col-md-offset-7"><span>time：</span></div>
                                             </div>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-3">
@@ -386,12 +385,12 @@
                                                            placeholder="width/cm">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" name="height" class="form-control"
-                                                           placeholder="height/cm">
-                                                </div>
-                                                <div class="col-md-3">
                                                     <input type="text" name="weight" class="form-control"
                                                            placeholder="weight/kg">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" name="deadline" class="form-control"
+                                                           placeholder="time/min">
                                                 </div>
                                             </div>
 
@@ -428,7 +427,14 @@
                                             <div id="map_container" class="col-md-12"
                                                  style="display: none;background-color: white;height: 500px;padding: 10px;border-radius: 10px;">
                                                 <div id="container"
-                                                     style="position: relative;width: 100%;height: 100%;border-radius: 10px;"></div>
+                                                     style="position: relative;width: 100%;height: 100%;border-radius: 10px;">
+<!--                                                    <div style="position:relative;z-index: 100;width: 200px;height: 70px;-->
+<!--                                                    background-color: white;margin-left: 10px;top: 10px;border-radius: 5px;">-->
+<!--                                                        <div>no load  middle</div>-->
+<!--                                                        <div id="timeAndEnergy"></div>-->
+
+<!--                                                    </div>-->
+                                                </div>
                                             </div>
 
 
@@ -578,10 +584,27 @@
             },
             dataType: "json",
             success: function (data) {
+                // data = [
+                //          [
+                //            [路径途径站点坐标],
+                //            [路径途径站点坐标],
+                //            ....
+                //            [
+                //              [路径总时间],
+                //              [路径总时间]
+                //            ]
+                //          ],
+                //          [
+                //            [用户坐标]
+                //          ]
 
                 // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
                 var t = document.getElementById('map_container');
                 t.style.display = 'block';
+
+                // var time = document.querySelector('#timeAndEnergy');
+                // time.innerHTML = "time:" + data[0][data[0].length - 1][0] +
+                //     "energy:" + data[0][data[0].length - 1][1];
 
                 var map = new AMap.Map("container", {
                     // center: [112.187017,31.763388],
@@ -589,8 +612,12 @@
                     zoom: 14
                 });
 
+                var pathData = [];
+                for (let i = 0; i < data[0].length - 1; i++) {
+                    pathData[i] = data[0][i];
+                }
                 var polyline = new AMap.Polyline({
-                    path: data[0],
+                    path: pathData,
                     isOutline: true,
                     outlineColor: '#ffeeff',
                     borderWeight: 3,
@@ -660,7 +687,7 @@
                 }
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[0][data[0].length - 1][0], data[0][data[0].length - 1][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                driving.search(new AMap.LngLat(data[0][data[0].length - 2][0], data[0][data[0].length - 2][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
                     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
                     if (status === 'complete') {
                     } else {
@@ -691,7 +718,7 @@
                 var marker2 = new AMap.Marker({
                     icon: endIcon,
                     // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-                    position: data[0][data[0].length - 1],
+                    position: data[0][data[0].length - 2],
                     offset: new AMap.Pixel(-14, -29),
                 });
                 map.add([marker1, marker2])
@@ -723,7 +750,19 @@
             },
             dataType: "json",
             success: function (data) {
-
+                // data = [
+                //          [
+                //            [路径途径站点坐标],
+                //            [路径途径站点坐标],
+                //            ....
+                //            [
+                //              [路径总时间],
+                //              [路径总时间]
+                //            ]
+                //          ],
+                //          [
+                //            [用户坐标]
+                //          ]
                 // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
                 var t = document.getElementById('map_container_1');
                 t.style.display = 'block';
@@ -734,8 +773,12 @@
                     zoom: 14
                 });
 
+                var pathData = [];
+                for (let i = 0; i < data[0].length - 1; i++) {
+                    pathData[i] = data[0][i];
+                }
                 var polyline = new AMap.Polyline({
-                    path: data[0],
+                    path: pathData,
                     isOutline: true,
                     outlineColor: '#ffeeff',
                     borderWeight: 3,
@@ -805,7 +848,7 @@
                 }
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[0][data[0].length - 1][0], data[0][data[0].length - 1][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                driving.search(new AMap.LngLat(data[0][data[0].length - 2][0], data[0][data[0].length - 2][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
                     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
                     if (status === 'complete') {
                     } else {
@@ -836,7 +879,7 @@
                 var marker2 = new AMap.Marker({
                     icon: endIcon,
                     // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-                    position: data[0][data[0].length - 1],
+                    position: data[0][data[0].length - 2],
                     offset: new AMap.Pixel(-14, -29),
                 });
                 map.add([marker1, marker2])

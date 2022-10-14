@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: pwz
@@ -50,7 +51,7 @@ public class RoutePlanning {
      * @param sourceStationName
      * @param endStationName
      * @return List<List < Double>>
-     * @Description: 迪杰斯特拉算法求最短路径(方法未完成、数据结构未处理好、太复杂、已舍弃由getShortestPath()代替 )
+     * @Description: 迪杰斯特拉算法求最短路径(方法未完成 、 数据结构未处理好 、 太复杂 、 已舍弃由getShortestPath ()代替 )
      * @author pwz
      * @date 2022/9/22 20:11
      */
@@ -121,7 +122,7 @@ public class RoutePlanning {
      * @author pwz
      * @date 2022/9/22 20:11
      */
-    private static List<String> getShortestPath(int source, int end) {
+    public static List<String> getShortestPath(int source, int end) {
         int[][] matrix = Graph.getMatrix();  //地图的邻接矩阵
         List<String> vertex = Graph.getVertex();  //顶点数组W1-D1....C1...
         //最短路径长度
@@ -194,21 +195,25 @@ public class RoutePlanning {
      * @author pwz
      * @date 2022/9/26 17:14
      */
-    public static List<List<Double>> getShortestDistanceRoute(String startStation, String consignee) {
+    public static List<List<Double>> getShortestDistanceRoute(String startStation, String consignee,
+                                                              int uavType, int ugvType) {
+        Drone drone = routePlanning.droneService.getById(uavType);
+        Car car = routePlanning.carService.getById(ugvType);
         int source = Graph.getSequenceByName(startStation);
         int end = routePlanning.carToCustomerService.getShortestCarStationNum(consignee);
-        List<String> stations = RoutePlanning.getShortestPath(source, end);
-        stations.remove(stations.size() - 1);
-        return routePlanning.StationNameToRouteLocation(stations);
+        List<String> path = RoutePlanning.getShortestPath(source, end);
+        int[] timeAndEnergy = routePlanning.getTimeAndEnergy(path, consignee, drone, car);
+        path.remove(path.size() - 1);
+        return routePlanning.StationNameToRouteLocation(path, timeAndEnergy);
     }
 
     /**
-     * @Description: 根据不同优化目标选择对应路径规划算法
      * @param model
      * @param startStation
      * @param consignee
      * @param objective
-     * @return List<List<Double>>
+     * @return List<List < Double>>
+     * @Description: 根据不同优化目标选择对应路径规划算法
      * @author pwz
      * @date 2022/10/13 16:46
      */
@@ -218,14 +223,15 @@ public class RoutePlanning {
         switch (objective) {
             case "distance":
                 // 地杰斯特拉最短路径
-                Paths = RoutePlanning.getShortestDistanceRoute(startStation, consignee);
+                Paths = getShortestDistanceRoute(startStation, consignee, uavType, ugvType);
                 break;
             case "time":
-                Paths = RoutePlanning.getShortestTimeRoute(model, startStation, consignee, uavType, ugvType);
                 // 选择总时间最短的路线
+                Paths = getShortestTimeRoute(model, startStation, consignee, uavType, ugvType);
                 break;
             case "energy":
                 // 选择总能耗最小的路线
+                Paths = getShortestEnergyRoute(model, startStation, consignee, uavType, ugvType);
                 break;
             case "energyInTime":
                 // 选择时间约束下总能耗最小的路线
@@ -248,46 +254,64 @@ public class RoutePlanning {
         int source = Graph.getSequenceByName(startStation);
         // 遍历各个车站，计算总时间，选择最短时间的路径
         List<Integer> ends = routePlanning.carToCustomerService.getAllCarStationByCustomerName(consignee);
-
-        // 获取各个车站名
-        List<String> carStationNames = routePlanning.carStationService.getNameByIds(ends);
-
         for (int i = 0; i < ends.size(); i++) {
             // 获取车站在邻接矩阵中的顺序
             ends.set(i, (int) (ends.get(i) + routePlanning.droneStationService.count() - 1));
         }
-        int totalTime = Integer.MAX_VALUE;
-        // 保存时间最短路径
+        int totalTime = Integer.MAX_VALUE, totalEnergy = 0;
+        // 保存时间最短路径和 总时间 总能耗
         List<String> res = null;
         for (int i = 0; i < ends.size(); i++) {
             List<String> path = RoutePlanning.getShortestPath(source, ends.get(i));
-            // 无人机部分总时间 dTime
-            int dTime = Integer.parseInt(path.get(path.size() - 1)) / drone.getSpeed();
-            int carRouteDistance = GuideRoutePlanUtils.getDistanceOfPlanFromGuide(carStationNames.get(i), consignee);
-            // 无人车部分总时间 cTime
-            int cTime = carRouteDistance / car.getSpeed();
+            int[] timeAndEnergy = routePlanning.getTimeAndEnergy(path, consignee, drone, car);
 //            System.out.println(path.remove(path.size()) + "===" + dTime + " " + cTime + " " + (dTime + cTime));
-            if ((cTime + dTime) < totalTime) {
-                totalTime = cTime + dTime;
+            if (timeAndEnergy[0] < totalTime) {
+                totalTime = timeAndEnergy[0];
+                totalEnergy = timeAndEnergy[1];
                 res = path;
             }
         }
         res.remove(res.size() - 1);
-        return routePlanning.StationNameToRouteLocation(res);
+//        System.out.println(res);
+        return routePlanning.StationNameToRouteLocation(res, new int[] {totalTime, totalEnergy});
     }
 
     /**
-     * @return List<List<Double>>
+     * @return List<List < Double>>
      * @Description: 总能耗最小的路线规划
      * @author pwz
      * @date 2022/10/13 16:53
      */
-    public static List<List<Double>> getShortestEnergyRoute() {
-        return null;
+    public static List<List<Double>> getShortestEnergyRoute(String model, String startStation
+            , String consignee, int uavType, int ugvType) {
+        Drone drone = routePlanning.droneService.getById(uavType);
+        Car car = routePlanning.carService.getById(ugvType);
+        int source = Graph.getSequenceByName(startStation);
+        // 遍历各个车站，计算总能耗，选择能耗最小的路径
+        List<Integer> ends = routePlanning.carToCustomerService.getAllCarStationByCustomerName(consignee);
+        for (int i = 0; i < ends.size(); i++) {
+            // 获取车站在邻接矩阵中的顺序
+            ends.set(i, (int) (ends.get(i) + routePlanning.droneStationService.count() - 1));
+        }
+        int totalEnergy = Integer.MAX_VALUE, totalTime = 0;
+        // 保存能耗最小路径 和 总时间 总能耗
+        List<String> res = null;
+        for (int i = 0; i < ends.size(); i++) {
+            List<String> path = RoutePlanning.getShortestPath(source, ends.get(i));
+            int[] timeAndEnergy = routePlanning.getTimeAndEnergy(path, consignee, drone, car);
+            if (timeAndEnergy[1] < totalEnergy) {
+                totalEnergy = timeAndEnergy[1];
+                totalTime = timeAndEnergy[0];
+                res = path;
+            }
+        }
+        res.remove(res.size() - 1);
+//        System.out.println(res);
+        return routePlanning.StationNameToRouteLocation(res, new int[] {totalTime, totalEnergy});
     }
 
     /**
-     * @return List<List<Double>>
+     * @return List<List < Double>>
      * @Description: 时间约束下总能耗最小的路线规划
      * @author pwz
      * @date 2022/10/13 16:53
@@ -320,7 +344,7 @@ public class RoutePlanning {
      * @param: [stations]
      * @return: java.util.List<java.lang.Double>
      **/
-    private List<List<Double>> StationNameToRouteLocation(List<String> stations) {
+    private List<List<Double>> StationNameToRouteLocation(List<String> stations, int[] timeAndEnergy) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < stations.size(); i++) {
             char[] chars = stations.get(i).toCharArray();
@@ -332,6 +356,37 @@ public class RoutePlanning {
             }
             jsonArray.add(location);
         }
+        jsonArray.add(timeAndEnergy);
         return jsonArray;
+    }
+
+    /**
+     * @Description: 输入路径 求总时间和总能耗
+     * @author pwz
+     * @date 2022/10/14 12:08
+     * @param path
+     * @param consignee
+     * @param drone
+     * @param car
+     * @return int[]
+     */
+    private static int[] getTimeAndEnergy(List<String> path, String consignee, Drone drone, Car car) {
+        // 无人机飞行总距离 preDistance
+        int preDistance = Integer.parseInt(path.get(path.size() - 1));
+        String driveSource = path.get(path.size() - 2);
+        // 无人机路程总时间 dTime
+        int dTime = preDistance / drone.getSpeed();
+        int carRouteDistance = GuideRoutePlanUtils.getDistanceOfPlanFromGuide(driveSource, consignee);
+        // 无人车路程总时间 cTime
+        int cTime = carRouteDistance / car.getSpeed();
+        // 无人机路程总能耗 dEnergy
+        int dEnergy = dTime * drone.getNoLoadPower();
+        // 无人车路程总能耗 dEnergy
+        int cEnergy = cTime * car.getNoLoadPower();
+        // 总时间
+        int totalTime = dTime + cTime;
+        // 总能耗
+        int totalEnergy = cEnergy + dEnergy;
+        return new int[] {totalTime / 60, totalEnergy/ 1000};
     }
 }
