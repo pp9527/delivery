@@ -30,30 +30,6 @@ public class SafetyController {
     @Resource
     PathService pathService;
 
-
-    @GetMapping("/safety")
-    public String toSafety(Model model) {
-
-        //查询表中最大的id
-        int maxId = orderService.getMaxId();
-
-        //        查询当前活跃订单
-        List<Order> activeOrders = orderService.getActiveOrders();
-        model.addAttribute("activeOrders", activeOrders);
-
-        //        根据订单id查询订单路径
-        Order order = orderService.getById(maxId);
-        List<List<Double>> path = pathService.getPathByOrderId(order.getOrderId());
-        model.addAttribute("pathLists", path);
-
-//        根据订单id查询指定订单终点坐标
-        JSONArray desLocation = new JSONArray();
-        desLocation.add(order.getPrivacyLongitude());
-        desLocation.add(order.getPrivacyLatitude());
-        model.addAttribute("desLocation", desLocation);
-        return "safe_order";
-    }
-
     @GetMapping(value = "/safe/{id}")
     public String safeOrder(@PathVariable("id")Integer id,
                             @RequestParam(value = "type", required = false, defaultValue = "0")int type) {

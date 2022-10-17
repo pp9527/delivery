@@ -34,7 +34,7 @@ public class RoutePlanningTest {
 
     @Test
     public void testGetShortestPaths() {
-        System.out.println(RoutePlanning.getShortestDistanceRoute("W1", "C6", 2, 2));
+        System.out.println(RoutePlanning.getShortestDistanceRoute("W1", "C6", 2, 2, -1));
     }
 
     @Test

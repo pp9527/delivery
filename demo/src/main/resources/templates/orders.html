@@ -322,7 +322,7 @@
                                                 </div>
                                                 <div class="col-md-8" style="color: green;vertical-align: middle">
                                                     <label class="radio-inline;"
-                                                           style="padding: 0;font-weight: bold;display: inline-block">
+                                                           style="padding: 0;font-weight: bold;display: inline-block;margin-right: 20px;">
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
                                                                name="model"
                                                                id="Radio1"
@@ -330,7 +330,7 @@
                                                         <span>only uav</span>
                                                     </label>
                                                     <label class="radio-inline;"
-                                                           style="padding: 0;font-weight: bold;display: inline-block">
+                                                           style="padding: 0;font-weight: bold;display: inline-block;margin-right: 20px;">
                                                         <input style="vertical-align: middle;margin: 0" type="radio"
                                                                name="model"
                                                                id="Radio2"
@@ -351,7 +351,7 @@
                                                 <div class="col-md-3"><span>start station：</span></div>
                                                 <div class="col-md-3"><span>consignee：</span></div>
                                                 <div class="col-md-3"><span>orderID：</span></div>
-                                                <div class="col-md-3"><span>goods：</span></div>
+                                                <div class="col-md-3"><span>time：</span></div>
                                             </div>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-3">
@@ -365,28 +365,6 @@
                                                 <div class="col-md-3">
                                                     <input type="text" name="orderId" class="form-control"
                                                            placeholder="five figure">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" name="goods" class="form-control"
-                                                           placeholder="type of goods">
-                                                </div>
-                                            </div>
-                                            <div class="row" style="margin-bottom: 10px;">
-                                                <div class="col-md-2 text-center"><span>goods info：</span></div>
-                                                <div class="col-md-3 col-md-offset-7"><span>time：</span></div>
-                                            </div>
-                                            <div class="row" style="margin-bottom: 15px;">
-                                                <div class="col-md-3">
-                                                    <input type="text" name="length" class="form-control"
-                                                           placeholder="length/cm">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" name="width" class="form-control"
-                                                           placeholder="width/cm">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" name="weight" class="form-control"
-                                                           placeholder="weight/kg">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="deadline" class="form-control"
@@ -428,12 +406,12 @@
                                                  style="display: none;background-color: white;height: 500px;padding: 10px;border-radius: 10px;">
                                                 <div id="container"
                                                      style="position: relative;width: 100%;height: 100%;border-radius: 10px;">
-<!--                                                    <div style="position:relative;z-index: 100;width: 200px;height: 70px;-->
-<!--                                                    background-color: white;margin-left: 10px;top: 10px;border-radius: 5px;">-->
-<!--                                                        <div>no load  middle</div>-->
-<!--                                                        <div id="timeAndEnergy"></div>-->
+                                                    <!--                                                    <div style="position:relative;z-index: 100;width: 200px;height: 70px;-->
+                                                    <!--                                                    background-color: white;margin-left: 10px;top: 10px;border-radius: 5px;">-->
+                                                    <!--                                                        <div>no load  middle</div>-->
+                                                    <!--                                                        <div id="timeAndEnergy"></div>-->
 
-<!--                                                    </div>-->
+                                                    <!--                                                    </div>-->
                                                 </div>
                                             </div>
 
@@ -442,7 +420,7 @@
                                         <fieldset title="Service Distribution Strategy"
                                                   style="margin: 0;padding-bottom: 20px;">
                                             <legend>Service Distribution Strategy Details</legend>
-                                            <div class="row" style="margin-bottom: 30px;">
+                                            <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-2 text-center" style="line-height: 34px;">
                                                     <span>uav type：</span></div>
                                                 <div class="col-md-3">
@@ -465,6 +443,27 @@
                                                     <button type="button" onclick="getRoute()" class="btn btn-primary">
                                                         generate
                                                     </button>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col-md-2 text-center"><span>goods info：</span></div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 15px;">
+                                                <div class="col-md-3">
+                                                    <input type="text" name="goods" class="form-control"
+                                                           placeholder="name of goods">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" name="length" class="form-control"
+                                                           placeholder="length/cm">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" name="width" class="form-control"
+                                                           placeholder="width/cm">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" name="weight" class="form-control"
+                                                           placeholder="weight/kg">
                                                 </div>
                                             </div>
                                             <div id="map_container_1" class="col-md-12"
@@ -573,6 +572,7 @@
         const startStation = $("[name='startStation']").val();
         const consignee = $("[name='consignee']").val();
         const objective = $("[name='objective']").val();
+        const time = $("[name='deadline']").val();
         $.ajax({
             url: "/ajax/generate",
             type: "post",
@@ -580,10 +580,14 @@
                 model: model,
                 startStation: startStation,
                 consignee: consignee,
-                objective: objective
+                objective: objective,
+                time: time
             },
             dataType: "json",
             success: function (data) {
+                if (data == null) {
+                    alert("该条件下没有可行的服务方案，请修改订单信息！")
+                }
                 // data = [
                 //          [
                 //            [路径途径站点坐标],
@@ -724,6 +728,14 @@
                 map.add([marker1, marker2])
                 map.setFitView(null, true, [40, 40, 50, 50]);
 
+                if (data == null) {
+                    alert("该条件下没有可行的服务方案，请修改清单信息！")
+                } else {
+                    alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
+                        + data[0][data[0].length - 1][0] + "min, 总能耗："
+                        + data[0][data[0].length - 1][1] + "kj");
+                }
+
                 // var t = document.getElementById('map_container');
                 // t.style.display = 'block';
             }
@@ -737,6 +749,8 @@
         const objective = $("[name='objective']").val();
         const uavType = $("[name='uavType']").val();
         const ugvType = $("[name='ugvType']").val();
+        const time = $("[name='deadline']").val();
+        const weight = $("[name='weight']").val();
         $.ajax({
             url: "/ajax/getRoute",
             type: "post",
@@ -746,7 +760,9 @@
                 consignee: consignee,
                 objective: objective,
                 uavType: uavType,
-                ugvType: ugvType
+                ugvType: ugvType,
+                time: time,
+                weight: weight
             },
             dataType: "json",
             success: function (data) {
@@ -766,6 +782,18 @@
                 // 开始放在地图最后显示div，会出现首次生成路径时地图自适应属性失效的问题，解决办法：放在地图加载之前
                 var t = document.getElementById('map_container_1');
                 t.style.display = 'block';
+
+                if (data == null) {
+                    alert("该条件下没有可行的服务方案，请修改清单信息！")
+                } else if (data[0][data[0].length - 1][0] == -1) {
+                    alert("当前无人机无法承受当前负载！请选择更大无人机！")
+                } else if (data[0][data[0].length - 1][0] == -2) {
+                    alert("当前无人车无法承受当前负载！请选择更大无人车！")
+                } else {
+                    alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
+                        + data[0][data[0].length - 1][0] + "min, 总能耗："
+                        + data[0][data[0].length - 1][1] + "kj");
+                }
 
                 var map = new AMap.Map("container_1", {
                     // center: [112.187017,31.763388],

@@ -30,10 +30,14 @@ public class AjaxController {
 
     @ResponseBody
     @PostMapping("/generate")
-    public List<List<Double>> generatePath(String model, String startStation,
+    public List<List<Double>> generatePath(String time, String model, String startStation,
                                            String consignee, String objective) {
-        List<List<Double>> shortestPaths = RoutePlanning.
-                selectStrategyByObjective(model, startStation, consignee, objective, 2, 2);
+        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(
+                model, startStation, consignee, objective, 2, 2,
+                Integer.parseInt(time) * 60, -1);
+        if (shortestPaths == null) {
+            return null;
+        }
         List<Double> desLocation = customerService.getLocationByName(consignee);
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(shortestPaths);
@@ -44,9 +48,10 @@ public class AjaxController {
     @ResponseBody
     @PostMapping("/getRoute")
     public List<List<Double>> getRoute(String model, String startStation
-            , int uavType, int ugvType, String consignee, String objective) {
-        List<List<Double>> shortestPaths = RoutePlanning.
-                selectStrategyByObjective(model, startStation, consignee, objective, uavType, ugvType);
+            , int uavType, int ugvType, String consignee, String objective, String time, String weight) {
+        int weigh = (int) (Float.parseFloat(weight) * 1000);
+        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(
+                model, startStation, consignee, objective, uavType, ugvType, Integer.parseInt(time) * 60, weigh);
         List<Double> desLocation = customerService.getLocationByName(consignee);
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(shortestPaths);
