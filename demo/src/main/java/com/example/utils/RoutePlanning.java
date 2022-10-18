@@ -373,6 +373,7 @@ public class RoutePlanning {
             }
         }
         if (res == null) {
+            System.out.println("该条件下没有可行的服务方案，请修改订单信息！");
             return null;
         }
 //        res.remove(res.size() - 1);

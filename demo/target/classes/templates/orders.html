@@ -42,16 +42,13 @@
         <!-- page heading start-->
         <div class="page-heading">
             <h3>
-                All Orders
+                Order Management
             </h3>
             <ul class="breadcrumb">
                 <li>
                     <a href="main.html">Home</a>
                 </li>
-                <li>
-                    <a href="#">Order Management</a>
-                </li>
-                <li class="active">All Orders</li>
+                <li class="active">Order Management</li>
             </ul>
         </div>
         <!-- page heading end-->
@@ -729,7 +726,7 @@
                 map.setFitView(null, true, [40, 40, 50, 50]);
 
                 if (data == null) {
-                    alert("该条件下没有可行的服务方案，请修改清单信息！")
+                    alert("该条件下没有可行的服务方案，请修改订单信息！")
                 } else {
                     alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
                         + data[0][data[0].length - 1][0] + "min, 总能耗："
@@ -784,7 +781,7 @@
                 t.style.display = 'block';
 
                 if (data == null) {
-                    alert("该条件下没有可行的服务方案，请修改清单信息！")
+                    alert("该条件下没有可行的服务方案，请修改订单信息！")
                 } else if (data[0][data[0].length - 1][0] == -1) {
                     alert("当前无人机无法承受当前负载！请选择更大无人机！")
                 } else if (data[0][data[0].length - 1][0] == -2) {

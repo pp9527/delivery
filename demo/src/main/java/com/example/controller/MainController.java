@@ -101,8 +101,9 @@ public class MainController {
 
     @GetMapping("/ai")
     public String toAi(Model model) {
-
-        return "ai";
+        List<Order> activeOrders = orderService.getActiveOrders();
+        model.addAttribute("activeOrders", activeOrders);
+        return "ai_page";
     }
 
 }

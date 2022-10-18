@@ -60,7 +60,6 @@ public class LoginController {
         return "redirect:/main.html";
     }
 
-
     @GetMapping("/main.html")
     public String mainPage(Model model) {
 //        Order order = orderService.getById(id);
