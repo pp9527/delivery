@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,21 +30,23 @@ public class OrderController {
     CustomerService customerService;
 
     @RequestMapping("/insertOrder")
-    public String insertOrder(Order order, String objective) {
-
-//        1、插入一条新订单到order_record表
+    public String insertOrder(Order order, int uavType, int ugvType, String objective) {
+//        1、根据订单信息规划路径, 插入path表
+        List<String> route = RoutePlanning.getRouteByObjective(order, objective, uavType, ugvType);
+//        System.out.println(route);
+        pathService.insertPaths(route, order.getOrderId());
+//        2、把路径转化为string，填充order.route属性
+        String string = RoutePlanning.pathListToString(route, order.getConsignee());
+        order.setRoute(string);
+//        3、根据用户查询用户坐标，填充order相关属性
         List<Double> locationByName = customerService.getLocationByName(order.getConsignee());
         order.setDesLongitude(locationByName.get(0));
         order.setDesLatitude(locationByName.get(1));
         order.setPrivacyLongitude(locationByName.get(0));
         order.setPrivacyLatitude(locationByName.get(1));
-        order.setDeadline(order.getDeadline());
+//        4、插入订单表order
+//        System.out.println(order);
         orderService.save(order);
-//        2、根据订单规划路径，结果插入path表
-        List<String> stationName = RoutePlanning.getShortestStationName(order.getStartStation(),
-                order.getConsignee());
-        pathService.insertPaths(stationName, order.getOrderId());
-//        3、发送订单id，重定向到main/id
         return "redirect:/orders";
     }
 

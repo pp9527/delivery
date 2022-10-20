@@ -6,21 +6,15 @@ import com.example.bean.Order;
 import com.example.service.OrderService;
 import com.example.service.PathService;
 import com.example.service.WareService;
-import com.example.service.impl.OrderServiceImpl;
 import com.example.utils.PageUtils;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import net.sf.json.JSONArray;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +50,7 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/main/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/main/{id}")
     public String getMapById(@PathVariable("id")Integer id, Model model) {
 
 //        查询活跃订单

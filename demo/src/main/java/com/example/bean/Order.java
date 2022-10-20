@@ -39,5 +39,5 @@ public class Order {
     private int status; // 默认0:未发货  1:运输中  2:超时  3:已完成
     private String info;
     private boolean privacyStatus; //隐私保护状态 启用为1
-
+    private String route;
 }

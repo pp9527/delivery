@@ -20,11 +20,16 @@
 
     <div th:include="common::commonheader"></div>
 
-
     <style>
         tr, th {
             text-align: center;
         }
+        /*地图标记大小样式*/
+        .amap-icon img,
+         .amap-marker-content img{
+             width: 25px;
+             height: 34px;
+         }
     </style>
 
 </head>
@@ -97,33 +102,28 @@
                                     <tr>
                                         <th>orderID</th>
                                         <th>goods</th>
-                                        <th>start station</th>
                                         <th>transportation model</th>
-                                        <th>consignee</th>
-                                        <th>length/cm</th>
-                                        <th>width/cm</th>
+                                        <th>start station</th>
+                                        <th>destination</th>
+                                        <th>time/min</th>
                                         <th>weight/kg</th>
                                         <th>order info</th>
-                                        <th>time/min</th>
+                                        <th>order route</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="order:${orders.getRecords()}">
                                         <td th:text="${order.orderId}"></td>
                                         <td th:text="${order.goods}"></td>
-                                        <td th:text="${order.startStation}"></td>
-
-
                                         <td th:if="${order.model} == 1">cooperate</td>
                                         <td th:if="${order.model} == 2">uav</td>
                                         <td th:if="${order.model} == 3">ugv</td>
-
+                                        <td th:text="${order.startStation}"></td>
                                         <td th:text="${order.consignee}"></td>
-                                        <td th:text="${order.length}"></td>
-                                        <td th:text="${order.width}"></td>
+                                        <td th:text="${order.deadline}"></td>
                                         <td th:text="${order.weight}"></td>
                                         <td th:text="${order.info}"></td>
-                                        <td th:text="${order.deadline/60}"></td>
+                                        <td th:text="${order.route}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -157,143 +157,6 @@
 
     </div>
     <!-- main content end-->
-
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="border-radius: 10px;font-size: 18px;font-weight: bolder">
-                <div class="modal-header" style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Creating a New Order</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="row" style="margin-bottom: 15px;">
-                                    <div class="col-md-4">
-                                        <span>transportation mode：</span>
-                                    </div>
-                                    <div class="col-md-7" style="color: green">
-                                        <label class="radio-inline" style="font-weight: bold">
-                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                                   value="option1"> only uav
-                                        </label>
-                                        <label class="radio-inline" style="font-weight: bold">
-                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                                   value="option2"> only ugv
-                                        </label>
-                                        <label class="radio-inline" style="font-weight: bold">
-                                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                                                   value="option3"> uav and ugv
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <div class="col-md-3 text-center"><span>start station：</span></div>
-                            <div class="col-md-3 text-center"><span>destination：</span></div>
-                            <div class="col-md-3 text-center"><span>orderID：</span></div>
-                            <div class="col-md-3 text-center"><span>consignee：</span></div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="W1">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="U1 to U5">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="five figure">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="name">
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <div class="col-md-2 text-center"><span>goods info：</span></div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="length/cm">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="width/cm">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="height/cm">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="email" class="form-control" placeholder="weight/kg">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label text-center" style="font-weight: bold;">order
-                                    note：</label>
-                                <div class="col-md-10">
-                                    <textarea rows="6" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-                    <button type="button" class="col-md-1 btn btn-info"
-                            data-toggle="modal" data-target="#myModalNext" data-dismiss="modal">next
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-
-
-    <!-- 模态框（Modal1） -->
-    <div class="modal fade" id="myModalNext" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="border-radius: 10px;font-size: 18px;font-weight: bolder">
-                <div class="modal-header" style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabelNext">Generate Distribution Scheme</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4 text-center" style="line-height: 34px;">
-                            <span>optimization objective：</span></div>
-                        <div class="col-md-6">
-                            <select class="form-control">
-                                <option>time</option>
-                                <option>energy</option>
-                                <option>energy consumption optimization under time constraint</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 text-center">
-                            <a th:href="@{/test}">
-                                <button class="btn btn-info">generate</button>
-                            </a>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-                    <button type="button" class="col-md-1 btn btn-primary"
-                            data-toggle="modal" data-target="#myModalNext">confirm
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
 
     <!-- 模态框（Modal2） -->
     <div class="modal fade form-horizontal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
@@ -569,7 +432,7 @@
         const startStation = $("[name='startStation']").val();
         const consignee = $("[name='consignee']").val();
         const objective = $("[name='objective']").val();
-        const time = $("[name='deadline']").val();
+        const deadline = $("[name='deadline']").val();
         $.ajax({
             url: "/ajax/generate",
             type: "post",
@@ -578,7 +441,7 @@
                 startStation: startStation,
                 consignee: consignee,
                 objective: objective,
-                time: time
+                deadline: deadline
             },
             dataType: "json",
             success: function (data) {
@@ -603,22 +466,18 @@
                 var t = document.getElementById('map_container');
                 t.style.display = 'block';
 
-                // var time = document.querySelector('#timeAndEnergy');
-                // time.innerHTML = "time:" + data[0][data[0].length - 1][0] +
-                //     "energy:" + data[0][data[0].length - 1][1];
-
                 var map = new AMap.Map("container", {
                     // center: [112.187017,31.763388],
                     resizeEnable: true,
                     zoom: 14
                 });
 
-                var pathData = [];
-                for (let i = 0; i < data[0].length - 1; i++) {
-                    pathData[i] = data[0][i];
-                }
+                // var pathData = [];
+                // for (let i = 0; i < data[0].length - 1; i++) {
+                //     pathData[i] = data[0][i];
+                // }
                 var polyline = new AMap.Polyline({
-                    path: pathData,
+                    path: data[1],
                     isOutline: true,
                     outlineColor: '#ffeeff',
                     borderWeight: 3,
@@ -635,49 +494,125 @@
                 })
                 map.add(polyline);
 
-                var text1 = new AMap.Text({
-                    text: '起点',
-                    anchor: 'top-left', // 设置文本标记锚点
-                    draggable: true,
-                    cursor: 'pointer',
-                    style: {
-                        'padding': '.75rem 1.25rem',
+                // var text1 = new AMap.Text({
+                //     text: startStation,
+                //     anchor: 'top-left', // 设置文本标记锚点
+                //     draggable: true,
+                //     cursor: 'pointer',
+                //     style: {
+                //         'padding': '.75rem 1.25rem',
+                //         'margin-bottom': '1rem',
+                //         'border-radius': '.40rem',
+                //         'background-color': 'white',
+                //         'width': '6rem',
+                //         'border-width': 0,
+                //         'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                //         'text-align': 'center',
+                //         'font-size': '20px',
+                //         'color': 'green',
+                //         'x-index': '10000'
+                //     },
+                //     position: data[1][0]
+                // });
+                // var text2 = new AMap.Text({
+                //     text: consignee,
+                //     anchor: 'top-left', // 设置文本标记锚点
+                //     draggable: true,
+                //     cursor: 'pointer',
+                //     style: {
+                //         'padding': '.75rem 1.25rem',
+                //         'margin-bottom': '1rem',
+                //         'border-radius': '.40rem',
+                //         'background-color': 'white',
+                //         'width': '6rem',
+                //         'border-width': 0,
+                //         'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                //         'text-align': 'center',
+                //         'font-size': '20px',
+                //         'color': 'red',
+                //         'x-index': '10000'
+                //     },
+                //     position: data[3]
+                // });
+                // text1.setMap(map);
+                // text2.setMap(map);
+
+                for (let i = 1; i < data[0].length - 1; i++) {
+                    // 以不同颜色标出不同种类站点名  仓库：绿色  无人机站点：红色  无人车站点：黑色
+                    let color;
+                    if (data[0][i][0] == 'W') {
+                        color = 'green';
+                    } else if (data[0][i][0] == 'D') {
+                        color = 'red';
+                    } else {
+                        color = 'black';
+                    }
+                    // 标出站点标记
+                    let marker = new AMap.Marker({
+                        icon: '/icon/poi-marker-' + color + '.png',
+                        position: data[1][i],
+                        offset: new AMap.Pixel(-13, -30)
+                    });
+                    marker.setMap(map);
+                }
+
+                for (let i = 0; i < data[0].length; i++) {
+                    // 以不同颜色标出不同种类站点名  仓库：绿色  无人机站点：红色  无人车站点：黑色
+                    let color;
+                    if (data[0][i][0] == 'W') {
+                        color = 'green';
+                    } else if (data[0][i][0] == 'D') {
+                        color = 'red';
+                    } else {
+                        color = 'black';
+                    }
+                    let text = new AMap.Text({
+                        text:data[0][i],
+                        anchor:'top-left', // 设置文本标记锚点
+                        draggable:true,
+                        cursor:'pointer',
+                        style:{
+                            'padding': '.5rem .75rem',
+                            'margin-bottom': '1rem',
+                            'border-radius': '.40rem',
+                            'background-color': 'white',
+                            'width': '6rem',
+                            'border-width': 0,
+                            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                            'text-align': 'center',
+                            'font-size': '15px',
+                            'font-weight': 'bolder',
+                            'color': color,
+                            'x-index':'10000'
+                        },
+                        position: data[1][i]
+                    });
+                    text.setMap(map);
+                }
+
+                // 终点坐标文本
+                let text1 = new AMap.Text({
+                    text:consignee,
+                    anchor:'top-left', // 设置文本标记锚点
+                    draggable:true,
+                    cursor:'pointer',
+                    style:{
+                        'padding': '.5rem .75rem',
                         'margin-bottom': '1rem',
                         'border-radius': '.40rem',
                         'background-color': 'white',
-                        'width': '8rem',
+                        'width': '6rem',
                         'border-width': 0,
                         'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
                         'text-align': 'center',
-                        'font-size': '20px',
-                        'color': 'green',
-                        'x-index': '10000'
+                        'font-size': '15px',
+                        'font-weight': 'bolder',
+                        'color': 'blue',
+                        'x-index':'10000'
                     },
-                    // position: [location1[0],location1[1]]
-                    position: data[0][0]
-                });
-                var text2 = new AMap.Text({
-                    text: '终点',
-                    anchor: 'top-left', // 设置文本标记锚点
-                    draggable: true,
-                    cursor: 'pointer',
-                    style: {
-                        'padding': '.75rem 1.25rem',
-                        'margin-bottom': '1rem',
-                        'border-radius': '.40rem',
-                        'background-color': 'white',
-                        'width': '8rem',
-                        'border-width': 0,
-                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-                        'text-align': 'center',
-                        'font-size': '20px',
-                        'color': 'red',
-                        'x-index': '10000'
-                    },
-                    position: data[1]
+                    position: data[3]
                 });
                 text1.setMap(map);
-                text2.setMap(map);
 
                 var drivingOption = {
                     policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
@@ -688,7 +623,7 @@
                 }
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[0][data[0].length - 2][0], data[0][data[0].length - 2][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                driving.search(new AMap.LngLat(data[1][data[1].length - 1][0], data[1][data[1].length - 1][1]), new AMap.LngLat(data[3][0], data[3][1]), function (status, result) {
                     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
                     if (status === 'complete') {
                     } else {
@@ -707,7 +642,7 @@
                     // content: markerContent,
                     icon: startIcon,
                     // icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png",
-                    position: data[0][0],
+                    position: data[1][0],
                     offset: new AMap.Pixel(-17, -25),
                 });
                 var endIcon = new AMap.Icon({
@@ -719,7 +654,7 @@
                 var marker2 = new AMap.Marker({
                     icon: endIcon,
                     // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-                    position: data[0][data[0].length - 2],
+                    position: data[1][data[1].length - 1],
                     offset: new AMap.Pixel(-14, -29),
                 });
                 map.add([marker1, marker2])
@@ -729,8 +664,8 @@
                     alert("该条件下没有可行的服务方案，请修改订单信息！")
                 } else {
                     alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
-                        + data[0][data[0].length - 1][0] + "min, 总能耗："
-                        + data[0][data[0].length - 1][1] + "kj");
+                        + data[2][0] + "min, 总能耗："
+                        + data[2][1] + "kj");
                 }
 
                 // var t = document.getElementById('map_container');
@@ -746,7 +681,7 @@
         const objective = $("[name='objective']").val();
         const uavType = $("[name='uavType']").val();
         const ugvType = $("[name='ugvType']").val();
-        const time = $("[name='deadline']").val();
+        const deadline = $("[name='deadline']").val();
         const weight = $("[name='weight']").val();
         $.ajax({
             url: "/ajax/getRoute",
@@ -758,7 +693,7 @@
                 objective: objective,
                 uavType: uavType,
                 ugvType: ugvType,
-                time: time,
+                deadline: deadline,
                 weight: weight
             },
             dataType: "json",
@@ -782,14 +717,14 @@
 
                 if (data == null) {
                     alert("该条件下没有可行的服务方案，请修改订单信息！")
-                } else if (data[0][data[0].length - 1][0] == -1) {
+                } else if (data[0][0] == -1) {
                     alert("当前无人机无法承受当前负载！请选择更大无人机！")
-                } else if (data[0][data[0].length - 1][0] == -2) {
+                } else if (data[0][1] == -2) {
                     alert("当前无人车无法承受当前负载！请选择更大无人车！")
                 } else {
                     alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
-                        + data[0][data[0].length - 1][0] + "min, 总能耗："
-                        + data[0][data[0].length - 1][1] + "kj");
+                        + data[2][0] + "min, 总能耗："
+                        + data[2][1] + "kj");
                 }
 
                 var map = new AMap.Map("container_1", {
@@ -798,12 +733,9 @@
                     zoom: 14
                 });
 
-                var pathData = [];
-                for (let i = 0; i < data[0].length - 1; i++) {
-                    pathData[i] = data[0][i];
-                }
+
                 var polyline = new AMap.Polyline({
-                    path: pathData,
+                    path: data[1],
                     isOutline: true,
                     outlineColor: '#ffeeff',
                     borderWeight: 3,
@@ -820,49 +752,82 @@
                 })
                 map.add(polyline);
 
-                var text1 = new AMap.Text({
-                    text: '起点',
-                    anchor: 'top-left', // 设置文本标记锚点
-                    draggable: true,
-                    cursor: 'pointer',
-                    style: {
-                        'padding': '.75rem 1.25rem',
+                for (let i = 1; i < data[0].length - 1; i++) {
+                    // 以不同颜色标出不同种类站点名  仓库：绿色  无人机站点：红色  无人车站点：黑色
+                    let color;
+                    if (data[0][i][0] == 'W') {
+                        color = 'green';
+                    } else if (data[0][i][0] == 'D') {
+                        color = 'red';
+                    } else {
+                        color = 'black';
+                    }
+                    // 标出站点标记
+                    let marker = new AMap.Marker({
+                        icon: '/icon/poi-marker-' + color + '.png',
+                        position: data[1][i],
+                        offset: new AMap.Pixel(-13, -30)
+                    });
+                    marker.setMap(map);
+                }
+
+                for (let i = 0; i < data[0].length; i++) {
+                    // 以不同颜色标出不同种类站点名  仓库：绿色  无人机站点：红色  无人车站点：黑色
+                    let color;
+                    if (data[0][i][0] == 'W') {
+                        color = 'green';
+                    } else if (data[0][i][0] == 'D') {
+                        color = 'red';
+                    } else {
+                        color = 'black';
+                    }
+                    let text = new AMap.Text({
+                        text:data[0][i],
+                        anchor:'top-left', // 设置文本标记锚点
+                        draggable:true,
+                        cursor:'pointer',
+                        style:{
+                            'padding': '.5rem .75rem',
+                            'margin-bottom': '1rem',
+                            'border-radius': '.40rem',
+                            'background-color': 'white',
+                            'width': '6rem',
+                            'border-width': 0,
+                            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                            'text-align': 'center',
+                            'font-size': '15px',
+                            'font-weight': 'bolder',
+                            'color': color,
+                            'x-index':'10000'
+                        },
+                        position: data[1][i]
+                    });
+                    text.setMap(map);
+                }
+
+                // 终点坐标文本
+                let text1 = new AMap.Text({
+                    text:consignee,
+                    anchor:'top-left', // 设置文本标记锚点
+                    draggable:true,
+                    cursor:'pointer',
+                    style:{
+                        'padding': '.5rem .75rem',
                         'margin-bottom': '1rem',
                         'border-radius': '.40rem',
                         'background-color': 'white',
-                        'width': '8rem',
+                        'width': '6rem',
                         'border-width': 0,
                         'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
                         'text-align': 'center',
-                        'font-size': '20px',
-                        'color': 'green',
-                        'x-index': '10000'
+                        'font-size': '15px',
+                        'font-weight': 'bolder',
+                        'color': 'blue',
+                        'x-index':'10000'
                     },
-                    // position: [location1[0],location1[1]]
-                    position: data[0][0]
-                });
-                var text2 = new AMap.Text({
-                    text: '终点',
-                    anchor: 'top-left', // 设置文本标记锚点
-                    draggable: true,
-                    cursor: 'pointer',
-                    style: {
-                        'padding': '.75rem 1.25rem',
-                        'margin-bottom': '1rem',
-                        'border-radius': '.40rem',
-                        'background-color': 'white',
-                        'width': '8rem',
-                        'border-width': 0,
-                        'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-                        'text-align': 'center',
-                        'font-size': '20px',
-                        'color': 'red',
-                        'x-index': '10000'
-                    },
-                    position: data[1]
+                    position: data[3]
                 });
                 text1.setMap(map);
-                text2.setMap(map);
 
                 var drivingOption = {
                     policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
@@ -873,7 +838,7 @@
                 }
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[0][data[0].length - 2][0], data[0][data[0].length - 2][1]), new AMap.LngLat(data[1][0], data[1][1]), function (status, result) {
+                driving.search(new AMap.LngLat(data[1][data[1].length - 1][0], data[1][data[1].length - 1][1]), new AMap.LngLat(data[3][0], data[3][1]), function (status, result) {
                     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
                     if (status === 'complete') {
                     } else {
@@ -892,7 +857,7 @@
                     // content: markerContent,
                     icon: startIcon,
                     // icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png",
-                    position: data[0][0],
+                    position: data[1][0],
                     offset: new AMap.Pixel(-17, -25),
                 });
                 var endIcon = new AMap.Icon({
@@ -904,7 +869,7 @@
                 var marker2 = new AMap.Marker({
                     icon: endIcon,
                     // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-                    position: data[0][data[0].length - 2],
+                    position: data[1][data[1].length - 1],
                     offset: new AMap.Pixel(-14, -29),
                 });
                 map.add([marker1, marker2])

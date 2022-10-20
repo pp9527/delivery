@@ -1,16 +1,17 @@
 package com.example.controller;
 
 
-import com.example.service.CarToCustomerService;
+import com.example.bean.Order;
 import com.example.service.CustomerService;
 import com.example.utils.RoutePlanning;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -28,31 +29,31 @@ public class AjaxController {
 
     @ResponseBody
     @PostMapping("/generate")
-    public List<List<Double>> generatePath(String time, String model, String startStation,
-                                           String consignee, String objective) {
-        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(
-                model, startStation, consignee, objective, 2, 2,
-                Integer.parseInt(time) * 60, -1);
+    public List<List<Double>> generatePath(Order order, String objective) {
+        order.setWeight(-1);
+        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(order, objective, 2, 2);
         if (shortestPaths == null) {
             return null;
         }
-        List<Double> desLocation = customerService.getLocationByName(consignee);
+        List<Double> desLocation = customerService.getLocationByName(order.getConsignee());
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(shortestPaths);
+        jsonArray.addAll(shortestPaths);
         jsonArray.add(desLocation);
         return jsonArray;
     }
 
     @ResponseBody
     @PostMapping("/getRoute")
-    public List<List<Double>> getRoute(String model, String startStation
-            , int uavType, int ugvType, String consignee, String objective, String time, String weight) {
-        int weigh = (int) (Float.parseFloat(weight) * 1000);
-        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(
-                model, startStation, consignee, objective, uavType, ugvType, Integer.parseInt(time) * 60, weigh);
-        List<Double> desLocation = customerService.getLocationByName(consignee);
+    public List<List<Double>> getRoute(int uavType, int ugvType, Order order, String objective) {
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(shortestPaths);
+        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(order, objective, uavType, ugvType);
+        if (shortestPaths == null) {
+            return null;
+        } else if (shortestPaths.size() == 1) {
+            return shortestPaths;
+        }
+        List<Double> desLocation = customerService.getLocationByName(order.getConsignee());
+        jsonArray.addAll(shortestPaths);
         jsonArray.add(desLocation);
         return jsonArray;
     }
