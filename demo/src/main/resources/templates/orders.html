@@ -109,6 +109,7 @@
                                         <th>weight/kg</th>
                                         <th>order info</th>
                                         <th>order route</th>
+                                        <th>operation</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -124,6 +125,7 @@
                                         <td th:text="${order.weight}"></td>
                                         <td th:text="${order.info}"></td>
                                         <td th:text="${order.route}"></td>
+                                        <td><button th:value="${order.id}" class="fa fa-times btn-danger btn" onclick="deleteOrder(this.value)"> delete</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -670,6 +672,20 @@
 
                 // var t = document.getElementById('map_container');
                 // t.style.display = 'block';
+            }
+        })
+    }
+
+    function deleteOrder(id) {
+        $.ajax({
+            url: "/ajax/deleteOrder/" + id,
+            type: "delete",
+            dataType: "json",
+            success: function (data) {
+                if (data != 1) {
+                    alert("删除失败！")
+                }
+                location.reload();
             }
         })
     }

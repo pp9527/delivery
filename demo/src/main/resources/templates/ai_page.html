@@ -44,66 +44,69 @@
                 <li class="active">Ai Management</li>
             </ul>
         </div>
-
         <!--body wrapper start-->
         <div class="wrapper">
             <div class="col-md-4">
-
-                <div class="row" style="padding-bottom: 10px;margin-right: 14px;background-color: white;margin-bottom: 10px;border-radius: 10px;">
-                        <div class="row center-block" style="margin-bottom: 15px;padding-left: 20px;">
+                <div class="row"
+                     style="padding-bottom: 10px;margin-right: 14px;background-color: white;margin-bottom: 10px;border-radius: 10px;">
+                    <div class="row center-block" style="margin-bottom: 15px;padding-left: 20px;">
                         <h3>Active Orders：[[${activeOrders.size()}]]</h3>
+                    </div>
+                    <form role="form" class="form-inline" style="background-color: white">
+                        <div class="form-group col-md-6">
+                            <input type="text" style="width: 100%" placeholder="Input" class="form-control input-lg">
                         </div>
-                        <form role="form" class="form-inline" style="background-color: white">
-                            <div class="form-group col-md-6">
-                                <input type="text" style="width: 100%" placeholder="Input" class="form-control input-lg">
-                            </div>
-                            <button class="btn btn-primary col-md-2 input-lg" type="submit">Search</button>
-                            <div class="dropdown col-md-offset-1 col-md-2">
-                                <button type="button" class="input-lg btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown">
-                                    Filters<span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                </ul>
-                            </div>
-                        </form>
+                        <button class="btn btn-primary col-md-2 input-lg" type="submit">Search</button>
+                        <div class="dropdown col-md-offset-1 col-md-2">
+                            <button type="button" class="input-lg btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                Filters<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </form>
                 </div>
-
                 <div class="row" style="height:600px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
                             <div class="panel newPanel" th:each="order:${activeOrders}">
                                 <div class="panel-body">
                                     <div class="row" style="margin-bottom: 10px;">
-                                        <h4 class="col-md-4 text-center"><strong >ID: [[${order.orderId}]]</strong></h4>
+                                        <h4 class="col-md-4 text-center"><strong>ID: [[${order.orderId}]]</strong></h4>
                                         <div class="col-md-3 col-md-offset-5">
-                                            <button class="btn btn-info btn-block" style="font-weight: bolder">track</button>
+                                            <button class="btn btn-info btn-block" style="font-weight: bolder">track
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-md-6">
-                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">uav id: 0012</button>
+                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">
+                                                uav id: 0012
+                                            </button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">ugv id: 0123</button>
+                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">
+                                                ugv id: 0123
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">cloud server id: 0432</button>
+                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">
+                                                cloud server id: 0432
+                                            </button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">edge server id: 0252</button>
+                                            <button class="btn btn-block" style="font-weight: bolder;font-size: 18px;">
+                                                edge server id: 0252
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -112,6 +115,7 @@
             <!--            主显示-->
             <div class="col-md-8" style="background-color: white;height: 700px;padding: 10px;border-radius: 10px;">
                 <div id="canvas" style="height: 600px;"></div>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">running condition</button>
             </div>
         </div>
         <!--body wrapper end-->
@@ -121,11 +125,34 @@
             2022 &copy; AdminEx by AHU ISEC
         </footer>
         <!--footer section end-->
-
-
-
     </div>
     <!-- main content end-->
+
+
+    <div class="modal fade" id="myModal" role="dialog" aria-labelledby="videoPlayModal" aria-hidden="true">'
+        <div class="modal-dialog" style="width:700px;">
+            <div class="modal-content" style="border-radius: 10px">
+                <div class="modal-header" style="border-radius: 10px 10px 0 0">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">running condition</h4>
+                </div>
+                <div class="modal-body" style="padding: 10px;">
+                    <div class="row text-center" id="filelist">
+                        <video controls="" width="656" height="369" class="video_link" poster="#">
+                            <source src="/media/123.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                </div>
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+<!--                    <button type="button" class="btn btn-primary">提交更改</button>-->
+<!--                </div>-->
+            </div>
+
+        </div>
+    </div>
+
 </section>
 
 <div th:replace="common :: commonscript"></div>
@@ -159,7 +186,15 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 <script>
 
+
+    $("#filelist").on('mouseenter', ".video_link", function(){
+        var videoDom = event.target;
+        videoDom.addEventListener('play', function(){
+            videoDom.play();
+        })
+    })
     sendAjax()
+
     function sendAjax() {
         $.ajax({
             url: "/ajax/workflow",

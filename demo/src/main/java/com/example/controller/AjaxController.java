@@ -1,15 +1,16 @@
 package com.example.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.bean.Order;
+import com.example.bean.Path;
 import com.example.service.CustomerService;
+import com.example.service.OrderService;
+import com.example.service.PathService;
 import com.example.utils.RoutePlanning;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,6 +27,12 @@ public class AjaxController {
 
     @Resource
     CustomerService customerService;
+
+    @Resource
+    OrderService orderService;
+
+    @Resource
+    PathService pathService;
 
     @ResponseBody
     @PostMapping("/generate")
@@ -56,6 +63,21 @@ public class AjaxController {
         jsonArray.addAll(shortestPaths);
         jsonArray.add(desLocation);
         return jsonArray;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/deleteOrder/{id}")
+    public int deleteOrder(@PathVariable int id) {
+        Order order = orderService.getById(id);
+        QueryWrapper<Path> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id", order.getOrderId());
+        boolean remove = pathService.remove(queryWrapper);
+        boolean b = orderService.removeById(id);
+        if (remove == b == true) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @ResponseBody

@@ -40,7 +40,7 @@ public class MainController {
     public String toOrders(@RequestParam(value = "pn", defaultValue = "1")Integer pn, Model model) {
 //        List<Order> list = orderService.list();
 //        分页查询
-        Page<Order> orderPage = new Page<>(pn, 12);
+        Page<Order> orderPage = new Page<>(pn, 8);
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id");
         Page<Order> page = orderService.page(orderPage, wrapper);
