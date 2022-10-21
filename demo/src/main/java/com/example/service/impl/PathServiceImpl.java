@@ -2,15 +2,12 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.bean.CarStation;
-import com.example.bean.DroneStation;
 import com.example.bean.Path;
 import com.example.mapper.CarStationMapper;
 import com.example.mapper.DroneStationMapper;
 import com.example.mapper.PathMapper;
 import com.example.service.PathService;
 import com.example.utils.Graph;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -73,5 +70,28 @@ public class PathServiceImpl extends ServiceImpl<PathMapper, Path> implements Pa
             }
             pathMapper.insert(new Path(orderId, did, cid, stationNumber++));
         }
+    }
+
+    /**
+     * @Description: 查询途径站点名
+     * @author pwz
+     * @date 2022/10/21 14:29
+     */
+    @Override
+    public List<String> getPathStationsByOrderId(int orderId) {
+        QueryWrapper<Path> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id", orderId).orderByAsc("station_number");
+        List<Path> paths = pathMapper.selectList(queryWrapper);
+        ArrayList<String> res = new ArrayList<>();
+        for (Path path : paths) {
+            if (path.getDid() == 0) {
+                res.add("C" + path.getCid());
+            } else if (path.getDid() == 1) {
+                res.add("W1");
+            } else {
+                res.add("D" + (path.getDid() - 1));
+            }
+        }
+        return res;
     }
 }

@@ -6,6 +6,7 @@ import com.example.bean.Order;
 import com.example.service.OrderService;
 import com.example.service.PathService;
 import com.example.service.WareService;
+import com.example.utils.Graph;
 import com.example.utils.PageUtils;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
@@ -62,11 +63,18 @@ public class MainController {
         List<List<Double>> path = pathService.getPathByOrderId(order.getOrderId());
         model.addAttribute("pathLists", path);
 
-//        根据订单id查询指定订单终点坐标
-        JSONArray desLocation = new JSONArray();
-        desLocation.add(order.getPrivacyLongitude());
-        desLocation.add(order.getPrivacyLatitude());
-        model.addAttribute("desLocation", desLocation);
+//        根据订单id查询路线站点名和坐标
+        JSONArray stationInfo = new JSONArray();
+//        desLocation.add(order.getPrivacyLongitude());
+//        desLocation.add(order.getPrivacyLatitude());
+//        model.addAttribute("desLocation", desLocation);
+
+        List<String> stations = pathService.getPathStationsByOrderId(order.getOrderId());
+        stations.add(order.getConsignee());
+        List<List<Double>> stationLocations = Graph.stationNamesToLocations(stations);
+        stationInfo.add(stations);
+        stationInfo.add(stationLocations);
+        model.addAttribute("stationInfo", stationInfo);
         return "active_order";
     }
 

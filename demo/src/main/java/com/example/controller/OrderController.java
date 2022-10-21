@@ -35,8 +35,11 @@ public class OrderController {
         List<String> route = RoutePlanning.getRouteByObjective(order, objective, uavType, ugvType);
 //        System.out.println(route);
         pathService.insertPaths(route, order.getOrderId());
-//        2、把路径转化为string，填充order.route属性
-        String string = RoutePlanning.pathListToString(route, order.getConsignee());
+//        2、根据OrderId查询路径转化为string，填充order.route属性
+        List<String> stations = pathService.getPathStationsByOrderId(order.getOrderId());
+        String string = RoutePlanning.pathListToString(stations, order.getConsignee());
+        System.out.println("最终所选方案为: " + string);
+//        String string = RoutePlanning.pathListToString(route, order.getConsignee());
         order.setRoute(string);
 //        3、根据用户查询用户坐标，填充order相关属性
         List<Double> locationByName = customerService.getLocationByName(order.getConsignee());

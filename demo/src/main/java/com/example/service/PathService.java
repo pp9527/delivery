@@ -16,4 +16,6 @@ public interface PathService extends IService<Path>{
     List<List<Double>> getPathByOrderId(int orderId);
 
     void insertPaths(List<String> stationNames, int orderId);
+
+    List<String> getPathStationsByOrderId(int orderId);
 }

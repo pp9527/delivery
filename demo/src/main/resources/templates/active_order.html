@@ -40,7 +40,12 @@
         .my_style_a2{
             color: black;
         }
-
+        /*地图标记大小样式*/
+        .amap-icon img,
+        .amap-marker-content img{
+            width: 25px;
+            height: 34px;
+        }
     </style>
 
 </head>
@@ -137,7 +142,7 @@
                     <div class="panel-body" style="padding-bottom: 0px;padding-top: 5px;">
                         <div class="col-md-3">
                             <div class="row col-md-12">
-                                <h4 style="text-align: center"><strong>Current location</strong></h4>
+                                <h4 style="text-align: center"><strong>Current</strong></h4>
                             </div>
                             <div class="row col-md-12">
                                 <p style="text-align: center">Station A-19</p>
@@ -212,9 +217,7 @@
 
 
         <input id="pathLists" hidden="hidden" th:value="${pathLists}"/>
-        <input id="desLocation" hidden="hidden" th:value="${desLocation}"/>
-
-
+        <input id="stationInfo" hidden="hidden" th:value="${stationInfo}"/>
     </div>
     <!-- main content end-->
 </section>
@@ -257,30 +260,17 @@
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 <script>
-    //初始化地图
-    // var map = new AMap.Map('container', {
-    //     resizeEnable: true, //是否监控地图容器尺寸变化
-    //     zoom: 11, //初始地图级别
-    // });
-
-    // 获取并展示当前城市信息
-    // function logMapinfo(){
-    //     map.getCity( function(info){
-    //         var node = new PrettyJSON.view.Node({
-    //             el: document.querySelector("#map-city"),
-    //             data: info
-    //         });
-    //     });
-    // }
-
 
     //将json字符串转为数组 : 获取无人机路线数组
     // var Latitude2 = $('#Longitude2').val()
     var path = JSON.parse($('#pathLists').val());
-    var desLocation = JSON.parse($('#desLocation').val());
+    var stationInfo = JSON.parse($('#stationInfo').val());
 
-
+    // alert(stationInfo)
+    // alert(stationInfo[0])   //站点名
+    // alert(stationInfo[1])   //站点坐标
     // 无人机路线终点即为无人车路线起点
+
     var start_lo = path[path.length-1][0];
     var end_la = path[path.length-1][1];
 
@@ -302,7 +292,7 @@
     var driving = new AMap.Driving(drivingOption)
 
     // 根据起终点经纬度规划驾车导航路线
-    driving.search(new AMap.LngLat(start_lo,end_la), new AMap.LngLat(desLocation[0],desLocation[1]), function(status, result) {
+    driving.search(new AMap.LngLat(start_lo,end_la), new AMap.LngLat(stationInfo[1][stationInfo[1].length - 1][0],stationInfo[1][stationInfo[1].length - 1][1]), function(status, result) {
         // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
         if (status === 'complete') {
         } else {
@@ -379,55 +369,51 @@
     })
     map.add(polyline);
 
-    var text1 = new AMap.Text({
-        text:'终点',
-        anchor:'top-left', // 设置文本标记锚点
-        draggable:true,
-        cursor:'pointer',
-        style:{
-            'padding': '.75rem 1.25rem',
-            'margin-bottom': '1rem',
-            'border-radius': '.40rem',
-            'background-color': 'white',
-            'width': '8rem',
-            'border-width': 0,
-            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-            'text-align': 'center',
-            'font-size': '20px',
-            'color': 'red',
-            'x-index':'10000'
-        },
-        position: desLocation
-    });
+    for (let i = 0; i < stationInfo[0].length; i++) {
+        // 以不同颜色标出不同种类站点名  仓库：绿色  无人机站点：红色  无人车站点：黑色
+        let color;
+        if (stationInfo[0][i][0] == 'W') {
+            color = 'green';
+        } else if (stationInfo[0][i][0] == 'D') {
+            color = 'red';
+        } else if (stationInfo[0][i][0] == 'C'){
+            color = 'black';
+        } else {
+            color = 'blue';
+        }
+        let text = new AMap.Text({
+            text:stationInfo[0][i],
+            anchor:'top-left', // 设置文本标记锚点
+            draggable:true,
+            cursor:'pointer',
+            style:{
+                'padding': '.5rem .75rem',
+                'margin-bottom': '1rem',
+                'border-radius': '.40rem',
+                'background-color': 'white',
+                'width': '6rem',
+                'border-width': 0,
+                'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+                'text-align': 'center',
+                'font-size': '15px',
+                'font-weight': 'bolder',
+                'color': color,
+                'x-index':'10000'
+            },
+            position: stationInfo[1][i]
+        });
+        text.setMap(map);
+    }
 
-
-
-    var text2 = new AMap.Text({
-        text:'起点',
-        anchor:'top-left', // 设置文本标记锚点
-        draggable:true,
-        cursor:'pointer',
-        style:{
-            'padding': '.75rem 1.25rem',
-            'margin-bottom': '1rem',
-            'border-radius': '.40rem',
-            'background-color': 'white',
-            'width': '8rem',
-            'border-width': 0,
-            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-            'text-align': 'center',
-            'font-size': '20px',
-            'color': 'green',
-            'x-index':'10000'
-        },
-        // position: [location1[0],location1[1]]
-        position: path[0]
-    });
-
-    text1.setMap(map);
-    text2.setMap(map);
-
-
+    for (let i = 1; i < stationInfo[0].length - 2; i++) {
+        // 标出站点标记
+        let marker = new AMap.Marker({
+            icon: '/icon/poi-marker-red.png',
+            position: stationInfo[1][i],
+            offset: new AMap.Pixel(-13, -30)
+        });
+        marker.setMap(map);
+    }
 
     map.setFitView(null, true, [150, 300, 30, 80]);
 </script>

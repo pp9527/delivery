@@ -29,4 +29,9 @@ public class PathServiceTest {
         pathService.insertPaths(list, 12345);
     }
 
+    @Test
+    public void testGetPathStationsByOrderId() {
+        System.out.println(pathService.getPathStationsByOrderId(11111));
+    }
+
 }

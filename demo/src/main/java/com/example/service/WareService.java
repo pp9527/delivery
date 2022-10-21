@@ -11,5 +11,4 @@ import com.example.bean.Warehouse;
  */
 public interface WareService extends IService<Warehouse> {
 
-    Warehouse selectById(int id);
 }

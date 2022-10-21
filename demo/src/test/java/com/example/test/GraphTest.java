@@ -4,6 +4,8 @@ import com.example.utils.Graph;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+
 /**
  * @author: pwz
  * @create: 2022/9/26 16:13
@@ -27,5 +29,10 @@ public class GraphTest {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testStationNamesToLocations() {
+        System.out.println(Graph.stationNamesToLocations(Arrays.asList("W1", "D1", "C1", "U1")));
     }
 }

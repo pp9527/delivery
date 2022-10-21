@@ -3,11 +3,10 @@ package com.example.utils;
 
 import com.example.bean.StationNetMap;
 import com.example.service.CarStationService;
+import com.example.service.CustomerService;
 import com.example.service.DroneStationService;
 import com.example.service.StationNetMapService;
-import lombok.Data;
 import org.springframework.stereotype.Component;
-import sun.security.provider.certpath.Vertex;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -43,6 +42,9 @@ public class Graph {
 
     @Resource
     CarStationService carStationService;
+
+    @Resource
+    CustomerService customerService;
 
     /**
      * @Description: 求图的顶点（站点）集合，与边集合一一对应 W1..D1..C1..
@@ -91,5 +93,27 @@ public class Graph {
      */
     public static int getSequenceByName(String name) {
         return Graph.getVertex().indexOf(name);
+    }
+
+    /**
+     * @Description: 根据站点名集合返回站点坐标集合
+     * @author pwz
+     * @date 2022/10/21 15:00
+     */
+    public static List<List<Double>> stationNamesToLocations(List<String> stations) {
+        List<List<Double>> list = new ArrayList<>();
+        for (int i = 0; i < stations.size(); i++) {
+            char[] chars = stations.get(i).toCharArray();
+            List<Double> location;
+            if (chars[0] == 'W' || chars[0] == 'D') {
+                location = graph.droneStationService.getLocationByName(stations.get(i));
+            } else if (chars[0] == 'C'){
+                location = graph.carStationService.getLocationByName(stations.get(i));
+            } else {
+                location = graph.customerService.getLocationByName(stations.get(i));
+            }
+            list.add(location);
+        }
+        return list;
     }
 }

@@ -146,7 +146,7 @@ public class RoutePlanning {
             }
             timeAndEnergy = getTimeAndEnergy(route, order.getConsignee(), drone, car, weigh);
             route.remove(route.size() - 1);
-            System.out.println("最终所选方案为：" + route + ", 总时间：" +
+            System.out.println("符合要求方案为：" + route + ", 总时间：" +
                     timeAndEnergy[0] + "s, 总能耗：" + timeAndEnergy[1] + "j");
             res = routePlanning.stationNameToRouteLocation(route, timeAndEnergy);
         }
@@ -373,13 +373,12 @@ public class RoutePlanning {
         int carRouteDistance = GuideRoutePlanUtils.getDistanceOfPlanFromGuide(driveSource, consignee);
         // 无人车路程总时间 cTime
         int cTime = carRouteDistance / car.getSpeed();
-        // 无人车实时功耗
-        int realDronePower = weigh == -1 ?
-                drone.getNoLoadPower() : drone.getNoLoadPower() + (weigh / drone.getMaxLoad());
+        // 无人机实时功耗
+        int realDronePower = getDronePower(drone, weigh);
         // 无人机路程总能耗 dEnergy
         int dEnergy = dTime * realDronePower;
         // 无人车实时功耗
-        int realCarPower = weigh == -1 ? car.getNoLoadPower() : car.getNoLoadPower() + (weigh / car.getMaxLoad());
+        int realCarPower = getCarPower(car, weigh);
         // 无人车路程总能耗 dEnergy
         int cEnergy = cTime * realCarPower;
         // 总时间
@@ -387,6 +386,26 @@ public class RoutePlanning {
         // 总能耗
         int totalEnergy = cEnergy + dEnergy;
         return new int[]{totalTime, totalEnergy};
+    }
+
+    // 无人机实时功耗
+    private static int getDronePower(Drone drone, int weight) {
+        if (weight == -1) {
+            return drone.getNoLoadPower();
+        } else {
+            return drone.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
+                    + (drone.getMaxPower() - drone.getNoLoadPower()) * weight / drone.getMaxLoad();
+        }
+    }
+
+    // 无人车实时功耗
+    private static int getCarPower(Car car, int weight) {
+        if (weight == -1) {
+            return car.getNoLoadPower();
+        } else {
+            return car.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
+                    + (car.getMaxPower() - car.getNoLoadPower()) * weight / car.getMaxLoad();
+        }
     }
 
     /**
