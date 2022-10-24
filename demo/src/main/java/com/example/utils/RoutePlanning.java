@@ -26,6 +26,8 @@ public class RoutePlanning {
     private static int[] minDis;// 源点到其他各点的最短距离
     public static RoutePlanning routePlanning;
 
+//    private static GuideRoutePlanUtils guideRoutePlanUtils;
+
     @PostConstruct
     public void init() {
         routePlanning = this;

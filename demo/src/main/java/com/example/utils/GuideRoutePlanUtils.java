@@ -4,15 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.service.CarStationService;
 import com.example.service.CustomerService;
 import com.example.service.DroneStationService;
-import net.sf.json.JSON;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: pwz
@@ -48,6 +45,7 @@ public class GuideRoutePlanUtils {
      * @date 2022/10/13 15:54
      * @return int
      */
+//    @Cacheable(value = "getDistanceOfPlanFromGuide")
     public static int getDistanceOfPlanFromGuide(String startStation, String consignee) {
         List<Double> origin = guideRoutePlanUtils.carStationService.getLocationByName(startStation);
         List<Double> des = guideRoutePlanUtils.customerService.getLocationByName(consignee);

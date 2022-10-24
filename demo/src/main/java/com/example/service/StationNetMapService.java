@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.bean.StationNetMap;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public interface StationNetMapService extends IService<StationNetMap> {
 
+    @Cacheable(value = "stationNetMap")
     List<List<List<Double>>> getAllStationPath();
 
     @Deprecated
