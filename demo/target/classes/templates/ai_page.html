@@ -113,10 +113,28 @@
             </div>
 
             <!--            主显示-->
-            <div class="col-md-8" style="background-color: white;height: 700px;padding: 10px;border-radius: 10px;">
-                <div id="canvas" style="height: 600px;">
-                    <div data-toggle="modal" data-target="#myModal" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
-margin-left: 250px;margin-top: 90px;opacity: 0.5"></div>
+            <div class="col-md-8" style="overflow: hidden;background-color: white;height: 700px;padding: 10px;border-radius: 10px;">
+                <div id="canvas" style="height: 1000px;margin-left: -140px;margin-top: 80px;">
+                    <div id="col1" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 250px;margin-top: 170px;opacity: 0.5"></div>
+                    <div id="col2" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 380px;margin-top: 60px;opacity: 0.5"></div>
+                    <div id="col3" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 380px;margin-top: 280px;opacity: 0.5"></div>
+                    <div id="col4" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 510px;margin-top: 170px;opacity: 0.5"></div>
+                    <div id="col5" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 630px;margin-top: 170px;opacity: 0.5"></div>
+                    <div id="col6" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 750px;margin-top: 60px;opacity: 0.5"></div>
+                    <div id="col7" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 750px;margin-top: 170px;opacity: 0.5"></div>
+                    <div id="col8" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 750px;margin-top: 280px;opacity: 0.5"></div>
+                    <div id="col9" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 870px;margin-top: 170px;opacity: 0.5"></div>
+                    <div id="col10" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 990px;margin-top: 170px;opacity: 0.5"></div>
                 </div>
             </div>
         </div>
@@ -189,6 +207,7 @@ margin-left: 250px;margin-top: 90px;opacity: 0.5"></div>
 <script>
 
 
+
     $("#filelist").on('mouseenter', ".video_link", function () {
         var videoDom = event.target;
         videoDom.addEventListener('play', function () {
@@ -216,6 +235,64 @@ margin-left: 250px;margin-top: 90px;opacity: 0.5"></div>
             }
         })
     }
+
+    {
+        var t1 = document.getElementById('col1');
+        var t2 = document.getElementById('col2');
+        var t3 = document.getElementById('col3');
+        var t4 = document.getElementById('col4');
+        var t5 = document.getElementById('col5');
+        var t6 = document.getElementById('col6');
+        var t7 = document.getElementById('col7');
+        var t8 = document.getElementById('col8');
+        var t9 = document.getElementById('col9');
+        var t10 = document.getElementById('col10');
+    }
+    for(let i = 1; i < 8; i++) {
+        setTimeout(function() {
+            t1.style.backgroundColor = '#4cae4c';
+            t2.style.backgroundColor = '#4cae4c';
+            t3.style.backgroundColor = '#4cae4c';
+            t4.style.backgroundColor = '#4cae4c';
+            t5.style.backgroundColor = '#4cae4c';
+            t6.style.backgroundColor = '#4cae4c';
+            t7.style.backgroundColor = '#4cae4c';
+            t8.style.backgroundColor = '#4cae4c';
+            t9.style.backgroundColor = '#4cae4c';
+            t10.style.backgroundColor = '#4cae4c';
+            switch (i) {
+                case 1 :
+                    t1.style.backgroundColor = 'red';
+                    break;
+                case 2 :
+                    t2.style.backgroundColor = 'red';
+                    t3.style.backgroundColor = 'red';
+                    break;
+                case 3 :
+                    t4.style.backgroundColor = 'red';
+                    break;
+                case 4 :
+                    t5.style.backgroundColor = 'red';
+                    break;
+                case 5 :
+                    t6.style.backgroundColor = 'red';
+                    t7.style.backgroundColor = 'red';
+                    t8.style.backgroundColor = 'red';
+                    break;
+                case 6 :
+                    t9.style.backgroundColor = 'red';
+                    break;
+                case 7 :
+                    t10.style.backgroundColor = 'red';
+                    break;
+            }
+        }, 1500 * i);
+    }
+    // for(let i = 1; i < 11; i++) {
+    //     setTimeout(function() {
+    //         console.log(i)
+    //     }, 1000 * i);
+    // }
 </script>
 
 

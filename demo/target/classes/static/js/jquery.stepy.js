@@ -211,6 +211,21 @@
         	$('<a/>', { id: id + '-back-' + index, href: 'javascript:void(0);', 'class': 'button-back btn btn-info', html: opt.backLabel }).click(function() {
         		if (!opt.back || methods.execute.call($this, opt.back, index - 1)) {
         			methods.step.call($this, (index - 1) + 1);
+					if (index === 1) {
+						var t = document.getElementById('firstStep');
+						t.style.display = 'block';
+						var t = document.getElementById('secondStep');
+						t.style.display = 'none';
+						var t = document.getElementById('thirdStep');
+						t.style.display = 'none';
+					} else if (index === 2) {
+						var t = document.getElementById('firstStep');
+						t.style.display = 'none';
+						var t = document.getElementById('secondStep');
+						t.style.display = 'block';
+						var t = document.getElementById('thirdStep');
+						t.style.display = 'none';
+					}
         		}
             }).appendTo($('#' + id + '-buttons-' + index));
         }, createNextButton: function(index) {
@@ -219,8 +234,24 @@
 				opt		= this.data('options');
 
         	$('<a/>', { id: id + '-next-' + index, href: 'javascript:void(0);', 'class': 'button-next  btn btn-info', html: opt.nextLabel }).click(function() {
+
         		if (!opt.next || methods.execute.call($this, opt.next, index + 1)) {
 					methods.step.call($this, (index + 1) + 1);
+					if (index == 0) {
+						var t = document.getElementById('firstStep');
+						t.style.display = 'none';
+						var t = document.getElementById('secondStep');
+						t.style.display = 'block';
+						var t = document.getElementById('thirdStep');
+						t.style.display = 'none';
+					} else if (index == 1) {
+						var t = document.getElementById('firstStep');
+						t.style.display = 'none';
+						var t = document.getElementById('secondStep');
+						t.style.display = 'none';
+						var t = document.getElementById('thirdStep');
+						t.style.display = 'block';
+					}
         		}
             }).appendTo($('#' + id + '-buttons-' + index));
         }, execute: function(callback, index) {

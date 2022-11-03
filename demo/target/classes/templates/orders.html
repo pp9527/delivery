@@ -15,7 +15,8 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
 
-
+    <!-- 使用 CDN 路径 或者本地 bpmn-js 路径 -->
+    <script src="https://unpkg.com/bpmn-js@0.27.0-1/dist/bpmn-viewer.development.js"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 
     <div th:include="common::commonheader"></div>
@@ -174,10 +175,23 @@
                         <div class="col-md-12">
                             <div class="square-widget">
                                 <div class="widget-container">
+                                    <div style="height: 100px;overflow: hidden">
+                                        <div id="canvas" style="height: 400px;margin-left: -100px;margin-top: -50px;">
+                                            <div id="firstStep" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 270px;margin-top: 60px;opacity: 0.5"></div>
+                                            <div id="secondStep" style="display: none;border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 480px;margin-top: 60px;opacity: 0.5"></div>
+                                            <div id="thirdStep" style="display: none;border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
+margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
+                                        </div>
+                                    </div>
+
                                     <div class="stepy-tab"></div>
                                     <form id="default" th:action="@{/insertOrder}" method="post">
+
                                         <fieldset title="Order Info" style="margin: 0;padding-bottom: 20px;">
-                                            <legend>Detailed Information</legend>
+                                            <legend>Detailed Information
+                                            </legend>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-4" style="vertical-align: middle">
                                                     <span>transportation mode：</span>
@@ -388,7 +402,7 @@
             backLabel: 'Previous',
             block: true,
             nextLabel: 'Next',
-            titleClick: true,
+            titleClick: false,
             titleTarget: '.stepy-tab'
         });
     });
@@ -428,6 +442,27 @@
     // model、startStation、consignee、orderId、type、length、width、height、weight、info、
     // objective
 
+    getWorkflow();
+
+    function getWorkflow() {
+        $.ajax({
+            url: "/ajax/workflow1",
+            type: "get",
+            data: {},
+            // dataType: "xml",
+            success: function (data) {
+                var diagramXML = data;
+                var bpmnModeler = new BpmnJS({
+                    container: '#canvas'
+                });
+                bpmnModeler.importXML(diagramXML, function (err) {
+                    if (err) {
+                        return console.error('failed to load diagram', err);
+                    }
+                });
+            }
+        })
+    }
 
     function sendAjax() {
         const model = $("[name='model']:checked").val();
