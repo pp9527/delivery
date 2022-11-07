@@ -1,6 +1,8 @@
 package com.example.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.bean.Order;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,4 +24,9 @@ public interface OrderService extends IService<Order> {
 
     @CacheEvict(value = "order", allEntries = true)
     boolean save(Order order);
+
+    @CacheEvict(value = "order", allEntries = true)
+    default boolean update(Order entity, Wrapper<Order> updateWrapper) {
+        return SqlHelper.retBool(this.getBaseMapper().update(entity, updateWrapper));
+    }
 }

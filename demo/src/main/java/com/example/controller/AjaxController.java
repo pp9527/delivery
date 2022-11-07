@@ -11,8 +11,10 @@ import com.example.utils.RoutePlanning;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -63,6 +65,16 @@ public class AjaxController {
         jsonArray.addAll(shortestPaths);
         jsonArray.add(desLocation);
         return jsonArray;
+    }
+
+    @ResponseBody
+    @PostMapping(path = "/uploadFile")
+    public String uploadFile(@RequestParam("file")MultipartFile file) throws IOException {
+        if (file != null) {
+            return "1";
+        } else {
+            return "0";
+        }
     }
 
     @ResponseBody

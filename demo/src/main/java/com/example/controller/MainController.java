@@ -79,11 +79,12 @@ public class MainController {
     }
 
     @GetMapping("/safety")
-    public String toSafety(Model model) {
-
-        //查询表中最大的id
-        int maxId = orderService.getMaxId();
-
+    public String toSafety(@RequestParam(value = "id", required = false, defaultValue = "0")int id, Model model) {
+        int maxId = id;
+        if (id == 0) {
+            //查询表中最大的id
+            maxId = orderService.getMaxId();
+        }
         //        查询当前活跃订单
         List<Order> activeOrders = orderService.getActiveOrders();
         model.addAttribute("activeOrders", activeOrders);

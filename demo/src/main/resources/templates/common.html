@@ -75,11 +75,15 @@
         <!--toggle button end-->
 
         <!--search start-->
-        <form class="searchform" action="main.html" method="post">
+        <form class="searchform" action="main.html" method="get">
             <input type="text" class="form-control" name="keyword" placeholder="Search here..."/>
         </form>
-        <!--search end-->
-
+        <!--search th:action="@{/ajax/uploadFile}"  end-->
+        <form id="form" class="col-md-3" style="line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
+            <input name="file" class="col-md-6" type="file" id="file">
+            <div class="col-md-3" style="height: 100%;"><button onclick="selectFile()" class="btn btn-info" style="padding: 0 8px 0 8px;height: 30px;">submit</button></div>
+        </form>
+        <iframe style="display: none" src="" fragment="0" name="frame"></iframe>
         <!--notification menu start -->
         <div class="menu-right">
             <ul class="notification-menu">
@@ -279,7 +283,6 @@
         </div>
         <!--notification menu end -->
 
-
     </div>
 
 <div th:fragment="commonscript">
@@ -291,6 +294,47 @@
     <script src="/js/modernizr.min.js" th:src="@{/js/modernizr.min.js}"></script>
     <script src="/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
     <script src="/js/scripts.js" th:src="@{/js/scripts.js}"></script>
+<script>
+
+    function selectFile() {
+
+        var formData = new FormData($('#form')[0]);
+        $.ajax({
+            url: "/ajax/uploadFile",
+            type: 'POST',
+            data: formData,
+            //要想用jquery的ajax来提交FormData数据,
+            //则必须要把这两项设为false
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data == "1") {
+                    alert("upload success!");
+                    var t = document.getElementById('form');
+                    t.style.display = 'none';
+                }
+        },
+    });
+
+
+        // const files = $('#exampleInputFile')[0].files[0]; //单个
+        // const data = new FormData();
+        // data.append('uploadFile', files[0]);
+        // $.ajax({
+        //     url: "/ajax/uploadFile",
+        //     type: "post",
+        //     data: data,
+        //     cache: false,
+        //     processData: false,
+        //     contentType: false,
+        //     success: function (data) {
+        //         if (data == "1") {
+        //             alert("upload success!")
+        //         }
+        //     }
+        // })
+    }
+</script>
 </div>
 
 
