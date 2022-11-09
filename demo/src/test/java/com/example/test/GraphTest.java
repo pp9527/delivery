@@ -25,7 +25,7 @@ public class GraphTest {
         int[][] matrix = Graph.getMatrix();
         for (int[] ints : matrix) {
             for (int anInt : ints) {
-                System.out.print(anInt + " ");
+                System.out.print(anInt + ", ");
             }
             System.out.println();
         }
@@ -34,5 +34,13 @@ public class GraphTest {
     @Test
     public void testStationNamesToLocations() {
         System.out.println(Graph.stationNamesToLocations(Arrays.asList("W1", "D1", "C1", "U1")));
+    }
+
+    @Test
+    public void testGetVertex() {
+        System.out.println(Graph.getVertex());
+        for (String vertex : Graph.getVertex()) {
+            System.out.print("\"" + vertex + "\",");
+        }
     }
 }

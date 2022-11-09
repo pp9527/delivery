@@ -20,4 +20,6 @@ public interface CarToCustomerService extends IService<CarToCustomer> {
     int getShortestCarStationNum(String customerName);
 
     List<Integer> getAllCarStationByCustomerName(String customerName);
+
+    List<String> getAllCarStationNameByCustomerName(String customerName);
 }

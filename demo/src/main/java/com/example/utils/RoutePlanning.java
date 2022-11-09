@@ -107,6 +107,7 @@ public class RoutePlanning {
      */
     public static List<List<Double>> selectStrategyByObjective(
             Order order, String objective, int uavType, int ugvType) {
+        int f = 0;
         List<List<Double>> res;
         // 最短路径途径站点和距离  W1, D1, C1, 2455
         List<String> route = null;
@@ -131,6 +132,18 @@ public class RoutePlanning {
                 case "time":
                     // 选择总时间最短的路线
                     System.out.println("当前选择总时间最短方案...");
+
+                    //使用openfaas函数
+//                    String carToUserDistance = GuideRoutePlanUtils.getCarToUserDistance(
+//                            routePlanning.carToCustomerService.getAllCarStationNameByCustomerName(
+//                                    order.getConsignee()), order.getConsignee());
+//                    f = 1;
+//                    String path = OpenFaasUtils.getShortestTimePath(order.getStartStation(), order.getConsignee()
+//                            , uavType - 1, ugvType - 1, weigh, carToUserDistance);
+//                    String[] split = path.split(",");
+//                    route = Arrays.asList(split);
+
+                    // 不使用使用openfaas函数
                     route = getShortestTimeRoute(order.getStartStation(), order.getConsignee(), drone, car, weigh);
                     break;
                 case "energy":
@@ -146,7 +159,13 @@ public class RoutePlanning {
                     if (route == null) return null;
                     break;
             }
-            timeAndEnergy = getTimeAndEnergy(route, order.getConsignee(), drone, car, weigh);
+            if (f == 1) {
+                timeAndEnergy = new int[]{Integer.parseInt(route.get(route.size() - 2)),
+                        Integer.parseInt(route.get(route.size() - 1))};
+                route.remove(route.size() - 1);
+            } else {
+                timeAndEnergy = getTimeAndEnergy(route, order.getConsignee(), drone, car, weigh);
+            }
             route.remove(route.size() - 1);
             System.out.println("符合要求方案为：" + route + ", 总时间：" +
                     timeAndEnergy[0] + "s, 总能耗：" + timeAndEnergy[1] + "j");
@@ -392,22 +411,14 @@ public class RoutePlanning {
 
     // 无人机实时功耗
     private static int getDronePower(Drone drone, int weight) {
-        if (weight == -1) {
-            return drone.getNoLoadPower();
-        } else {
-            return drone.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
-                    + (drone.getMaxPower() - drone.getNoLoadPower()) * weight / drone.getMaxLoad();
-        }
+        return drone.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
+                + (drone.getMaxPower() - drone.getNoLoadPower()) * weight / drone.getMaxLoad();
     }
 
     // 无人车实时功耗
     private static int getCarPower(Car car, int weight) {
-        if (weight == -1) {
-            return car.getNoLoadPower();
-        } else {
-            return car.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
-                    + (car.getMaxPower() - car.getNoLoadPower()) * weight / car.getMaxLoad();
-        }
+        return car.getNoLoadPower() // 功耗线性变化   空载功耗 + 载货增量
+                + (car.getMaxPower() - car.getNoLoadPower()) * weight / car.getMaxLoad();
     }
 
     /**

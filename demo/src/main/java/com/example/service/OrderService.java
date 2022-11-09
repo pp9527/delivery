@@ -17,15 +17,15 @@ import java.util.List;
  */
 public interface OrderService extends IService<Order> {
 
-    @Cacheable(value = "order")
+//    @Cacheable(value = "order")
     List<Order> getActiveOrders();
 
     int getMaxId();
 
-    @CacheEvict(value = "order", allEntries = true)
+//    @CacheEvict(value = "order", allEntries = true)
     boolean save(Order order);
 
-    @CacheEvict(value = "order", allEntries = true)
+//    @CacheEvict(value = "order", allEntries = true)
     default boolean update(Order entity, Wrapper<Order> updateWrapper) {
         return SqlHelper.retBool(this.getBaseMapper().update(entity, updateWrapper));
     }

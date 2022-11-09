@@ -1,16 +1,24 @@
 /*
-MySQL Data Transfer
-Source Host: localhost
-Source Database: delivery
-Target Host: localhost
-Target Database: delivery
-Date: 2022/10/17 16:55:53
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50729
+Source Host           : localhost:3306
+Source Database       : delivery
+
+Target Server Type    : MYSQL
+Target Server Version : 50729
+File Encoding         : 65001
+
+Date: 2022-11-08 17:15:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for car
 -- ----------------------------
+DROP TABLE IF EXISTS `car`;
 CREATE TABLE `car` (
   `id` int(11) NOT NULL,
   `no_load_power` int(11) NOT NULL,
@@ -22,8 +30,16 @@ CREATE TABLE `car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+-- Records of car
+-- ----------------------------
+INSERT INTO `car` VALUES ('1', '30', '80', '3', '5000', '1500');
+INSERT INTO `car` VALUES ('2', '50', '100', '4', '12000', '2100');
+INSERT INTO `car` VALUES ('3', '80', '130', '5', '20000', '2500');
+
+-- ----------------------------
 -- Table structure for car_station
 -- ----------------------------
+DROP TABLE IF EXISTS `car_station`;
 CREATE TABLE `car_station` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -46,8 +62,24 @@ CREATE TABLE `car_station` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of car_station
+-- ----------------------------
+INSERT INTO `car_station` VALUES ('1', 'C1', '117.192553', '31.759471', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('2', 'C2', '117.244588', '31.753487', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('3', 'C3', '117.240478', '31.724458', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('4', 'C4', '117.220845', '31.768617', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('5', 'C5', '117.231344', '31.759778', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('6', 'C6', '117.231085', '31.713368', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('7', 'C7', '117.187768', '31.732940', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('8', 'C8', '117.169658', '31.742174', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('9', 'C9', '117.231054', '31.724756', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('10', 'C10', '117.246237', '31.740925', '1', '1', '1', '2', '1', '3');
+INSERT INTO `car_station` VALUES ('11', 'C11', '117.220604', '31.730322', '1', '1', '1', '2', '1', '3');
+
+-- ----------------------------
 -- Table structure for car_to_customer
 -- ----------------------------
+DROP TABLE IF EXISTS `car_to_customer`;
 CREATE TABLE `car_to_customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `start` int(11) NOT NULL,
@@ -57,8 +89,22 @@ CREATE TABLE `car_to_customer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of car_to_customer
+-- ----------------------------
+INSERT INTO `car_to_customer` VALUES ('1', '3', '1', '1279');
+INSERT INTO `car_to_customer` VALUES ('2', '6', '1', '889');
+INSERT INTO `car_to_customer` VALUES ('3', '4', '2', '1011');
+INSERT INTO `car_to_customer` VALUES ('4', '5', '2', '1233');
+INSERT INTO `car_to_customer` VALUES ('7', '5', '4', '900');
+INSERT INTO `car_to_customer` VALUES ('8', '2', '4', '786');
+INSERT INTO `car_to_customer` VALUES ('9', '9', '1', '1560');
+INSERT INTO `car_to_customer` VALUES ('10', '10', '1', '3128');
+INSERT INTO `car_to_customer` VALUES ('11', '11', '1', '2673');
+
+-- ----------------------------
 -- Table structure for customer
 -- ----------------------------
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -68,8 +114,16 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of customer
+-- ----------------------------
+INSERT INTO `customer` VALUES ('1', 'U1', '117.240473', '31.713253');
+INSERT INTO `customer` VALUES ('2', 'U2', '117.231199', '31.770856');
+INSERT INTO `customer` VALUES ('4', 'U4', '117.240855', '31.759800');
+
+-- ----------------------------
 -- Table structure for drone
 -- ----------------------------
+DROP TABLE IF EXISTS `drone`;
 CREATE TABLE `drone` (
   `id` int(11) NOT NULL,
   `speed` int(11) NOT NULL,
@@ -81,8 +135,16 @@ CREATE TABLE `drone` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+-- Records of drone
+-- ----------------------------
+INSERT INTO `drone` VALUES ('1', '6', '200', '300', '1500', '180');
+INSERT INTO `drone` VALUES ('2', '8', '300', '400', '3000', '320');
+INSERT INTO `drone` VALUES ('3', '10', '400', '500', '5000', '400');
+
+-- ----------------------------
 -- Table structure for drone_station
 -- ----------------------------
+DROP TABLE IF EXISTS `drone_station`;
 CREATE TABLE `drone_station` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -102,8 +164,30 @@ CREATE TABLE `drone_station` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of drone_station
+-- ----------------------------
+INSERT INTO `drone_station` VALUES ('1', 'W1', '117.214161', '31.751530', '1', '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('2', 'D1', '117.200029', '31.753592', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('3', 'D2', '117.209581', '31.762060', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('4', 'D3', '117.209867', '31.774985', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('5', 'D4', '117.204802', '31.749343', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('6', 'D5', '117.217905', '31.756361', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('7', 'D6', '117.223643', '31.759551', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('8', 'D7', '117.213935', '31.742092', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('9', 'D8', '117.189316', '31.743619', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('10', 'D9', '117.231199', '31.747284', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('11', 'D10', '117.205524', '31.740505', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('12', 'D11', '117.180692', '31.751023', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('13', 'D12', '117.231273', '31.753442', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('14', 'D13', '117.231244', '31.735506', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('15', 'D14', '117.202916', '31.723304', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('16', 'D15', '117.222616', '31.717974', null, '1', '1', '1', '2', '1', '3');
+INSERT INTO `drone_station` VALUES ('17', 'D16', '117.207786', '31.729351', null, '1', '1', '1', '2', '1', '3');
+
+-- ----------------------------
 -- Table structure for order_record
 -- ----------------------------
+DROP TABLE IF EXISTS `order_record`;
 CREATE TABLE `order_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model` int(11) DEFAULT '1',
@@ -122,12 +206,33 @@ CREATE TABLE `order_record` (
   `status` int(11) DEFAULT '0',
   `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privacy_status` tinyint(4) DEFAULT '0',
+  `route` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of order_record
+-- ----------------------------
+INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.240473', '31.713253', '117.239703', '31.713891', '11111', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '', '1', 'W1->D7->D16->D15->C6->U1');
+INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '22222', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '111', '0', 'W1->D7->C11->U1');
+INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '33333', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '...', '0', 'W1->D7->D13->C3->U1');
+INSERT INTO `order_record` VALUES ('4', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10021', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '123', '0', 'W1->D7->D13->C3->U1');
+INSERT INTO `order_record` VALUES ('5', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10001', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '123', '0', 'W1->D7->D13->C9->U1');
+INSERT INTO `order_record` VALUES ('6', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10003', 'U1', '12', '12', '1.20000', 'apple', '17', '0', '123', '0', 'W1->D7->D13->C3->U1');
+INSERT INTO `order_record` VALUES ('7', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10005', 'U1', '12', '12', '2.00000', 'apple', '20', '0', '。。。', '0', 'W1->D7->C11->U1');
+INSERT INTO `order_record` VALUES ('11', '1', 'W1', '117.240473', '31.713253', '117.239521', '31.712882', '10006', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
+INSERT INTO `order_record` VALUES ('12', '1', 'W1', '117.240473', '31.713253', '117.237792', '31.717393', '10007', 'U1', '12', '12', '4.00000', 'apple', '30', '0', '11111', '1', 'W1->D7->C11->U1');
+INSERT INTO `order_record` VALUES ('13', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10008', 'U1', '12', '12', '1.00000', 'apple', '30', '0', '123', '0', 'W1->D7->D16->D15->C6->U1');
+INSERT INTO `order_record` VALUES ('14', '1', 'W1', '117.240473', '31.713253', '117.240062', '31.712307', '10009', 'U1', '12', '12', '1.20000', 'apple', '22', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
+INSERT INTO `order_record` VALUES ('15', '1', 'W1', '117.240473', '31.713253', '117.239337', '31.714411', '10010', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
+INSERT INTO `order_record` VALUES ('16', '1', 'W1', '117.240473', '31.713253', '117.241252', '31.712342', '10011', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D7->C11->U1');
+INSERT INTO `order_record` VALUES ('17', '1', 'W1', '117.231199', '31.770856', '117.231673', '31.771750', '10012', 'U2', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D5->C4->U2');
+INSERT INTO `order_record` VALUES ('23', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10013', 'U1', '12', '12', '1.20000', 'apple', '20', '0', 'new order', '0', 'W1->D7->D13->C3->U1');
 
 -- ----------------------------
 -- Table structure for path
 -- ----------------------------
+DROP TABLE IF EXISTS `path`;
 CREATE TABLE `path` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
@@ -135,11 +240,76 @@ CREATE TABLE `path` (
   `cid` int(11) DEFAULT '0',
   `station_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of path
+-- ----------------------------
+INSERT INTO `path` VALUES ('1', '11111', '1', '0', '1');
+INSERT INTO `path` VALUES ('2', '11111', '8', '0', '2');
+INSERT INTO `path` VALUES ('3', '11111', '17', '0', '3');
+INSERT INTO `path` VALUES ('4', '11111', '16', '0', '4');
+INSERT INTO `path` VALUES ('5', '11111', '0', '6', '5');
+INSERT INTO `path` VALUES ('6', '22222', '1', '0', '1');
+INSERT INTO `path` VALUES ('7', '22222', '8', '0', '2');
+INSERT INTO `path` VALUES ('8', '22222', '0', '11', '3');
+INSERT INTO `path` VALUES ('9', '33333', '1', '0', '1');
+INSERT INTO `path` VALUES ('10', '33333', '8', '0', '2');
+INSERT INTO `path` VALUES ('11', '33333', '14', '0', '3');
+INSERT INTO `path` VALUES ('12', '33333', '0', '3', '4');
+INSERT INTO `path` VALUES ('13', '10021', '1', '0', '1');
+INSERT INTO `path` VALUES ('14', '10021', '8', '0', '2');
+INSERT INTO `path` VALUES ('15', '10021', '14', '0', '3');
+INSERT INTO `path` VALUES ('16', '10021', '0', '3', '4');
+INSERT INTO `path` VALUES ('17', '10001', '1', '0', '1');
+INSERT INTO `path` VALUES ('18', '10001', '8', '0', '2');
+INSERT INTO `path` VALUES ('19', '10001', '14', '0', '3');
+INSERT INTO `path` VALUES ('20', '10001', '0', '9', '4');
+INSERT INTO `path` VALUES ('21', '10003', '1', '0', '1');
+INSERT INTO `path` VALUES ('22', '10003', '8', '0', '2');
+INSERT INTO `path` VALUES ('23', '10003', '14', '0', '3');
+INSERT INTO `path` VALUES ('24', '10003', '0', '3', '4');
+INSERT INTO `path` VALUES ('25', '10005', '1', '0', '1');
+INSERT INTO `path` VALUES ('26', '10005', '8', '0', '2');
+INSERT INTO `path` VALUES ('27', '10005', '0', '11', '3');
+INSERT INTO `path` VALUES ('38', '10006', '1', '0', '1');
+INSERT INTO `path` VALUES ('39', '10006', '8', '0', '2');
+INSERT INTO `path` VALUES ('40', '10006', '17', '0', '3');
+INSERT INTO `path` VALUES ('41', '10006', '16', '0', '4');
+INSERT INTO `path` VALUES ('42', '10006', '0', '6', '5');
+INSERT INTO `path` VALUES ('43', '10007', '1', '0', '1');
+INSERT INTO `path` VALUES ('44', '10007', '8', '0', '2');
+INSERT INTO `path` VALUES ('45', '10007', '0', '11', '3');
+INSERT INTO `path` VALUES ('46', '10008', '1', '0', '1');
+INSERT INTO `path` VALUES ('47', '10008', '8', '0', '2');
+INSERT INTO `path` VALUES ('48', '10008', '17', '0', '3');
+INSERT INTO `path` VALUES ('49', '10008', '16', '0', '4');
+INSERT INTO `path` VALUES ('50', '10008', '0', '6', '5');
+INSERT INTO `path` VALUES ('51', '10009', '1', '0', '1');
+INSERT INTO `path` VALUES ('52', '10009', '8', '0', '2');
+INSERT INTO `path` VALUES ('53', '10009', '17', '0', '3');
+INSERT INTO `path` VALUES ('54', '10009', '16', '0', '4');
+INSERT INTO `path` VALUES ('55', '10009', '0', '6', '5');
+INSERT INTO `path` VALUES ('56', '10010', '1', '0', '1');
+INSERT INTO `path` VALUES ('57', '10010', '8', '0', '2');
+INSERT INTO `path` VALUES ('58', '10010', '17', '0', '3');
+INSERT INTO `path` VALUES ('59', '10010', '16', '0', '4');
+INSERT INTO `path` VALUES ('60', '10010', '0', '6', '5');
+INSERT INTO `path` VALUES ('61', '10011', '1', '0', '1');
+INSERT INTO `path` VALUES ('62', '10011', '8', '0', '2');
+INSERT INTO `path` VALUES ('63', '10011', '0', '11', '3');
+INSERT INTO `path` VALUES ('64', '10012', '1', '0', '1');
+INSERT INTO `path` VALUES ('65', '10012', '6', '0', '2');
+INSERT INTO `path` VALUES ('66', '10012', '0', '4', '3');
+INSERT INTO `path` VALUES ('88', '10013', '1', '0', '1');
+INSERT INTO `path` VALUES ('89', '10013', '8', '0', '2');
+INSERT INTO `path` VALUES ('90', '10013', '14', '0', '3');
+INSERT INTO `path` VALUES ('91', '10013', '0', '3', '4');
 
 -- ----------------------------
 -- Table structure for t_map
 -- ----------------------------
+DROP TABLE IF EXISTS `t_map`;
 CREATE TABLE `t_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `start` int(11) NOT NULL,
@@ -151,138 +321,8 @@ CREATE TABLE `t_map` (
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for warehouse
+-- Records of t_map
 -- ----------------------------
-CREATE TABLE `warehouse` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `longitude` decimal(10,6) NOT NULL,
-  `latitude` decimal(10,6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records 
--- ----------------------------
-INSERT INTO `car` VALUES ('1', '30', '80', '3', '5000', '1500');
-INSERT INTO `car` VALUES ('2', '50', '100', '4', '12000', '2100');
-INSERT INTO `car` VALUES ('3', '80', '130', '5', '20000', '2500');
-INSERT INTO `car_station` VALUES ('1', 'C1', '117.192553', '31.759471', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('2', 'C2', '117.244588', '31.753487', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('3', 'C3', '117.240478', '31.724458', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('4', 'C4', '117.220845', '31.768617', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('5', 'C5', '117.231344', '31.759778', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('6', 'C6', '117.231085', '31.713368', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('7', 'C7', '117.187768', '31.732940', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('8', 'C8', '117.169658', '31.742174', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('9', 'C9', '117.231054', '31.724756', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('10', 'C10', '117.246237', '31.740925', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_station` VALUES ('11', 'C11', '117.220604', '31.730322', '1', '1', '1', '2', '1', '3');
-INSERT INTO `car_to_customer` VALUES ('1', '3', '1', '1279');
-INSERT INTO `car_to_customer` VALUES ('2', '6', '1', '889');
-INSERT INTO `car_to_customer` VALUES ('3', '4', '2', '1011');
-INSERT INTO `car_to_customer` VALUES ('4', '5', '2', '1233');
-INSERT INTO `car_to_customer` VALUES ('7', '5', '4', '900');
-INSERT INTO `car_to_customer` VALUES ('8', '2', '4', '786');
-INSERT INTO `car_to_customer` VALUES ('9', '9', '1', '1560');
-INSERT INTO `car_to_customer` VALUES ('10', '10', '1', '3128');
-INSERT INTO `car_to_customer` VALUES ('11', '11', '1', '2673');
-INSERT INTO `customer` VALUES ('1', 'U1', '117.240473', '31.713253');
-INSERT INTO `customer` VALUES ('2', 'U2', '117.231199', '31.770856');
-INSERT INTO `customer` VALUES ('4', 'U4', '117.240855', '31.759800');
-INSERT INTO `drone` VALUES ('1', '6', '200', '300', '1500', '180');
-INSERT INTO `drone` VALUES ('2', '8', '300', '400', '3000', '320');
-INSERT INTO `drone` VALUES ('3', '10', '400', '500', '5000', '400');
-INSERT INTO `drone_station` VALUES ('1', 'W1', '117.214161', '31.751530', '1', '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('2', 'D1', '117.200029', '31.753592', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('3', 'D2', '117.209581', '31.762060', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('4', 'D3', '117.209867', '31.774985', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('5', 'D4', '117.204802', '31.749343', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('6', 'D5', '117.217905', '31.756361', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('7', 'D6', '117.223643', '31.759551', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('8', 'D7', '117.213935', '31.742092', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('9', 'D8', '117.189316', '31.743619', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('10', 'D9', '117.231199', '31.747284', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('11', 'D10', '117.205524', '31.740505', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('12', 'D11', '117.180692', '31.751023', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('13', 'D12', '117.231273', '31.753442', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('14', 'D13', '117.231244', '31.735506', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('15', 'D14', '117.202916', '31.723304', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('16', 'D15', '117.222616', '31.717974', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `drone_station` VALUES ('17', 'D16', '117.207786', '31.729351', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.220599', '31.730276', '117.220599', '31.730276', '12345', 'U1', '12', '12', '1.20000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.240855', '31.759800', '117.240855', '31.759800', '23456', 'U4', '12', '12', '1.20000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.240769', '31.740787', '117.240769', '31.740787', '34567', 'U3', '12', '12', '1.20000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('4', '1', 'D1', '117.220599', '31.730276', '117.220599', '31.730276', '56234', 'U1', '18', '15', '1.50000', 'book', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('5', '1', 'D1', '117.240855', '31.759800', '117.240855', '31.759800', '13456', 'U4', '12', '15', '1.50000', 'book', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('6', '1', 'D3', '117.240855', '31.759800', '117.240855', '31.759800', '10001', 'U4', '18', '15', '1.50000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('7', '1', 'D3', '117.231199', '31.770856', '117.230798', '31.769938', '10002', 'U2', '18', '12', '1.20000', 'book', '1200', '0', '...', '1');
-INSERT INTO `order_record` VALUES ('8', '1', 'D7', '117.240769', '31.740787', '117.240769', '31.740787', '10011', 'U3', '12', '12', '1.20000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('9', '1', 'D6', '117.220599', '31.730276', '117.220599', '31.730276', '95271', 'U1', '12', '12', '1.20000', 'apple', '1200', '0', '...', '0');
-INSERT INTO `order_record` VALUES ('10', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '45242', 'U1', '12', '12', '1.20000', 'apple', '1200', '0', '2', '0');
-INSERT INTO `order_record` VALUES ('11', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '42352', 'U1', '12', '15', '1.20000', 'apple', '1200', '0', '2345', '0');
-INSERT INTO `order_record` VALUES ('12', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '1323123', 'U1', '12', '12', '4.00000', 'book', '20', '0', '13213', '0');
-INSERT INTO `order_record` VALUES ('13', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '324234', 'U1', '23', '12', '5.00000', 'apple', '20', '0', '2343', '0');
-INSERT INTO `path` VALUES ('1', '12345', '1', '0', '1');
-INSERT INTO `path` VALUES ('2', '12345', '8', '0', '2');
-INSERT INTO `path` VALUES ('3', '12345', '0', '3', '3');
-INSERT INTO `path` VALUES ('4', '23456', '1', '0', '1');
-INSERT INTO `path` VALUES ('5', '23456', '6', '0', '2');
-INSERT INTO `path` VALUES ('6', '23456', '13', '0', '3');
-INSERT INTO `path` VALUES ('7', '23456', '0', '2', '4');
-INSERT INTO `path` VALUES ('8', '34567', '1', '0', '1');
-INSERT INTO `path` VALUES ('9', '34567', '8', '0', '2');
-INSERT INTO `path` VALUES ('10', '34567', '0', '3', '3');
-INSERT INTO `path` VALUES ('11', '56234', '2', '0', '1');
-INSERT INTO `path` VALUES ('12', '56234', '5', '0', '2');
-INSERT INTO `path` VALUES ('13', '56234', '8', '0', '3');
-INSERT INTO `path` VALUES ('14', '56234', '0', '3', '4');
-INSERT INTO `path` VALUES ('15', '13456', '2', '0', '1');
-INSERT INTO `path` VALUES ('16', '13456', '1', '0', '2');
-INSERT INTO `path` VALUES ('17', '13456', '6', '0', '3');
-INSERT INTO `path` VALUES ('18', '13456', '13', '0', '4');
-INSERT INTO `path` VALUES ('19', '13456', '0', '2', '5');
-INSERT INTO `path` VALUES ('20', '10001', '4', '0', '1');
-INSERT INTO `path` VALUES ('21', '10001', '0', '4', '2');
-INSERT INTO `path` VALUES ('22', '10001', '7', '0', '3');
-INSERT INTO `path` VALUES ('23', '10001', '13', '0', '4');
-INSERT INTO `path` VALUES ('24', '10001', '0', '2', '5');
-INSERT INTO `path` VALUES ('25', '10002', '4', '0', '1');
-INSERT INTO `path` VALUES ('26', '10002', '0', '4', '2');
-INSERT INTO `path` VALUES ('27', '10011', '8', '0', '1');
-INSERT INTO `path` VALUES ('28', '10011', '0', '3', '2');
-INSERT INTO `path` VALUES ('29', '95271', '7', '0', '1');
-INSERT INTO `path` VALUES ('30', '95271', '13', '0', '2');
-INSERT INTO `path` VALUES ('31', '95271', '10', '0', '3');
-INSERT INTO `path` VALUES ('32', '95271', '0', '3', '4');
-INSERT INTO `path` VALUES ('33', '95271', '7', '0', '1');
-INSERT INTO `path` VALUES ('34', '95271', '13', '0', '2');
-INSERT INTO `path` VALUES ('35', '95271', '10', '0', '3');
-INSERT INTO `path` VALUES ('36', '95271', '0', '3', '4');
-INSERT INTO `path` VALUES ('37', '95271', '7', '0', '1');
-INSERT INTO `path` VALUES ('38', '95271', '13', '0', '2');
-INSERT INTO `path` VALUES ('39', '95271', '10', '0', '3');
-INSERT INTO `path` VALUES ('40', '95271', '0', '3', '4');
-INSERT INTO `path` VALUES ('41', '45242', '1', '0', '1');
-INSERT INTO `path` VALUES ('42', '45242', '8', '0', '2');
-INSERT INTO `path` VALUES ('43', '45242', '15', '0', '3');
-INSERT INTO `path` VALUES ('44', '45242', '16', '0', '4');
-INSERT INTO `path` VALUES ('45', '45242', '0', '6', '5');
-INSERT INTO `path` VALUES ('46', '42352', '1', '0', '1');
-INSERT INTO `path` VALUES ('47', '42352', '8', '0', '2');
-INSERT INTO `path` VALUES ('48', '42352', '17', '0', '3');
-INSERT INTO `path` VALUES ('49', '42352', '16', '0', '4');
-INSERT INTO `path` VALUES ('50', '42352', '0', '6', '5');
-INSERT INTO `path` VALUES ('51', '1323123', '1', '0', '1');
-INSERT INTO `path` VALUES ('52', '1323123', '8', '0', '2');
-INSERT INTO `path` VALUES ('53', '1323123', '17', '0', '3');
-INSERT INTO `path` VALUES ('54', '1323123', '16', '0', '4');
-INSERT INTO `path` VALUES ('55', '1323123', '0', '6', '5');
-INSERT INTO `path` VALUES ('56', '324234', '1', '0', '1');
-INSERT INTO `path` VALUES ('57', '324234', '8', '0', '2');
-INSERT INTO `path` VALUES ('58', '324234', '17', '0', '3');
-INSERT INTO `path` VALUES ('59', '324234', '16', '0', '4');
-INSERT INTO `path` VALUES ('60', '324234', '0', '6', '5');
 INSERT INTO `t_map` VALUES ('1', '9', '0', '7', '1197');
 INSERT INTO `t_map` VALUES ('2', '1', '2', '0', '1357');
 INSERT INTO `t_map` VALUES ('3', '1', '3', '0', '1249');
@@ -328,4 +368,20 @@ INSERT INTO `t_map` VALUES ('49', '16', '17', '0', '1936');
 INSERT INTO `t_map` VALUES ('50', '17', '0', '7', '1589');
 INSERT INTO `t_map` VALUES ('51', '10', '0', '10', '1387');
 INSERT INTO `t_map` VALUES ('52', '8', '0', '11', '1454');
+
+-- ----------------------------
+-- Table structure for warehouse
+-- ----------------------------
+DROP TABLE IF EXISTS `warehouse`;
+CREATE TABLE `warehouse` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `longitude` decimal(10,6) NOT NULL,
+  `latitude` decimal(10,6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of warehouse
+-- ----------------------------
 INSERT INTO `warehouse` VALUES ('1', 'W1', '117.180692', '31.751023');

@@ -93,7 +93,7 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
     }
 
     /**
-     * @Description: 根据用户名查询能够到达指定用户的所有车站集合
+     * @Description: 根据用户名查询能够到达指定用户的所有车站id集合
      * @author pwz
      * @date 2022/10/13 18:58
      * @param customerName
@@ -108,6 +108,27 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
         List<Integer> list = new ArrayList<>();
         for (CarToCustomer path : paths) {
             list.add(path.getStart());
+        }
+        return list;
+    }
+
+    /**
+     * @description: 根据用户名查询能够到达指定用户的所有车站名集合
+     * @author: pwz
+     * @date: 2022/11/8 17:43
+     * @param: [customerName]
+     * @return: java.util.List<java.lang.String>
+     **/
+    @Override
+    public List<String> getAllCarStationNameByCustomerName(String customerName) {
+        String customerId = customerName.substring(1);
+        Map<String, Object> map = new HashMap<>();
+        map.put("end", customerId);
+        List<CarToCustomer> paths = carToCustomerMapper.selectByMap(map);
+        List<String> list = new ArrayList<>();
+        for (CarToCustomer path : paths) {
+            CarStation carStation = carStationMapper.selectById(path.getStart());
+            list.add(carStation.getName());
         }
         return list;
     }

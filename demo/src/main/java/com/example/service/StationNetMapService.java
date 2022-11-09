@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface StationNetMapService extends IService<StationNetMap> {
 
-    @Cacheable(value = "stationNetMap")
+//    @Cacheable(value = "stationNetMap")
     List<List<List<Double>>> getAllStationPath();
 
     @Deprecated
