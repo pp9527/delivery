@@ -9,7 +9,8 @@ import com.example.service.CustomerService;
 import com.example.service.OrderService;
 import com.example.service.PathService;
 import com.example.service.WorkflowFileService;
-import com.example.utils.RoutePlanning;
+import com.example.utils.ResourceAllocation;
+import com.example.utils.ServiceComposition;
 import net.sf.json.JSONArray;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
@@ -44,11 +45,17 @@ public class AjaxController {
     @Resource
     WorkflowFileService workflowFileService;
 
+    @Resource
+    ServiceComposition serviceComposition;
+
+    @Resource
+    ResourceAllocation resourceAllocation;
+
     @ResponseBody
     @PostMapping("/generate")
     public List<List<Double>> generatePath(Order order, String objective) {
         order.setWeight(0);
-        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(order, objective, 2, 2);
+        List<List<Double>> shortestPaths = serviceComposition.selectStrategyByObjective(order, objective, 2, 2);
         if (shortestPaths == null) {
             return null;
         }
@@ -63,7 +70,7 @@ public class AjaxController {
     @PostMapping("/getRoute")
     public List<List<Double>> getRoute(int uavType, int ugvType, Order order, String objective) {
         JSONArray jsonArray = new JSONArray();
-        List<List<Double>> shortestPaths = RoutePlanning.selectStrategyByObjective(order, objective, uavType, ugvType);
+        List<List<Double>> shortestPaths = resourceAllocation.selectStrategyByObjective(order, objective, uavType, ugvType);
         if (shortestPaths == null) {
             return null;
         } else if (shortestPaths.size() == 1) {
