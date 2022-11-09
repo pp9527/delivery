@@ -175,7 +175,7 @@
                         <div class="col-md-12">
                             <div class="square-widget">
                                 <div class="widget-container">
-                                    <div style="height: 100px;overflow: hidden">
+                                    <div id="workflow" style="display: none;height: 100px;overflow: hidden">
                                         <div id="canvas" style="height: 400px;margin-left: -100px;margin-top: -50px;">
                                             <div id="firstStep" style="border-radius: 10px;position: absolute;z-index: 10;width: 100px;height: 80px;background-color: #4cae4c;
 margin-left: 270px;margin-top: 60px;opacity: 0.5"></div>
@@ -443,6 +443,20 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
     // objective
 
     getWorkflow();
+    getFileStatus();
+
+    function getFileStatus() {
+        $.ajax({
+            url: "/ajax/getFileStatus",
+            type: 'get',
+            success: function (data) {
+                if (data == "1") {
+                    var t = document.getElementById('workflow');
+                    t.style.display = 'block';
+                }
+            },
+        });
+    }
 
     function getWorkflow() {
         $.ajax({

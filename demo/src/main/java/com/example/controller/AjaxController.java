@@ -4,17 +4,22 @@ package com.example.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.bean.Order;
 import com.example.bean.Path;
+import com.example.bean.WorkflowFile;
 import com.example.service.CustomerService;
 import com.example.service.OrderService;
 import com.example.service.PathService;
+import com.example.service.WorkflowFileService;
 import com.example.utils.RoutePlanning;
 import net.sf.json.JSONArray;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -35,6 +40,9 @@ public class AjaxController {
 
     @Resource
     PathService pathService;
+
+    @Resource
+    WorkflowFileService workflowFileService;
 
     @ResponseBody
     @PostMapping("/generate")
@@ -68,9 +76,36 @@ public class AjaxController {
     }
 
     @ResponseBody
+    @GetMapping("/getFileStatus")
+    public String getFileStatus() {
+        WorkflowFile byId = workflowFileService.getById(1);
+        return String.valueOf(byId.getStatus());
+    }
+
+    @ResponseBody
     @PostMapping(path = "/uploadFile")
     public String uploadFile(@RequestParam("file")MultipartFile file) throws IOException {
         if (file != null) {
+            WorkflowFile byId = workflowFileService.getById(1);
+            byId.setStatus(1);
+            workflowFileService.update(byId, null);
+            BufferedReader reader = null;
+            try {
+                //用流读取文件
+                reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+                String line;
+                StringBuffer content = new StringBuffer();
+                // 读取想定文件
+                while ((line = reader.readLine()) != null) {
+                    content.append(line);
+                }
+            } catch (IOException e) {
+
+            } finally {
+                if (reader != null) {
+                    IOUtils.closeQuietly(reader);
+                }
+            }
             return "1";
         } else {
             return "0";

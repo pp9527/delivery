@@ -79,7 +79,7 @@
             <input type="text" class="form-control" name="keyword" placeholder="Search here..."/>
         </form>
         <!--search th:action="@{/ajax/uploadFile}"  end-->
-        <form id="form" class="col-md-3" style="line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
+        <form id="form" class="col-md-3" style="display: none;line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
             <input name="file" class="col-md-6" type="file" id="file">
             <div class="col-md-3" style="height: 100%;"><button onclick="selectFile()" class="btn btn-info" style="padding: 0 8px 0 8px;height: 30px;">submit</button></div>
         </form>
@@ -295,6 +295,19 @@
     <script src="/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
     <script src="/js/scripts.js" th:src="@{/js/scripts.js}"></script>
 <script>
+    getFileStatus();
+    function getFileStatus() {
+        $.ajax({
+            url: "/ajax/getFileStatus",
+            type: 'get',
+            success: function (data) {
+                if (data == "0") {
+                    var t = document.getElementById('form');
+                    t.style.display = 'block';
+                }
+            },
+        });
+    }
 
     function selectFile() {
 
