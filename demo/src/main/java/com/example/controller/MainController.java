@@ -6,7 +6,7 @@ import com.example.bean.Order;
 import com.example.service.OrderService;
 import com.example.service.PathService;
 import com.example.service.WareService;
-import com.example.utils.Graph;
+import com.example.utils.GraphUtils;
 import com.example.utils.PageUtils;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
@@ -71,7 +71,7 @@ public class MainController {
 
         List<String> stations = pathService.getPathStationsByOrderId(order.getOrderId());
         stations.add(order.getConsignee());
-        List<List<Double>> stationLocations = Graph.stationNamesToLocations(stations);
+        List<List<Double>> stationLocations = GraphUtils.stationNamesToLocations(stations);
         stationInfo.add(stations);
         stationInfo.add(stationLocations);
         model.addAttribute("stationInfo", stationInfo);

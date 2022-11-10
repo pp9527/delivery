@@ -497,7 +497,7 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
             dataType: "json",
             success: function (data) {
                 if (data == null) {
-                    alert("该条件下没有可行的服务方案，请修改订单信息！")
+                    alert("All schemes have timed out！Please modify the order information!")
                 }
                 // data = [
                 //          [
@@ -712,10 +712,10 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                 map.setFitView(null, true, [40, 40, 50, 50]);
 
                 if (data == null) {
-                    alert("该条件下没有可行的服务方案，请修改订单信息！")
+                    alert("All schemes have timed out！Please modify the order information!")
                 } else {
-                    alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
-                        + data[2][0] + "min, 总能耗："
+                    alert("The solution has been generated. Click OK to view it！\n" + "total time："
+                        + data[2][0] + "min, total energy："
                         + data[2][1] + "kj");
                 }
 
@@ -781,14 +781,14 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                 t.style.display = 'block';
 
                 if (data == null) {
-                    alert("该条件下没有可行的服务方案，请修改订单信息！")
+                    alert("All schemes have timed out！Please modify the order information!")
                 } else if (data[0][0] == -1) {
-                    alert("当前无人机无法承受当前负载！请选择更大无人机！")
+                    alert("Item is too heavy, please choose a larger vehicle!")
                 } else if (data[0][1] == -2) {
-                    alert("当前无人车无法承受当前负载！请选择更大无人车！")
+                    alert("Item is too heavy, please choose a larger vehicle!")
                 } else {
-                    alert("方案已生成，点击确认查看！\n" + "该方案预计总时间："
-                        + data[2][0] + "min, 总能耗："
+                    alert("The solution has been generated. Click OK to view it！\n" + "total time："
+                        + data[2][0] + "min, total energy："
                         + data[2][1] + "kj");
                 }
 

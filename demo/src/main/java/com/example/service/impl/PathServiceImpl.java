@@ -7,7 +7,7 @@ import com.example.mapper.CarStationMapper;
 import com.example.mapper.DroneStationMapper;
 import com.example.mapper.PathMapper;
 import com.example.service.PathService;
-import com.example.utils.Graph;
+import com.example.utils.GraphUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -64,7 +64,7 @@ public class PathServiceImpl extends ServiceImpl<PathMapper, Path> implements Pa
         for (String stationName : stationNames) {
             int did = 0, cid = 0;
             if (stationName.charAt(0) == 'D' || stationName.charAt(0) == 'W') {
-                did = Graph.getSequenceByName(stationName) + 1; // 返回的顺序从0开始，path表中有效路径从1开始，所以加1
+                did = GraphUtils.getSequenceByName(stationName) + 1; // 返回的顺序从0开始，path表中有效路径从1开始，所以加1
             } else {
                 cid = Integer.valueOf(stationName.substring(1));
             }

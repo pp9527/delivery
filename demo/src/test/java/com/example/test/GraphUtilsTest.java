@@ -1,6 +1,6 @@
 package com.example.test;
 
-import com.example.utils.Graph;
+import com.example.utils.GraphUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,16 +13,16 @@ import java.util.Arrays;
  * @FileName: testGraph
  */
 @SpringBootTest
-public class GraphTest {
+public class GraphUtilsTest {
 
     @Test
     public void testGetSequenceByName() {
-        System.out.println(Graph.getSequenceByName("C3"));
+        System.out.println(GraphUtils.getSequenceByName("C3"));
     }
 
     @Test
     public void testGetMatrix() {
-        int[][] matrix = Graph.getMatrix();
+        int[][] matrix = GraphUtils.getMatrix();
         for (int[] ints : matrix) {
             for (int anInt : ints) {
                 System.out.print(anInt + ", ");
@@ -33,13 +33,13 @@ public class GraphTest {
 
     @Test
     public void testStationNamesToLocations() {
-        System.out.println(Graph.stationNamesToLocations(Arrays.asList("W1", "D1", "C1", "U1")));
+        System.out.println(GraphUtils.stationNamesToLocations(Arrays.asList("W1", "D1", "C1", "U1")));
     }
 
     @Test
     public void testGetVertex() {
-        System.out.println(Graph.getVertex());
-        for (String vertex : Graph.getVertex()) {
+        System.out.println(GraphUtils.getVertex());
+        for (String vertex : GraphUtils.getVertex()) {
             System.out.print("\"" + vertex + "\",");
         }
     }

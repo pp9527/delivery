@@ -20,18 +20,18 @@ import java.util.List;
  * @FileName: Graph
  */
 @Component
-public class Graph {
+public class GraphUtils {
 
     public static final int maxDis = 10000; //最大距离
     private static List<String> vertex; //图的顶点（站点）集合
     private static List<List<StationNetMap>> edges;// 每个顶点下的边的集合
 
 //    获取非静态接口
-    public static Graph graph;
+    public static GraphUtils graphUtils;
 
     @PostConstruct
     public void init() {
-        graph = this;
+        graphUtils = this;
     }
 
     @Resource
@@ -53,8 +53,8 @@ public class Graph {
      * @return java.lang.String[]
      */
     public static List<String> getVertex() {
-        List<String> droneStationNames = graph.droneStationService.getNames();
-        List<String> carStationNames = graph.carStationService.getNames();
+        List<String> droneStationNames = graphUtils.droneStationService.getNames();
+        List<String> carStationNames = graphUtils.carStationService.getNames();
         vertex = new ArrayList<>();
         vertex.addAll(droneStationNames);
         vertex.addAll(carStationNames);
@@ -69,7 +69,7 @@ public class Graph {
      */
     @Deprecated
     public static List<List<StationNetMap>> getMaps() {
-        edges = graph.netMapService.getMapData();
+        edges = graphUtils.netMapService.getMapData();
         return edges;
     }
 
@@ -80,7 +80,7 @@ public class Graph {
      * @return int[][] ：顶点顺序W1..D1..C1..
      */
     public static int[][] getMatrix() {
-        int[][] matrix = graph.netMapService.getMatrix();
+        int[][] matrix = graphUtils.netMapService.getMatrix();
         return matrix;
     }
 
@@ -92,7 +92,7 @@ public class Graph {
      * @return int
      */
     public static int getSequenceByName(String name) {
-        return Graph.getVertex().indexOf(name);
+        return GraphUtils.getVertex().indexOf(name);
     }
 
     /**
@@ -106,11 +106,11 @@ public class Graph {
             char[] chars = stations.get(i).toCharArray();
             List<Double> location;
             if (chars[0] == 'W' || chars[0] == 'D') {
-                location = graph.droneStationService.getLocationByName(stations.get(i));
+                location = graphUtils.droneStationService.getLocationByName(stations.get(i));
             } else if (chars[0] == 'C'){
-                location = graph.carStationService.getLocationByName(stations.get(i));
+                location = graphUtils.carStationService.getLocationByName(stations.get(i));
             } else {
-                location = graph.customerService.getLocationByName(stations.get(i));
+                location = graphUtils.customerService.getLocationByName(stations.get(i));
             }
             list.add(location);
         }

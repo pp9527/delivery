@@ -8,35 +8,34 @@ package com.example.test;
  */
 
 import com.example.service.CarToCustomerService;
-import com.example.utils.Graph;
-import com.example.utils.RoutePlanning;
+import com.example.utils.GraphUtils;
+import com.example.utils.RoutePlanUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
-public class RoutePlanningTest {
+public class RoutePlanUtilsTest {
 
     @Resource
     CarToCustomerService carToCustomerService;
 
     @Test
     public void testGetShortestPath() {
-        int source = Graph.getSequenceByName("W1");
+        int source = GraphUtils.getSequenceByName("W1");
         System.out.println(source);
         int end = carToCustomerService.getShortestCarStationNum("U1");
         System.out.println(end);
-        List<String> paths = RoutePlanning.getShortestPath(source, end);
+        List<String> paths = RoutePlanUtils.getShortestPath(source, end);
         System.out.println(paths);
     }
 
     @Test
     public void testGetShortestPaths() {
-        System.out.println(RoutePlanning.getShortestPath(0, 22));
-        System.out.println(RoutePlanning.getShortestPath(0, 22));
+        System.out.println(RoutePlanUtils.getShortestPath(0, 22));
+        System.out.println(RoutePlanUtils.getShortestPath(0, 22));
     }
 
     @Test

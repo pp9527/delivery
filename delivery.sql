@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/11/9 16:36:05
+Date: 2022/11/10 17:40:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,7 +124,7 @@ CREATE TABLE `order_record` (
   `privacy_status` tinyint(4) DEFAULT '0',
   `route` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for path
@@ -136,7 +136,7 @@ CREATE TABLE `path` (
   `cid` int(11) DEFAULT '0',
   `station_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_map
@@ -236,6 +236,8 @@ INSERT INTO `order_record` VALUES ('15', '1', 'W1', '117.240473', '31.713253', '
 INSERT INTO `order_record` VALUES ('16', '1', 'W1', '117.240473', '31.713253', '117.241252', '31.712342', '10011', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D7->C11->U1');
 INSERT INTO `order_record` VALUES ('17', '1', 'W1', '117.231199', '31.770856', '117.231673', '31.771750', '10012', 'U2', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D5->C4->U2');
 INSERT INTO `order_record` VALUES ('23', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10013', 'U1', '12', '12', '1.20000', 'apple', '20', '0', 'new order', '0', 'W1->D7->D13->C3->U1');
+INSERT INTO `order_record` VALUES ('25', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10014', 'U1', '12', '12', '1.00000', 'apple', '22', '0', '', '0', 'W1->D7->D13->C3->U1');
+INSERT INTO `order_record` VALUES ('26', '1', 'W1', '117.240473', '31.713253', '117.243247', '31.711408', '10015', 'U1', '12', '12', '1.20000', 'apple', '22', '0', '', '1', 'W1->D7->C11->U1');
 INSERT INTO `path` VALUES ('1', '11111', '1', '0', '1');
 INSERT INTO `path` VALUES ('2', '11111', '8', '0', '2');
 INSERT INTO `path` VALUES ('3', '11111', '17', '0', '3');
@@ -296,6 +298,13 @@ INSERT INTO `path` VALUES ('88', '10013', '1', '0', '1');
 INSERT INTO `path` VALUES ('89', '10013', '8', '0', '2');
 INSERT INTO `path` VALUES ('90', '10013', '14', '0', '3');
 INSERT INTO `path` VALUES ('91', '10013', '0', '3', '4');
+INSERT INTO `path` VALUES ('97', '10014', '1', '0', '1');
+INSERT INTO `path` VALUES ('98', '10014', '8', '0', '2');
+INSERT INTO `path` VALUES ('99', '10014', '14', '0', '3');
+INSERT INTO `path` VALUES ('100', '10014', '0', '3', '4');
+INSERT INTO `path` VALUES ('101', '10015', '1', '0', '1');
+INSERT INTO `path` VALUES ('102', '10015', '8', '0', '2');
+INSERT INTO `path` VALUES ('103', '10015', '0', '11', '3');
 INSERT INTO `t_map` VALUES ('1', '9', '0', '7', '1197');
 INSERT INTO `t_map` VALUES ('2', '1', '2', '0', '1357');
 INSERT INTO `t_map` VALUES ('3', '1', '3', '0', '1249');

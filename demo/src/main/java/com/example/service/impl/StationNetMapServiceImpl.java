@@ -9,7 +9,7 @@ import com.example.mapper.CarStationMapper;
 import com.example.mapper.DroneStationMapper;
 import com.example.mapper.StationNetMapMapper;
 import com.example.service.StationNetMapService;
-import com.example.utils.Graph;
+import com.example.utils.GraphUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -138,7 +138,7 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
         int carCount = Math.toIntExact(carStationMapper.selectCount(null));
         int[][] matrix = new int[droneCount + carCount][droneCount + carCount];
         for (int[] i : matrix) {
-            Arrays.fill(i, Graph.maxDis);
+            Arrays.fill(i, GraphUtils.maxDis);
         }
         List<StationNetMap> stationNetMaps = stationNetMapMapper.selectList(null);
         for (StationNetMap stationNetMap : stationNetMaps) {

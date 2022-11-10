@@ -3,15 +3,12 @@ package com.example.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.bean.CarStation;
 import com.example.bean.CarToCustomer;
-import com.example.bean.DroneStation;
 import com.example.mapper.CarStationMapper;
 import com.example.mapper.CarToCustomerMapper;
 import com.example.mapper.CustomerMapper;
-import com.example.service.CarStationService;
 import com.example.service.CarToCustomerService;
-import com.example.service.CustomerService;
 import com.example.service.DroneStationService;
-import com.example.utils.Graph;
+import com.example.utils.GraphUtils;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +79,7 @@ public class CarToCustomerServiceImpl extends ServiceImpl<CarToCustomerMapper, C
         Map<String, Object> map = new HashMap<>();
         map.put("end", customerId);
         List<CarToCustomer> paths = carToCustomerMapper.selectByMap(map);
-        int carNum = 0, minDistance = Graph.maxDis;
+        int carNum = 0, minDistance = GraphUtils.maxDis;
         for (CarToCustomer path : paths) {
             if (path.getDistance() < minDistance) {
                 carNum = path.getStart();
