@@ -55,7 +55,8 @@ public class AjaxController {
     @PostMapping("/generate")
     public List<List<Double>> generatePath(Order order, String objective) {
         order.setWeight(0);
-        List<List<Double>> shortestPaths = serviceComposition.selectStrategyByObjective(order, objective, 2, 2);
+        List<List<Double>> shortestPaths = serviceComposition.selectStrategyByObjective(order,
+                objective, 2, 2);
         if (shortestPaths == null) {
             return null;
         }

@@ -295,19 +295,6 @@
     <script src="/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
     <script src="/js/scripts.js" th:src="@{/js/scripts.js}"></script>
 <script>
-    getFileStatus();
-    function getFileStatus() {
-        $.ajax({
-            url: "/ajax/getFileStatus",
-            type: 'get',
-            success: function (data) {
-                if (data == "0") {
-                    var t = document.getElementById('form');
-                    t.style.display = 'block';
-                }
-            },
-        });
-    }
 
     function selectFile() {
 

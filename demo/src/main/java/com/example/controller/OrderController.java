@@ -38,7 +38,6 @@ public class OrderController {
 //        2、根据OrderId查询路径转化为string，填充order.route属性
         List<String> stations = pathService.getPathStationsByOrderId(order.getOrderId());
         String string = RoutePlanUtils.pathListToString(stations, order.getConsignee());
-        System.out.println("最终所选方案为: " + string);
 //        String string = RoutePlanning.pathListToString(route, order.getConsignee());
         order.setRoute(string);
 //        3、根据用户查询用户坐标，填充order相关属性

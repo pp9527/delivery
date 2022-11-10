@@ -169,6 +169,20 @@
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 <script>
 
+    getFileStatus();
+    function getFileStatus() {
+        $.ajax({
+            url: "/ajax/getFileStatus",
+            type: 'get',
+            success: function (data) {
+                if (data == "0") {
+                    var t = document.getElementById('form');
+                    t.style.display = 'block';
+                }
+            },
+        });
+    }
+
     //将json字符串转为数组 :
     // 1、获取站点名
     // 2、获取站点坐标（与站点名一一对应）
