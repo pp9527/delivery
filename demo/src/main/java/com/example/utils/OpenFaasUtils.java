@@ -1,6 +1,5 @@
 package com.example.utils;
 
-import com.example.controller.AjaxController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -25,13 +24,11 @@ public class OpenFaasUtils {
      * @date 2022/11/10 15:36
      */
     public static String getShortestDistancePath1(int startStation, int endStation) {
-        //        测试数据
-//        return "W1->D7->D16->D15->C6,5975";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ServiceComposition -> ShortestDistance***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
         log.info("request body: " + body);
@@ -49,13 +46,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestTimePath1(String startStation, String endStation, int droneId
             , int carId, int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,D13,C3,863,199215";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ServiceComposition -> ShortestTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -74,13 +69,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestEnergyPath1(String startStation, String endStation, int droneId
             , int carId, int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,C11,1245,154557";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergy***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -99,13 +92,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestEnergyInTimePath1(String startStation, String endStation, int droneId
             , int carId, int deadline , int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,D13,C3,1660,160642";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergyInTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + deadline + "," + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -125,13 +116,11 @@ public class OpenFaasUtils {
      * @date 2022/11/10 15:36
      */
     public static String getShortestDistancePath2(int startStation, int endStation) {
-        //        测试数据
-//        return "W1->D7->D16->D15->C6,5975";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ResourceAllocation -> ShortestDistance***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
         log.info("request body: " + body);
@@ -149,13 +138,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestTimePath2(String startStation, String endStation, int droneId
             , int carId, int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,D13,C3,863,199215";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ResourceAllocation -> ShortestTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -174,13 +161,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestEnergyPath2(String startStation, String endStation, int droneId
             , int carId, int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,C11,1245,154557";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ResourceAllocation -> ShortestEnergy***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -199,13 +184,11 @@ public class OpenFaasUtils {
      */
     public static String getShortestEnergyInTimePath2(String startStation, String endStation, int droneId
             , int carId, int deadline , int weight, String carToUserDistance) {
-        //        测试数据
-//        return "W1,D7,D13,C3,1660,160642";
-        log.info("*******openfaas request start!*******");
-        log.info("request -> openfaas: ");
+        log.info("***openfaas request start! -> ResourceAllocation -> ShortestEnergyInTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
         String url = "";
+        log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + deadline + "," + weight + "," + carToUserDistance;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -214,5 +197,39 @@ public class OpenFaasUtils {
         log.info("request successful! response body: " + s);
         log.info("*******openfaas request end!*******");
         return s;
+    }
+
+    /* SecurityService */
+
+    public static double[] geoDp(double[] location) {
+        log.info("***openfaas request start! -> SecurityService -> geoDp***");
+        RestTemplate restTemplate = new RestTemplate();
+        //        openfaas请求url
+        String url = "";
+        log.info("request -> openfaas: " + url);
+        String body = location[0] + "," + location[1];
+        HttpEntity<String> entity = new HttpEntity<>(body, null);
+        log.info("request body: " + body);
+        String s = restTemplate.postForObject(url, entity, String.class);
+        log.info("request successful! response body: " + s);
+        String[] split = s.split(",");
+        log.info("*******openfaas request end!*******");
+        return new double[]{Double.parseDouble(split[0]), Double.parseDouble(split[1])};
+    }
+
+    public static double[] geoDpEnhance(double[] location) {
+        log.info("***openfaas request start! -> SecurityService -> geoDpEnhance***");
+        RestTemplate restTemplate = new RestTemplate();
+        //        openfaas请求url
+        String url = "";
+        log.info("request -> openfaas: " + url);
+        String body = location[0] + "," + location[1];
+        HttpEntity<String> entity = new HttpEntity<>(body, null);
+        log.info("request body: " + body);
+        String s = restTemplate.postForObject(url, entity, String.class);
+        log.info("request successful! response body: " + s);
+        String[] split = s.split(",");
+        log.info("*******openfaas request end!*******");
+        return new double[]{Double.parseDouble(split[0]), Double.parseDouble(split[1])};
     }
 }

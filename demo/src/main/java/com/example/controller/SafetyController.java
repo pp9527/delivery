@@ -2,11 +2,13 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.bean.Order;
+import com.example.core.SecurityService;
 import com.example.service.OrderService;
 import com.example.service.PathService;
-import com.example.core.SecurityAlgorithm;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 
@@ -25,6 +27,9 @@ public class SafetyController {
     @Resource
     PathService pathService;
 
+    @Resource
+    SecurityService securityService;
+
     @GetMapping(value = "/safe/{id}")
     public String safeOrder(@PathVariable("id")Integer id,
                             @RequestParam(value = "type", required = false, defaultValue = "0")int type) {
@@ -32,26 +37,8 @@ public class SafetyController {
         double[] location = {order.getDesLongitude(), order.getDesLatitude()};
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", id);
-        if (type == 0) {
-            // 关闭隐私保护
-            order.setPrivacyLongitude(location[0]);
-            order.setPrivacyLatitude(location[1]);
-            order.setPrivacyStatus(false);
-        } else {
-            double[] enLocation = null; // 扰动后的坐标
-            if (type == 1) {
-                //使用SecurityAlgorithm.geoDp()方法加扰动
-                enLocation = SecurityAlgorithm.geoDp(location);
-            } else if (type == 2) {
-                //其他方法
-            } else if (type == 3) {
-                //其他方法
-            }
-            order.setPrivacyLongitude(enLocation[0]);
-            order.setPrivacyLatitude(enLocation[1]);
-            order.setPrivacyStatus(true);
-        }
-        orderService.update(order, updateWrapper);
+        Order newOrder = securityService.getSafetyLocation(type, order, location);
+        orderService.update(newOrder, updateWrapper);
         return "redirect:/safety?id=" + id;
     }
 }
