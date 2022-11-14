@@ -49,7 +49,7 @@ public class ServiceComposition {
         // 时间能耗标志位f  1：时间能耗已经求出 0：未求出
         int f = 0;
         // 运行环境标志位 0：请求本地服务  1：请求openfaas服务
-        int environmentFlag = 0;
+        int environmentFlag = 1;
         List<List<Double>> res;
         // 最短路径途径站点和距离  W1, D1, C1, 2455
         List<String> route = null;

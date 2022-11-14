@@ -27,7 +27,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ServiceComposition -> ShortestDistance***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-servicecomp";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -49,7 +49,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ServiceComposition -> ShortestTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-servicecomp-t";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
@@ -72,7 +72,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergy***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-servicecomp-e";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
@@ -95,7 +95,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergyInTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-servicecomp-et";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + deadline + "," + weight + "," + carToUserDistance;
@@ -119,7 +119,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ResourceAllocation -> ShortestDistance***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-serviceallo";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation;
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -141,7 +141,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ResourceAllocation -> ShortestTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-serviceallo-t";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
@@ -164,7 +164,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ResourceAllocation -> ShortestEnergy***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-serviceallo-e";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + weight + "," + carToUserDistance;
@@ -187,7 +187,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> ResourceAllocation -> ShortestEnergyInTime***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-serviceallo-et";
         log.info("request -> openfaas: " + url);
         String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
                 + deadline + "," + weight + "," + carToUserDistance;
@@ -205,7 +205,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> SecurityService -> geoDp***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-security-gi";
         log.info("request -> openfaas: " + url);
         String body = location[0] + "," + location[1];
         HttpEntity<String> entity = new HttpEntity<>(body, null);
@@ -221,7 +221,7 @@ public class OpenFaasUtils {
         log.info("***openfaas request start! -> SecurityService -> geoDpEnhance***");
         RestTemplate restTemplate = new RestTemplate();
         //        openfaas请求url
-        String url = "";
+        String url = "http://192.168.50.253:31112/function/faas-security-egi";
         log.info("request -> openfaas: " + url);
         String body = location[0] + "," + location[1];
         HttpEntity<String> entity = new HttpEntity<>(body, null);
