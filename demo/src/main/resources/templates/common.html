@@ -26,13 +26,50 @@
     <script src="/js/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        .toast {
+            display: none;
+            position: fixed;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 18rem;
+            height: 18rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 1rem;
+            color: #f0f0f0;
+            font-size: 2.5rem;
+        }
 
+        .load {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            height: 4rem;
+            width: 4rem;
+            border: 0.4rem solid transparent;
+            border-top-color: white;
+            border-left-color: white;
+            border-bottom-color: white;
+            animation: circle 1s infinite linear;
+            -webkit-animation: circle 1s infinite linear; /* Safari 和 Chrome */
+            border-radius: 50%
+        }
+        @-webkit-keyframes circle {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-360deg)
+            }
+        }
+    </style>
 
 </head>
 
 <body>
-
-
     <!-- left side start-->
     <div th:fragment="leftmenu" class="left-side sticky-left-side">
 
@@ -56,10 +93,6 @@
                 <li><a th:href="@{/safety}"><i class="fa fa-lock"></i> <span>Safety Management</span></a></li>
                 <li><a th:href="@{/ai}"><i class="fa fa-laptop"></i> <span>Ai Management</span></a></li>
                 <li><a th:href="@{/}"><i class="fa fa-sign-in"></i> <span>Log Out</span></a></li>
-
-
-
-
             </ul>
             <!--sidebar nav end-->
 
@@ -78,10 +111,27 @@
         <form class="searchform" action="main.html" method="get">
             <input type="text" class="form-control" name="keyword" placeholder="Search here..."/>
         </form>
+
+<!--        <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">-->
+<!--            <input type="file" name="uploadFile" id="uploadFile" style="visibility:hidden;position:absolute;top:0px;width:0px"/>&lt;!&ndash;隐藏默认标签样式&ndash;&gt;-->
+<!--        </form>-->
+<!--        <input type="button" value="上传" id="btn"/>-->
+
+        <div class="toast" id="toast">
+            <span class="load"></span>
+            <span>analysing...</span>
+        </div>
+<!--        <form action="" method="post">-->
+<!--            <input type="button" value="开始检测" id="submit">-->
+<!--        </form>-->
+
         <!--search th:action="@{/ajax/uploadFile}"  end-->
-        <form id="form" class="col-md-3" style="display: none;line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
-            <input name="file" class="col-md-6" type="file" id="file">
-            <div class="col-md-3" style="height: 100%;"><button onclick="selectFile()" class="btn btn-info" style="padding: 0 8px 0 8px;height: 30px;">submit</button></div>
+        <form id="form" class="col-md-2" style="line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
+            <input style="display: none" name="file" type="file" id="file">
+            <div class="col-md-12" style="height: 100%;">
+<!--                <input type="button" value="上传" id="btn"/>-->
+                <button id="btn" class="btn btn-info" style="padding: 0 8px 0 8px;height: 30px;">upload workflow</button>
+            </div>
         </form>
         <iframe style="display: none" src="" fragment="0" name="frame"></iframe>
         <!--notification menu start -->
@@ -296,6 +346,29 @@
     <script src="/js/scripts.js" th:src="@{/js/scripts.js}"></script>
 <script>
 
+    // var submit = document.getElementById("btn");
+    // var toast = document.getElementById("toast");
+    // submit.onclick = function () {
+    //     toast.style.display = "flex";
+    // }
+
+    $(function () {
+        //按钮的点击事件
+        $('#btn').click(function () {
+            //触发file的点击事件
+            $('#file').click();
+        });
+        //file的change事件
+        $('#file').change(function () {
+            //提交form表单的数据
+            toast.style.display = "flex";
+            setTimeout(function(){toast.style.display = "none"},2000);
+            selectFile();
+            //清空file标签的value，否则再次提交此文件时，onchange事件就不触发了
+            $('#file').val('');
+        });
+    });
+
     function selectFile() {
 
         var formData = new FormData($('#form')[0]);
@@ -309,9 +382,7 @@
             contentType: false,
             success: function (data) {
                 if (data == "1") {
-                    alert("upload success!");
-                    var t = document.getElementById('form');
-                    t.style.display = 'none';
+                    setTimeout(function(){alert("operate successfully!")},2050);
                 }
         },
     });
