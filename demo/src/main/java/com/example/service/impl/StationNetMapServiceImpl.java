@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -149,5 +150,16 @@ public class StationNetMapServiceImpl extends ServiceImpl<StationNetMapMapper, S
             matrix[x][y] = matrix[y][x] = stationNetMap.getDistance();
         }
         return matrix;
+    }
+
+    @Override
+    public int getDistance(String start, String end) {
+        int left = Integer.parseInt(start.substring(1)) + 1;
+        int right = Integer.parseInt(end.substring(1));
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("start", left);
+        map.put("end_cid", right);
+        StationNetMap stationNetMap = stationNetMapMapper.selectByMap(map).get(0);
+        return stationNetMap.getDistance();
     }
 }

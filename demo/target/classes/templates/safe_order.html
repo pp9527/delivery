@@ -18,7 +18,7 @@
             securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
         }
     </script>
-    <script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>-->
 
@@ -28,17 +28,6 @@
 
 
     <div th:include="common::commonheader"></div>
-
-    <style type="text/css">
-        .my_style_a1:hover{
-            font-weight: bolder;
-        }
-
-        .my_style_a2{
-            color: black;
-        }
-
-    </style>
 
 </head>
 
@@ -56,13 +45,13 @@
         <!-- page heading start-->
         <div class="page-heading">
             <h3>
-                Safety Management
+                Security Management
             </h3>
             <ul class="breadcrumb">
                 <li>
                     <a href="#">Home</a>
                 </li>
-                <li class="active">Safety Management</li>
+                <li class="active">Security Management</li>
             </ul>
         </div>
 
@@ -72,7 +61,7 @@
 
                 <div class="row" style="padding-bottom: 10px;margin-right: 14px;background-color: white;margin-bottom: 10px;border-radius: 10px;">
                         <div class="row center-block" style="margin-bottom: 15px;padding-left: 20px;">
-                        <h3>Active Orders：[[${activeOrders.size()}]]</h3>
+                        <h3>Number of Orders：[[${allOrders.size()}]]</h3>
                         </div>
                         <form role="form" class="form-inline" style="background-color: white">
                             <div class="form-group col-md-6">
@@ -84,9 +73,8 @@
                                         data-toggle="dropdown">
                                     Filters<span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="#">Under Protection</a></li>
+                                    <li><a href="#">Unprotected</a></li>
                                 </ul>
                             </div>
                         </form>
@@ -95,15 +83,16 @@
                 <div class="row" style="height:600px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
-                            <div class="panel newPanel" th:each="order:${activeOrders}">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-9" style="height: 70px;">
-                                            <h4 class="col-md-4 text-center" style="line-height: 70px;margin:0;"><strong >ID: [[${order.orderId}]]</strong></h4>
-                                            <h4 class="col-md-8 text-center" style="line-height: 70px;margin:0;color: #1CAF9A" th:if="${order.privacyStatus} == true"><strong>Privacy Protecting</strong></h4>
+                            <div class="panel newPanel" th:each="order:${allOrders}">
+                                <div class="panel-body" style="padding-left: 0">
+                                    <div class="row" style="margin-left: 0">
+                                        <div class="col-md-10" style="height: 70px;padding: 0;">
+                                            <h4 class="col-md-6 text-center" style="line-height: 70px;margin:0;padding: 0"><strong >Order ID: [[${order.orderId}]]</strong></h4>
+                                            <h4 class="col-md-6" style="line-height: 70px;padding: 0;margin:0;color: #1CAF9A" th:if="${order.privacyStatus} == true"><strong>Under Protection</strong></h4>
+                                            <h4 class="col-md-6" style="line-height: 70px;padding: 0;margin: 0;color: #c9302c" th:if="${order.privacyStatus} == false"><strong>Unprotected</strong></h4>
                                         </div>
 
-                                        <h4 class="col-md-3" style="padding: 0px;height: 70px;margin-top: 0;">
+                                        <h4 class="col-md-2" style="padding-left: 0px;height: 70px;margin-top: 0;">
                                             <div class="row" style="margin-bottom: 5px;">
                                                 <div class="dropdown">
                                                     <button style="font-size: 15px;" type="button" class="col-md-10 btn btn-primary dropdown-toggle" id="dropdownMenu1"
@@ -152,7 +141,7 @@
 
         <!--footer section start-->
         <footer style="text-align: center;margin-top: 10px;">
-            2022 &copy; AdminEx by AHU ISEC
+            2022 &copy; By AHU ISEC
         </footer>
         <!--footer section end-->
 
@@ -245,6 +234,7 @@
     var map = new AMap.Map("container", {
         // center: [112.187017,31.763388],
         resizeEnable: true,
+        lang: "en"
         // zoom: 16
     });
 
@@ -386,7 +376,7 @@
 
 
 
-    map.setFitView(null, true, [150, 150, 50, 50]);
+    map.setFitView(null, true, [20, 20, 20, 20]);
 
 </script>
 

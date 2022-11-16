@@ -22,7 +22,7 @@
     <div th:include="common::commonheader"></div>
 
     <style>
-        tr, th {
+        tr th {
             text-align: center;
         }
         /*地图标记大小样式*/
@@ -31,6 +31,10 @@
              width: 25px;
              height: 34px;
          }
+        .table tbody tr td{
+            text-align: center;
+            vertical-align: middle;
+        }
     </style>
 
 </head>
@@ -68,12 +72,12 @@
                         <div class="panel-body">
                             <div class="adv-table">
                                 <div class="col-md-6">
-                                    <button type="button" style="margin-bottom: 5px;" class="col-md-2 btn btn-info"
-                                            data-toggle="modal" data-target="#myModal2">Add Order
+                                    <button type="button" style="margin-bottom: 5px;" class="col-md-3 btn btn-info"
+                                            data-toggle="modal" data-target="#myModal2">Add Delivery Orders
                                     </button>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <div class="col-md-8 col-md-offset-2">
+                                    <div class="col-md-8 col-md-offset-1">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="Input ID">
@@ -89,9 +93,9 @@
                                                 data-toggle="dropdown">
                                             Filters<span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
+                                            <li><a href="#">UAV/UGV Collaboration</a></li>
+                                            <li><a href="#">Only UAV</a></li>
+                                            <li><a href="#">Only UGV</a></li>
                                         </ul>
                                     </div>
 
@@ -101,43 +105,45 @@
 
                                     <thead>
                                     <tr>
-                                        <th>orderID</th>
-                                        <th>goods</th>
-                                        <th>transportation model</th>
-                                        <th>start station</th>
-                                        <th>destination</th>
-                                        <th>time/min</th>
-                                        <th>weight/kg</th>
-                                        <th>order info</th>
-                                        <th>order route</th>
-                                        <th>operation</th>
+                                        <th style="vertical-align: middle;">Order ID</th>
+                                        <th style="vertical-align: middle;">Item</th>
+                                        <th style="vertical-align: middle;">Delivery Type</th>
+                                        <th style="vertical-align: middle;">Start Station</th>
+                                        <th style="vertical-align: middle;">End Station</th>
+                                        <th style="vertical-align: middle;width: 50px">Estimated Delivery Time/Min</th>
+                                        <th style="vertical-align: middle;width: 50px">Estimated Delivery Energy Consumption/KJ</th>
+                                        <th style="vertical-align: middle;">Weight/KG</th>
+                                        <th style="vertical-align: middle;">Note</th>
+                                        <th style="vertical-align: middle;">Delivery Route</th>
+                                        <th style="vertical-align: middle;">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="order:${orders.getRecords()}">
                                         <td th:text="${order.orderId}"></td>
                                         <td th:text="${order.goods}"></td>
-                                        <td th:if="${order.model} == 1">cooperate</td>
-                                        <td th:if="${order.model} == 2">uav</td>
-                                        <td th:if="${order.model} == 3">ugv</td>
+                                        <td th:if="${order.model} == 1">UAV/UGV Collaboration</td>
+                                        <td th:if="${order.model} == 2">Only UAV</td>
+                                        <td th:if="${order.model} == 3">Only UGV</td>
                                         <td th:text="${order.startStation}"></td>
                                         <td th:text="${order.consignee}"></td>
-                                        <td th:text="${order.deadline}"></td>
+                                        <td th:text="${order.time}"></td>
+                                        <td th:text="${order.energy}"></td>
                                         <td th:text="${order.weight}"></td>
                                         <td th:text="${order.info}"></td>
                                         <td th:text="${order.route}"></td>
-                                        <td><button th:value="${order.id}" class="fa fa-times btn-danger btn" onclick="deleteOrder(this.value)"> delete</button></td>
+                                        <td><button th:value="${order.id}" class="fa fa-times btn-danger btn" onclick="deleteOrder(this.value)"> Delete</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
 
                                 <nav class="col-md-3 col-md-offset-9" aria-label="...">
                                     <ul class="pagination">
-                                        <li><a th:href="@{/orders(pn=1)}">first</a></li>
+                                        <li><a th:href="@{/orders(pn=1)}">First</a></li>
 
                                         <li th:class="${num == orders.current?'active':''}" th:each="num:${navNums}">
                                             <a th:href="@{/orders(pn=${num})}">[[${num}]]</a></li>
-                                        <li><a th:href="@{/orders(pn=${orders.pages})}">last</a></li>
+                                        <li><a th:href="@{/orders(pn=${orders.pages})}">Last</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -152,7 +158,7 @@
 
         <!--footer section start-->
         <footer style="text-align: center;margin-top: 5px;margin-bottom: 0px;">
-            2022 &copy; AdminEx by AHU ISEC
+            2022 &copy; By AHU ISEC
         </footer>
         <!--footer section end-->
         <!--        </div>-->
@@ -186,15 +192,15 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                                         </div>
                                     </div>
 
-                                    <div class="stepy-tab"></div>
+                                    <div class="stepy-tab" style="margin-left: 35px"></div>
                                     <form id="default" th:action="@{/insertOrder}" method="post">
 
-                                        <fieldset title="Order Info" style="margin: 0;padding-bottom: 10px;">
-                                            <legend>Detailed Information
+                                        <fieldset title="Order Information" style="margin-left: 0;padding-bottom: 10px;">
+                                            <legend style="display: none">
                                             </legend>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-4" style="vertical-align: middle">
-                                                    <span>transportation mode：</span>
+                                                    <span>Delivery Type：</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: green;vertical-align: middle">
                                                     <label class="radio-inline;"
@@ -203,7 +209,7 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                                                                name="model"
                                                                id="Radio1"
                                                                value="2">
-                                                        <span>only uav</span>
+                                                        <span>Only UAV</span>
                                                     </label>
                                                     <label class="radio-inline;"
                                                            style="padding: 0;font-weight: bold;display: inline-block;margin-right: 20px;">
@@ -211,7 +217,7 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                                                                name="model"
                                                                id="Radio2"
                                                                value="3">
-                                                        <span>only ugv</span>
+                                                        <span>Only UGV</span>
                                                     </label>
                                                     <label class="radio-inline;"
                                                            style="padding: 0;font-weight: bold;display: inline-block">
@@ -219,15 +225,15 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                                                                name="model"
                                                                id="Radio3"
                                                                value="1">
-                                                        <span>uav and ugv</span>
+                                                        <span>UAV/UGV Collaboration</span>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-bottom: 10px;">
-                                                <div class="col-md-3"><span>start station：</span></div>
-                                                <div class="col-md-3"><span>consignee：</span></div>
-                                                <div class="col-md-3"><span>orderID：</span></div>
-                                                <div class="col-md-3"><span>deadline：</span></div>
+                                                <div class="col-md-3"><span>Start Station：</span></div>
+                                                <div class="col-md-3"><span>End Station：</span></div>
+                                                <div class="col-md-3"><span>Order ID：</span></div>
+                                                <div class="col-md-3"><span>Deadline：</span></div>
                                             </div>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-3">
@@ -240,41 +246,40 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="orderId" class="form-control"
-                                                           placeholder="five figure">
+                                                           placeholder="Five Figure">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="deadline" class="form-control"
-                                                           placeholder="time/min">
+                                                           placeholder="Time/min">
                                                 </div>
                                             </div>
 
                                             <div class="row" style="margin-bottom: 30px;">
-                                                <label class="col-md-2 control-label"
-                                                       style="font-weight: bold;">order note：</label>
-                                                <div class="col-md-10">
+                                                <label class="col-md-1 control-label"
+                                                       style="font-weight: bold;">Note：</label>
+                                                <div class="col-md-11">
                                                     <textarea name="info" rows="6" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </fieldset>
                                         <fieldset title="Service Composition Strategy"
                                                   style="margin: 0;padding-bottom: 10px;">
-                                            <legend>Service Composition Strategy Details</legend>
+                                            <legend style="display: none;"></legend>
                                             <div class="row" style="margin-bottom: 10px;">
                                                 <div class="col-md-4 text-center" style="line-height: 34px;">
-                                                    <span>optimization objective：</span></div>
+                                                    <span>Optimization Objective：</span></div>
                                                 <div class="col-md-6">
                                                     <select class="form-control" name="objective">
-                                                        <option>distance</option>
-                                                        <option>time</option>
-                                                        <option>energy</option>
-                                                        <option value="energyInTime">energy consumption optimization
-                                                            under time constraint
+                                                        <option value="distance">Distance Optimization</option>
+                                                        <option value="time">Time Optimization</option>
+                                                        <option value="energy">Energy Optimization</option>
+                                                        <option value="energyInTime">Energy Consumption Optimization Under Deadline Constraint
                                                         </option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 text-center">
                                                     <button type="button" onclick="sendAjax()" class="btn btn-primary">
-                                                        generate
+                                                        Generate
                                                     </button>
                                                 </div>
                                             </div>
@@ -293,53 +298,53 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
 
 
                                         </fieldset>
-                                        <fieldset title="Service Distribution Strategy"
+                                        <fieldset title="Service Allocation Strategy"
                                                   style="margin: 0;padding-bottom: 10px;">
-                                            <legend>Service Distribution Strategy Details</legend>
+                                            <legend style="display: none"></legend>
                                             <div class="row" style="margin-bottom: 15px;">
                                                 <div class="col-md-2 text-center" style="line-height: 34px;">
-                                                    <span>uav type：</span></div>
+                                                    <span>UAV Type：</span></div>
                                                 <div class="col-md-3">
                                                     <select class="form-control" name="uavType">
-                                                        <option value="1">small</option>
-                                                        <option value="2">middle</option>
-                                                        <option value="3">large</option>
+                                                        <option value="1">Small</option>
+                                                        <option value="2">Middle</option>
+                                                        <option value="3">Large</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 text-center" style="line-height: 34px;">
-                                                    <span>ugv type：</span></div>
+                                                    <span>UGV Type：</span></div>
                                                 <div class="col-md-3">
                                                     <select class="form-control" name="ugvType">
-                                                        <option value="1">small</option>
-                                                        <option value="2">middle</option>
-                                                        <option value="3">large</option>
+                                                        <option value="1">Small</option>
+                                                        <option value="2">Middle</option>
+                                                        <option value="3">Large</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 text-center">
                                                     <button type="button" onclick="getRoute()" class="btn btn-primary">
-                                                        generate
+                                                        Generate
                                                     </button>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-bottom: 10px;">
-                                                <div class="col-md-2 text-center"><span>goods info：</span></div>
+                                                <div class="col-md-3 text-center"><span>Cargo Information：</span></div>
                                             </div>
                                             <div class="row" style="margin-bottom: 5px;">
                                                 <div class="col-md-3">
                                                     <input type="text" name="goods" class="form-control"
-                                                           placeholder="name of goods">
+                                                           placeholder="Kind of Cargo">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="length" class="form-control"
-                                                           placeholder="length/cm">
+                                                           placeholder="Length/CM">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="width" class="form-control"
-                                                           placeholder="width/cm">
+                                                           placeholder="Width/CM">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" name="weight" class="form-control"
-                                                           placeholder="weight/kg">
+                                                           placeholder="Weight/KG">
                                                 </div>
                                             </div>
                                             <div id="map_container_1" class="col-md-12"
@@ -392,7 +397,7 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
         securityJsCode: '2f8af7c5b6908ba48f1e68c3fe9744ce',
     }
 </script>
-<script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
 <script>
 
 
@@ -497,7 +502,8 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
             dataType: "json",
             success: function (data) {
                 if (data == null) {
-                    alert("All schemes have timed out！Please modify the order information!")
+                    alert("All service composition plan cannot satisfy the deadline constraint, " +
+                        "please modify the order deadline constraint.")
                 }
                 // data = [
                 //          [
@@ -520,7 +526,8 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                 var map = new AMap.Map("container", {
                     // center: [112.187017,31.763388],
                     resizeEnable: true,
-                    zoom: 14
+                    zoom: 14,
+                    lang: "en"
                 });
 
                 // var pathData = [];
@@ -672,16 +679,20 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                     autoFitView: false,
                     // panel: 'panel'
                 }
+                var location0 = data[1][data[1].length - 1]
+                var location1 = data[3]
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[1][data[1].length - 1][0], data[1][data[1].length - 1][1]), new AMap.LngLat(data[3][0], data[3][1]), function (status, result) {
-                    // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-                    if (status === 'complete') {
-                    } else {
-                        log.error('获取驾车数据失败：' + result)
-                    }
+                driving.search(location0, location1, function (status, result) {
+                    // 未出错时，result即是对应的路线规划方案
                 });
-
+                // driving.search(new AMap.LngLat(location0[0], location0[1]), new AMap.LngLat(location1[0], location1[1]), function (status, result) {
+                //     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                //     if (status === 'complete') {
+                //     } else {
+                //         log.error('获取驾车数据失败：' + result)
+                //     }
+                // });
                 var startIcon = new AMap.Icon({
                     size: new AMap.Size(25, 34),
                     image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
@@ -712,11 +723,12 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                 map.setFitView(null, true, [40, 40, 50, 50]);
 
                 if (data == null) {
-                    alert("All schemes have timed out！Please modify the order information!")
+                    alert("All service composition plan cannot satisfy the deadline constraint, " +
+                        "please modify the order deadline constraint.")
                 } else {
-                    alert("The solution has been generated. Click OK to view it！\n" + "total time："
-                        + data[2][0] + "min, total energy："
-                        + data[2][1] + "kj");
+                    alert("The optimal service composition plan has been generated.\n" + "Estimated Delivery Time："
+                        + data[2][0] + "min, Estimated Delivery Energy Consumption："
+                        + data[2][1] + "KJ");
                 }
 
                 // var t = document.getElementById('map_container');
@@ -732,7 +744,7 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
             dataType: "json",
             success: function (data) {
                 if (data != 1) {
-                    alert("删除失败！")
+                    alert("Fail To Delete！")
                 }
                 location.reload();
             }
@@ -781,21 +793,23 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                 t.style.display = 'block';
 
                 if (data == null) {
-                    alert("All schemes have timed out！Please modify the order information!")
+                    alert("All service allocation plan cannot satisfy the deadline constraint," +
+                        " please modify the order deadline constraint.")
                 } else if (data[0][0] == -1) {
-                    alert("Item is too heavy, please choose a larger vehicle!")
+                    alert("The weight of the goods exceeds the maximum payload of the UAV/UAV. Please reselect the type of UAV/UAV.")
                 } else if (data[0][1] == -2) {
-                    alert("Item is too heavy, please choose a larger vehicle!")
+                    alert("The weight of the goods exceeds the maximum payload of the UAV/UAV. Please reselect the type of UAV/UAV.")
                 } else {
-                    alert("The solution has been generated. Click OK to view it！\n" + "total time："
-                        + data[2][0] + "min, total energy："
-                        + data[2][1] + "kj");
+                    alert("The optimal service composition plan has been generated.\n" + "Estimated Delivery Time："
+                        + data[2][0] + "min, Estimated Delivery Energy Consumption："
+                        + data[2][1] + "KJ");
                 }
 
                 var map = new AMap.Map("container_1", {
                     // center: [112.187017,31.763388],
                     resizeEnable: true,
-                    zoom: 14
+                    zoom: 14,
+                    lang: "en"
                 });
 
 
@@ -901,15 +915,22 @@ margin-left: 680px;margin-top: 60px;opacity: 0.5"></div>
                     autoFitView: false,
                     // panel: 'panel'
                 }
+                var location0 = data[1][data[1].length - 1]
+                var location1 = data[3]
                 var driving = new AMap.Driving(drivingOption)
                 // 根据起终点经纬度规划驾车导航路线
-                driving.search(new AMap.LngLat(data[1][data[1].length - 1][0], data[1][data[1].length - 1][1]), new AMap.LngLat(data[3][0], data[3][1]), function (status, result) {
-                    // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-                    if (status === 'complete') {
-                    } else {
-                        log.error('获取驾车数据失败：' + result)
-                    }
+                driving.search(location0, location1, function (status, result) {
+                    // 未出错时，result即是对应的路线规划方案
                 });
+                // var driving = new AMap.Driving(drivingOption)
+                // // 根据起终点经纬度规划驾车导航路线
+                // driving.search(new AMap.LngLat(data[1][data[1].length - 1][0], data[1][data[1].length - 1][1]), new AMap.LngLat(data[3][0], data[3][1]), function (status, result) {
+                //     // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                //     if (status === 'complete') {
+                //     } else {
+                //         log.error('获取驾车数据失败：' + result)
+                //     }
+                // });
 
                 var startIcon = new AMap.Icon({
                     size: new AMap.Size(25, 34),

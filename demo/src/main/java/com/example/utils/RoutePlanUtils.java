@@ -177,7 +177,7 @@ public class RoutePlanUtils {
 
     /**
      * @return List<String>
-     * @Description: 根据不同优化目标选择对应路径规划算法  返回返回路径途经站点集合
+     * @Description: 根据不同优化目标选择对应路径规划算法  返回返回路径途经站点集合和时间能耗
      * @author pwz
      * @date 2022/10/20 15:17
      */
@@ -186,31 +186,32 @@ public class RoutePlanUtils {
         Car car = routePlanUtils.carService.getById(ugvType);
         int weigh = (int) (order.getWeight() * 1000);
         List<String> route = null;
+        int[] timeAndEnergy = null;
         switch (objective) {
             case "distance":
                 // 地杰斯特拉最短路径
                 route = getShortestDistanceRoute(order.getStartStation(), order.getConsignee());
-                route.remove(route.size() - 1);
                 break;
             case "time":
                 // 选择总时间最短的路线
                 route = getShortestTimeRoute(order.getStartStation(), order.getConsignee(), drone, car, weigh);
-                route.remove(route.size() - 1);
                 break;
             case "energy":
                 // 选择总能耗最小的路线
                 route = getShortestEnergyRoute(order.getStartStation(), order.getConsignee(), drone, car, weigh);
-                route.remove(route.size() - 1);
                 break;
             case "energyInTime":
                 // 选择时间约束下总能耗最小的路线
                 route = getShortestEnergyRouteUnderTimeConstraint(order.getStartStation(),
                         order.getConsignee(), drone, car, order.getDeadline() * 60, weigh);
-                route.remove(route.size() - 1);
                 break;
             default:
                 break;
         }
+        timeAndEnergy = routePlanUtils.getTimeAndEnergy(route, order.getConsignee(), drone, car, weigh);
+        route.remove(route.size() - 1);
+        route.add(String.valueOf(timeAndEnergy[0]));
+        route.add(String.valueOf(timeAndEnergy[1]));
         return route;
     }
 

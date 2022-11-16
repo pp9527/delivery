@@ -34,6 +34,10 @@ public class OrderController {
 //        1、根据订单信息规划路径, 插入path表
         List<String> route = RoutePlanUtils.getRouteByObjective(order, objective, uavType, ugvType);
 //        System.out.println(route);
+        order.setTime(Integer.parseInt(route.get(route.size() - 2)) / 60);
+        order.setEnergy(Integer.parseInt(route.get(route.size() - 1)) / 1000);
+        route.remove(route.size() - 1);
+        route.remove(route.size() - 1);
         pathService.insertPaths(route, order.getOrderId());
 //        2、根据OrderId查询路径转化为string，填充order.route属性
         List<String> stations = pathService.getPathStationsByOrderId(order.getOrderId());

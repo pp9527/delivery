@@ -21,7 +21,7 @@
             securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
         }
     </script>
-    <script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 <!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>-->
 
@@ -67,7 +67,8 @@
 
                 <div class="row" style="padding-bottom: 10px;">
                     <div class="row center-block" style="margin-bottom: 20px;">
-                        <h3>Active Orders：[[${activeOrders.size()}]]</h3>
+                        <h4 class="col-md-6">Number of Orders：[[${allOrders.size()}]]</h4>
+                        <h4 class="col-md-6">Unfinished Orders：[[${activeOrdersNum}]]</h4>
                     </div>
                     <form role="form" class="form-inline">
                         <div class="form-group col-md-6">
@@ -79,9 +80,10 @@
                                     data-toggle="dropdown">
                                 Filters<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li><a href="#">Unshipped</a></li>
+                                <li><a href="#">In transit</a></li>
+                                <li><a href="#">Timeout</a></li>
+                                <li><a href="#">Finished</a></li>
                             </ul>
                         </div>
                     </form>
@@ -90,38 +92,40 @@
                 <div class="row" style="height:690px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
-                            <div class="panel newPanel" th:each="order:${activeOrders}">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <h4 class="col-md-3"><strong th:text="${order.orderId}">ID</strong></h4>
-                                            <h4 class="col-md-offset-9" style="padding: 0px;">
+                            <div class="panel newPanel" th:each="order:${allOrders}">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <h4 class="col-md-4"><strong>OrderId: [[${order.orderId}]]</strong></h4>
+                                        <h4 class="col-md-offset-9" style="padding: 0px;">
                                             <a class="btn btn-primary" style="border-radius: 15px;font-size: 15px;padding: 2px;"
-                                                  th:if="${order.status} == 0" th:href="@{'/main/'+${order.id}}">
+                                               th:if="${order.status} == 0" th:href="@{'/main/'+${order.id}}">
                                                 Unshipped
                                             </a>
-                                                <a class="btn btn-success" style="border-radius: 15px;font-size: 15px;padding: 2px;"
-                                                      th:if="${order.status} == 1" th:href="@{'/main/'+${order.id}}">
-                                                In transit
+                                            <a class="btn btn-info" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                               th:if="${order.status} == 1" th:href="@{'/main/'+${order.id}}">
+                                                In Transit
                                             </a>
-                                                <a class="btn btn-danger" style="border-radius: 15px;font-size: 15px;padding: 2px;"
-                                                      th:if="${order.status} == 2" th:href="@{'/main/'+${order.id}}">
-                                                Idle timeout
+                                            <a class="btn btn-danger" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                               th:if="${order.status} == 2" th:href="@{'/main/'+${order.id}}">
+                                                Timeout
                                             </a>
-                                            </h4>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-md-12" th:text="${order.goods}"></p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-md-3">23 Apr :</p>
-                                            <p class="col-md-8 col-md-offset-1"><strong>831 Jadloc Parkway, Calumet City,
-                                                IL</strong></p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-md-3">25 Apr :</p>
-                                            <p class="col-md-8 col-md-offset-1"><strong>982 Cemij View</strong></p>
-                                        </div>
+                                            <a class="btn btn-success" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                               th:if="${order.status} == 3" th:href="@{'/main/'+${order.id}}">
+                                                Finished
+                                            </a>
+                                        </h4>
                                     </div>
+                                    <div class="row">
+                                        <p class="col-md-4"><strong>Items: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color: #2F6F9F">[[${order.goods}]]</span></strong></p>
+                                        <p class="col-md-4 col-md-offset-1"><strong>Last Station:</strong></p>
+                                        <p class="col-md-1"><strong><span style="color: #2F6F9F">[[${order.lastStation}]]</span></strong></p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="col-md-4"><strong>Deadline: <span style="color: #2F6F9F">[[${order.deadline}]] min</span></strong></p>
+                                        <p class="col-md-4 col-md-offset-1"><strong>Next Station:</strong></p>
+                                        <p class="col-md-1"><strong><span style="color: #2F6F9F">[[${order.nextStation}]]</span></strong></p>
+                                    </div>
+                                </div>
 
 
 
@@ -142,18 +146,18 @@
                     <div class="panel-body" style="padding-bottom: 0px;padding-top: 5px;">
                         <div class="col-md-3">
                             <div class="row col-md-12">
-                                <h4 style="text-align: center"><strong>Current</strong></h4>
+                                <h4 style="text-align: center"><strong>Last Station</strong></h4>
                             </div>
                             <div class="row col-md-12">
-                                <p style="text-align: center">Station A-19</p>
+                                <p style="text-align: center">[[${info.get("lastStation")}]]</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="row col-md-12">
-                                <h4 style="text-align: center"><strong>Last stop</strong></h4>
+                                <h4 style="text-align: center"><strong>Next Station</strong></h4>
                             </div>
                             <div class="row col-md-12">
-                                <p style="text-align: center">6h ago</p>
+                                <p style="text-align: center">[[${info.get("nextStation")}]]</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -161,7 +165,7 @@
                                 <h4 style="text-align: center"><strong>Distance</strong></h4>
                             </div>
                             <div class="row col-md-12">
-                                <p style="text-align: center">120/180 mi</p>
+                                <p style="text-align: center">[[${info.get("distance")}]]m</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -169,7 +173,7 @@
                                 <h4 style="text-align: center"><strong>Current speed</strong></h4>
                             </div>
                             <div class="row col-md-12">
-                                <p style="text-align: center">18mph</p>
+                                <p style="text-align: center">[[${info.get("drone").speed}]]m/s</p>
                             </div>
                         </div>
                     </div>
@@ -178,30 +182,33 @@
                      style="position: absolute;top: 580px;height: 200px;">
                     <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 5px;">
                         <li class="col-md-3" style="padding: 0;text-align: center">
-                            <a class="my_style_a2 my_style_a1" href="#Order-details" data-toggle="tab">Order details</a>
+                            <a class="my_style_a2 my_style_a1" href="#Order-details" data-toggle="tab">Order Information</a>
                         </li>
                         <li class="col-md-3" style="padding: 0;text-align: center">
-                            <a class="my_style_a2 my_style_a1" href="#Vehicle" data-toggle="tab">Vehicle</a>
+                            <a class="my_style_a2 my_style_a1" href="#Vehicle" data-toggle="tab">Vehicle Information</a>
                         </li>
                         <li class="col-md-3" style="padding: 0;text-align: center">
                             <a class="my_style_a2 my_style_a1" href="#Customer-information" data-toggle="tab">Customer information</a>
                         </li>
                         <li class="col-md-3" style="padding: 0;text-align: center">
-                            <a class="my_style_a2 my_style_a1" href="#Documents" data-toggle="tab">Documents</a>
+                            <a class="my_style_a2 my_style_a1" href="#Documents" data-toggle="tab">Notes</a>
                         </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade in active" id="Order-details">
-                            <p>这里是订单详细信息（创建时间、截止时间、当前所在站点、货物信息）</p>
+                            <p>Item: [[${info.get("order").goods}]]</p>
+                            <p>Length: [[${info.get("order").length}]]cm</p>
+                            <p>Width: [[${info.get("order").width}]]cm</p>
                         </div>
                         <div class="tab-pane fade" id="Vehicle">
-                            <p>这里是运输工具信息（速度、电量）</p>
+                            <p>Drone Type: No.[[${info.get("drone").id}]]</p>
+                            <p>Speed: [[${info.get("drone").speed}]]m/s</p>
                         </div>
                         <div class="tab-pane fade" id="Customer-information">
-                            <p>这里是用户信息</p>
+                            <p>Customer Name: [[${info.get("order").consignee}]]</p>
                         </div>
                         <div class="tab-pane fade" id="Documents">
-                            <p>这里是订单备注信息</p>
+                            <p>[[${info.get("order").info}]]</p>
                         </div>
                     </div>
                 </div>
@@ -211,7 +218,7 @@
 
         <!--footer section start-->
         <footer style="text-align: center;margin-top: 10px;">
-            2022 &copy; AdminEx by AHU ISEC
+            2022 &copy; By AHU ISEC
         </footer>
         <!--footer section end-->
 
@@ -278,6 +285,8 @@
     var map = new AMap.Map("container", {
         // center: [112.187017,31.763388],
         resizeEnable: true,
+        zoom: 16,
+        lang: "en"
         // zoom: 16
     });
 
@@ -415,7 +424,7 @@
         marker.setMap(map);
     }
 
-    map.setFitView(null, true, [150, 300, 30, 80]);
+    map.setFitView(null, true, [80, 200, 30, 30]);
 </script>
 
 </body>

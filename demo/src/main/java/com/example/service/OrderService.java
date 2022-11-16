@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.bean.Order;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,4 +28,10 @@ public interface OrderService extends IService<Order> {
     default boolean update(Order entity, Wrapper<Order> updateWrapper) {
         return SqlHelper.retBool(this.getBaseMapper().update(entity, updateWrapper));
     }
+
+    List<Order> getAll();
+
+    HashMap<String, Object> getInfo(int id);
+
+    List<String> getLastAndNext(String route);
 }

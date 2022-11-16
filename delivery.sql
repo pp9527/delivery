@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/11/10 17:40:01
+Date: 2022/11/16 21:49:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,8 +123,10 @@ CREATE TABLE `order_record` (
   `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privacy_status` tinyint(4) DEFAULT '0',
   `route` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `time` int(11) DEFAULT NULL,
+  `energy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for path
@@ -136,7 +138,7 @@ CREATE TABLE `path` (
   `cid` int(11) DEFAULT '0',
   `station_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_map
@@ -221,90 +223,45 @@ INSERT INTO `drone_station` VALUES ('14', 'D13', '117.231244', '31.735506', null
 INSERT INTO `drone_station` VALUES ('15', 'D14', '117.202916', '31.723304', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('16', 'D15', '117.222616', '31.717974', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('17', 'D16', '117.207786', '31.729351', null, '1', '1', '1', '2', '1', '3');
-INSERT INTO `order_record` VALUES ('1', '1', 'W1', '117.240473', '31.713253', '117.239703', '31.713891', '11111', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '', '1', 'W1->D7->D16->D15->C6->U1');
-INSERT INTO `order_record` VALUES ('2', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '22222', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '111', '0', 'W1->D7->C11->U1');
-INSERT INTO `order_record` VALUES ('3', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '33333', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '...', '0', 'W1->D7->D13->C3->U1');
-INSERT INTO `order_record` VALUES ('4', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10021', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '123', '0', 'W1->D7->D13->C3->U1');
-INSERT INTO `order_record` VALUES ('5', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10001', 'U1', '12', '12', '1.20000', 'apple', '20', '0', '123', '0', 'W1->D7->D13->C9->U1');
-INSERT INTO `order_record` VALUES ('6', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10003', 'U1', '12', '12', '1.20000', 'apple', '17', '0', '123', '0', 'W1->D7->D13->C3->U1');
-INSERT INTO `order_record` VALUES ('7', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10005', 'U1', '12', '12', '2.00000', 'apple', '20', '0', '。。。', '0', 'W1->D7->C11->U1');
-INSERT INTO `order_record` VALUES ('11', '1', 'W1', '117.240473', '31.713253', '117.239521', '31.712882', '10006', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
-INSERT INTO `order_record` VALUES ('12', '1', 'W1', '117.240473', '31.713253', '117.237792', '31.717393', '10007', 'U1', '12', '12', '4.00000', 'apple', '30', '0', '11111', '1', 'W1->D7->C11->U1');
-INSERT INTO `order_record` VALUES ('13', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10008', 'U1', '12', '12', '1.00000', 'apple', '30', '0', '123', '0', 'W1->D7->D16->D15->C6->U1');
-INSERT INTO `order_record` VALUES ('14', '1', 'W1', '117.240473', '31.713253', '117.240062', '31.712307', '10009', 'U1', '12', '12', '1.20000', 'apple', '22', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
-INSERT INTO `order_record` VALUES ('15', '1', 'W1', '117.240473', '31.713253', '117.239337', '31.714411', '10010', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '123', '1', 'W1->D7->D16->D15->C6->U1');
-INSERT INTO `order_record` VALUES ('16', '1', 'W1', '117.240473', '31.713253', '117.241252', '31.712342', '10011', 'U1', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D7->C11->U1');
-INSERT INTO `order_record` VALUES ('17', '1', 'W1', '117.231199', '31.770856', '117.231673', '31.771750', '10012', 'U2', '12', '12', '1.20000', 'apple', '30', '0', '', '1', 'W1->D5->C4->U2');
-INSERT INTO `order_record` VALUES ('23', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10013', 'U1', '12', '12', '1.20000', 'apple', '20', '0', 'new order', '0', 'W1->D7->D13->C3->U1');
-INSERT INTO `order_record` VALUES ('25', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10014', 'U1', '12', '12', '1.00000', 'apple', '22', '0', '', '0', 'W1->D7->D13->C3->U1');
-INSERT INTO `order_record` VALUES ('26', '1', 'W1', '117.240473', '31.713253', '117.243247', '31.711408', '10015', 'U1', '12', '12', '1.20000', 'apple', '22', '0', '', '1', 'W1->D7->C11->U1');
-INSERT INTO `path` VALUES ('1', '11111', '1', '0', '1');
-INSERT INTO `path` VALUES ('2', '11111', '8', '0', '2');
-INSERT INTO `path` VALUES ('3', '11111', '17', '0', '3');
-INSERT INTO `path` VALUES ('4', '11111', '16', '0', '4');
-INSERT INTO `path` VALUES ('5', '11111', '0', '6', '5');
-INSERT INTO `path` VALUES ('6', '22222', '1', '0', '1');
-INSERT INTO `path` VALUES ('7', '22222', '8', '0', '2');
-INSERT INTO `path` VALUES ('8', '22222', '0', '11', '3');
-INSERT INTO `path` VALUES ('9', '33333', '1', '0', '1');
-INSERT INTO `path` VALUES ('10', '33333', '8', '0', '2');
-INSERT INTO `path` VALUES ('11', '33333', '14', '0', '3');
-INSERT INTO `path` VALUES ('12', '33333', '0', '3', '4');
-INSERT INTO `path` VALUES ('13', '10021', '1', '0', '1');
-INSERT INTO `path` VALUES ('14', '10021', '8', '0', '2');
-INSERT INTO `path` VALUES ('15', '10021', '14', '0', '3');
-INSERT INTO `path` VALUES ('16', '10021', '0', '3', '4');
-INSERT INTO `path` VALUES ('17', '10001', '1', '0', '1');
-INSERT INTO `path` VALUES ('18', '10001', '8', '0', '2');
-INSERT INTO `path` VALUES ('19', '10001', '14', '0', '3');
-INSERT INTO `path` VALUES ('20', '10001', '0', '9', '4');
-INSERT INTO `path` VALUES ('21', '10003', '1', '0', '1');
-INSERT INTO `path` VALUES ('22', '10003', '8', '0', '2');
-INSERT INTO `path` VALUES ('23', '10003', '14', '0', '3');
-INSERT INTO `path` VALUES ('24', '10003', '0', '3', '4');
-INSERT INTO `path` VALUES ('25', '10005', '1', '0', '1');
-INSERT INTO `path` VALUES ('26', '10005', '8', '0', '2');
-INSERT INTO `path` VALUES ('27', '10005', '0', '11', '3');
-INSERT INTO `path` VALUES ('38', '10006', '1', '0', '1');
-INSERT INTO `path` VALUES ('39', '10006', '8', '0', '2');
-INSERT INTO `path` VALUES ('40', '10006', '17', '0', '3');
-INSERT INTO `path` VALUES ('41', '10006', '16', '0', '4');
-INSERT INTO `path` VALUES ('42', '10006', '0', '6', '5');
-INSERT INTO `path` VALUES ('43', '10007', '1', '0', '1');
-INSERT INTO `path` VALUES ('44', '10007', '8', '0', '2');
-INSERT INTO `path` VALUES ('45', '10007', '0', '11', '3');
-INSERT INTO `path` VALUES ('46', '10008', '1', '0', '1');
-INSERT INTO `path` VALUES ('47', '10008', '8', '0', '2');
-INSERT INTO `path` VALUES ('48', '10008', '17', '0', '3');
-INSERT INTO `path` VALUES ('49', '10008', '16', '0', '4');
-INSERT INTO `path` VALUES ('50', '10008', '0', '6', '5');
-INSERT INTO `path` VALUES ('51', '10009', '1', '0', '1');
-INSERT INTO `path` VALUES ('52', '10009', '8', '0', '2');
-INSERT INTO `path` VALUES ('53', '10009', '17', '0', '3');
-INSERT INTO `path` VALUES ('54', '10009', '16', '0', '4');
-INSERT INTO `path` VALUES ('55', '10009', '0', '6', '5');
-INSERT INTO `path` VALUES ('56', '10010', '1', '0', '1');
-INSERT INTO `path` VALUES ('57', '10010', '8', '0', '2');
-INSERT INTO `path` VALUES ('58', '10010', '17', '0', '3');
-INSERT INTO `path` VALUES ('59', '10010', '16', '0', '4');
-INSERT INTO `path` VALUES ('60', '10010', '0', '6', '5');
-INSERT INTO `path` VALUES ('61', '10011', '1', '0', '1');
-INSERT INTO `path` VALUES ('62', '10011', '8', '0', '2');
-INSERT INTO `path` VALUES ('63', '10011', '0', '11', '3');
-INSERT INTO `path` VALUES ('64', '10012', '1', '0', '1');
-INSERT INTO `path` VALUES ('65', '10012', '6', '0', '2');
-INSERT INTO `path` VALUES ('66', '10012', '0', '4', '3');
-INSERT INTO `path` VALUES ('88', '10013', '1', '0', '1');
-INSERT INTO `path` VALUES ('89', '10013', '8', '0', '2');
-INSERT INTO `path` VALUES ('90', '10013', '14', '0', '3');
-INSERT INTO `path` VALUES ('91', '10013', '0', '3', '4');
-INSERT INTO `path` VALUES ('97', '10014', '1', '0', '1');
-INSERT INTO `path` VALUES ('98', '10014', '8', '0', '2');
-INSERT INTO `path` VALUES ('99', '10014', '14', '0', '3');
-INSERT INTO `path` VALUES ('100', '10014', '0', '3', '4');
-INSERT INTO `path` VALUES ('101', '10015', '1', '0', '1');
-INSERT INTO `path` VALUES ('102', '10015', '8', '0', '2');
-INSERT INTO `path` VALUES ('103', '10015', '0', '11', '3');
+INSERT INTO `order_record` VALUES ('31', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10001', 'U1', '15', '15', '2.00000', 'book', '30', '1', 'phone number: 15780864456', '0', 'W1->D7->D16->D15->C6->U1', '16', '286');
+INSERT INTO `order_record` VALUES ('32', '1', 'D1', '117.231199', '31.770856', '117.230213', '31.770655', '10002', 'U2', '12', '12', '1.50000', 'apple', '30', '0', 'Please give priority to delivery', '1', 'D1->W1->D5->D6->C5->U2', '22', '204');
+INSERT INTO `order_record` VALUES ('33', '1', 'W1', '117.231199', '31.770856', '117.232973', '31.770100', '10003', 'U2', '18', '18', '4.00000', 'banana', '25', '2', 'no information', '1', 'W1->D5->D6->C5->U2', '11', '139');
+INSERT INTO `order_record` VALUES ('34', '1', 'W1', '117.240855', '31.759800', '117.241455', '31.760697', '10004', 'U4', '12', '15', '1.50000', 'bread', '30', '3', 'phone number: 12345678901', '1', 'W1->D5->D6->C5->U4', '18', '134');
+INSERT INTO `order_record` VALUES ('35', '1', 'D1', '117.240473', '31.713253', '117.240473', '31.713253', '10005', 'U1', '20', '20', '1.80000', 'iphone', '25', '1', 'phone number: 18324569875', '0', 'D1->D4->D7->C11->U1', '22', '201');
+INSERT INTO `order_record` VALUES ('36', '1', 'D13', '117.240855', '31.759800', '117.240855', '31.759800', '10006', 'U4', '23', '23', '2.00000', 'apple', '30', '2', 'Please give priority to delivery', '0', 'D13->D9->D12->C5->U4', '20', '187');
+INSERT INTO `order_record` VALUES ('37', '1', 'W1', '117.240473', '31.713253', '117.242777', '31.713269', '10007', 'U1', '15', '15', '1.50000', 'banana', '25', '0', 'no information', '1', 'W1->D7->C11->U1', '27', '181');
+INSERT INTO `path` VALUES ('108', '12345', '1', '0', '1');
+INSERT INTO `path` VALUES ('109', '12345', '8', '0', '2');
+INSERT INTO `path` VALUES ('110', '12345', '0', '3', '3');
+INSERT INTO `path` VALUES ('128', '10001', '1', '0', '1');
+INSERT INTO `path` VALUES ('129', '10001', '8', '0', '2');
+INSERT INTO `path` VALUES ('130', '10001', '17', '0', '3');
+INSERT INTO `path` VALUES ('131', '10001', '16', '0', '4');
+INSERT INTO `path` VALUES ('132', '10001', '0', '6', '5');
+INSERT INTO `path` VALUES ('133', '10002', '2', '0', '1');
+INSERT INTO `path` VALUES ('134', '10002', '1', '0', '2');
+INSERT INTO `path` VALUES ('135', '10002', '6', '0', '3');
+INSERT INTO `path` VALUES ('136', '10002', '7', '0', '4');
+INSERT INTO `path` VALUES ('137', '10002', '0', '5', '5');
+INSERT INTO `path` VALUES ('138', '10003', '1', '0', '1');
+INSERT INTO `path` VALUES ('139', '10003', '6', '0', '2');
+INSERT INTO `path` VALUES ('140', '10003', '7', '0', '3');
+INSERT INTO `path` VALUES ('141', '10003', '0', '5', '4');
+INSERT INTO `path` VALUES ('142', '10004', '1', '0', '1');
+INSERT INTO `path` VALUES ('143', '10004', '6', '0', '2');
+INSERT INTO `path` VALUES ('144', '10004', '7', '0', '3');
+INSERT INTO `path` VALUES ('145', '10004', '0', '5', '4');
+INSERT INTO `path` VALUES ('146', '10005', '2', '0', '1');
+INSERT INTO `path` VALUES ('147', '10005', '5', '0', '2');
+INSERT INTO `path` VALUES ('148', '10005', '8', '0', '3');
+INSERT INTO `path` VALUES ('149', '10005', '0', '11', '4');
+INSERT INTO `path` VALUES ('150', '10006', '14', '0', '1');
+INSERT INTO `path` VALUES ('151', '10006', '10', '0', '2');
+INSERT INTO `path` VALUES ('152', '10006', '13', '0', '3');
+INSERT INTO `path` VALUES ('153', '10006', '0', '5', '4');
+INSERT INTO `path` VALUES ('154', '10007', '1', '0', '1');
+INSERT INTO `path` VALUES ('155', '10007', '8', '0', '2');
+INSERT INTO `path` VALUES ('156', '10007', '0', '11', '3');
 INSERT INTO `t_map` VALUES ('1', '9', '0', '7', '1197');
 INSERT INTO `t_map` VALUES ('2', '1', '2', '0', '1357');
 INSERT INTO `t_map` VALUES ('3', '1', '3', '0', '1249');

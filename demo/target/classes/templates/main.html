@@ -19,7 +19,7 @@
             securityJsCode:'2f8af7c5b6908ba48f1e68c3fe9744ce',
         }
     </script>
-    <script src="https://webapi.amap.com/maps?v=2.0&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=9802c49d608a80962ed05ccdc9de7723&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 <!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>-->
 
@@ -58,7 +58,8 @@
 
                 <div class="row" style="padding-bottom: 10px;">
                     <div class="row center-block" style="margin-bottom: 15px;padding-left: 20px;">
-                        <h3>Active Orders：[[${activeOrders.size()}]]</h3>
+                        <h4 class="col-md-6">Number of Orders：[[${allOrders.size()}]]</h4>
+                        <h4 class="col-md-6">Unfinished Orders：[[${activeOrdersNum}]]</h4>
                     </div>
                     <form role="form" class="form-inline">
                         <div class="form-group col-md-6">
@@ -70,9 +71,10 @@
                                     data-toggle="dropdown">
                                 Filters<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li><a href="#">Unshipped</a></li>
+                                <li><a href="#">In transit</a></li>
+                                <li><a href="#">Timeout</a></li>
+                                <li><a href="#">Finished</a></li>
                             </ul>
                         </div>
                     </form>
@@ -81,41 +83,40 @@
                 <div class="row" style="height:690px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
-                            <div class="panel newPanel" th:each="order:${activeOrders}">
-                                    <div class="panel-body">
+                            <div class="panel newPanel" th:each="order:${allOrders}">
+                                <div class="panel-body">
                                         <div class="row">
-                                            <h4 class="col-md-3"><strong th:text="${order.orderId}">ID</strong></h4>
+                                            <h4 class="col-md-4"><strong>OrderId: [[${order.orderId}]]</strong></h4>
                                             <h4 class="col-md-offset-9" style="padding: 0px;">
-                                            <a class="btn btn-primary" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                            <a class="btn btn-primary" id="order[[{order.id}}]]" style="border-radius: 15px;font-size: 15px;padding: 2px;"
                                                   th:if="${order.status} == 0" th:href="@{'/main/'+${order.id}}">
                                                 Unshipped
                                             </a>
-                                                <a class="btn btn-success" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                                <a class="btn btn-info" style="border-radius: 15px;font-size: 15px;padding: 2px;"
                                                       th:if="${order.status} == 1" th:href="@{'/main/'+${order.id}}">
-                                                In transit
+                                                In Transit
                                             </a>
                                                 <a class="btn btn-danger" style="border-radius: 15px;font-size: 15px;padding: 2px;"
                                                       th:if="${order.status} == 2" th:href="@{'/main/'+${order.id}}">
-                                                Idle timeout
+                                                Timeout
                                             </a>
+                                                <a class="btn btn-success" style="border-radius: 15px;font-size: 15px;padding: 2px;"
+                                                   th:if="${order.status} == 3" th:href="@{'/main/'+${order.id}}">
+                                                    Finished
+                                                </a>
                                             </h4>
                                         </div>
                                         <div class="row">
-                                            <p class="col-md-12" th:text="${order.goods}"></p>
+                                            <p class="col-md-4"><strong>Items: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color: #2F6F9F">[[${order.goods}]]</span></strong></p>
+                                            <p class="col-md-4 col-md-offset-1"><strong>Last Station:</strong></p>
+                                            <p class="col-md-1"><strong><span style="color: #2F6F9F">[[${order.lastStation}]]</span></strong></p>
                                         </div>
                                         <div class="row">
-                                            <p class="col-md-3">23 Apr :</p>
-                                            <p class="col-md-8 col-md-offset-1"><strong>831 Jadloc Parkway, Calumet City,
-                                                IL</strong></p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-md-3">25 Apr :</p>
-                                            <p class="col-md-8 col-md-offset-1"><strong>982 Cemij View</strong></p>
+                                            <p class="col-md-4"><strong>Deadline: <span style="color: #2F6F9F">[[${order.deadline}]] min</span></strong></p>
+                                            <p class="col-md-4 col-md-offset-1"><strong>Next Station:</strong></p>
+                                            <p class="col-md-1"><strong><span style="color: #2F6F9F">[[${order.nextStation}]]</span></strong></p>
                                         </div>
                                     </div>
-
-
-
                             </div>
 
                         </div>
@@ -146,7 +147,7 @@
 
         <!--footer section start-->
         <footer style="text-align: center;margin-top: 10px;">
-            2022 &copy; AdminEx by AHU ISEC
+            2022 &copy; By AHU ISEC
         </footer>
         <!--footer section end-->
 
@@ -167,6 +168,7 @@
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js" ></script>
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
 <script>
 
     getFileStatus();
@@ -199,7 +201,8 @@
     var map = new AMap.Map("container", {
         // center: [112.187017,31.763388],
         resizeEnable: true,
-        zoom: 16
+        zoom: 16,
+        lang: "en"
     });
 
     // 百度坐标转换高德坐标
@@ -350,7 +353,7 @@
     // }
 
     // 视图自动缩放设置
-    map.setFitView(null, true, [50, 50, 30, 30]);
+    map.setFitView(null, true, [20, 20, 20, 20]);
 
 </script>
 

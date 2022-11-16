@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -53,10 +54,20 @@ public class MainController {
 
     @GetMapping(value = "/main/{id}")
     public String getMapById(@PathVariable("id")Integer id, Model model) {
+        List<Order> all = orderService.getAll();
+        for (Order order : all) {
+            List<String> lastAndNext = orderService.getLastAndNext(order.getRoute());
+            order.setLastStation(lastAndNext.get(0));
+            order.setNextStation(lastAndNext.get(1));
+        }
+        model.addAttribute("allOrders", all);
+
+        HashMap<String, Object> info = orderService.getInfo(id);
+        model.addAttribute("info", info);
 
 //        查询活跃订单
         List<Order> activeOrders = orderService.getActiveOrders();
-        model.addAttribute("activeOrders", activeOrders);
+        model.addAttribute("activeOrdersNum", activeOrders.size());
 
 //        根据订单id查询订单路径
         Order order = orderService.getById(id);
@@ -86,8 +97,8 @@ public class MainController {
             maxId = orderService.getMaxId();
         }
         //        查询当前活跃订单
-        List<Order> activeOrders = orderService.getActiveOrders();
-        model.addAttribute("activeOrders", activeOrders);
+        List<Order> all = orderService.getAll();
+        model.addAttribute("allOrders", all);
 
         //        根据订单id查询订单路径
         Order order = orderService.getById(maxId);

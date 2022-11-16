@@ -2,7 +2,6 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.bean.StationNetMap;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -21,4 +20,6 @@ public interface StationNetMapService extends IService<StationNetMap> {
     List<List<StationNetMap>> getMapData();
 
     int[][] getMatrix();
+
+    int getDistance(String start, String end);
 }

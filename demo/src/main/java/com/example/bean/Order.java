@@ -1,13 +1,12 @@
 package com.example.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * @author: pwz
@@ -40,4 +39,10 @@ public class Order {
     private String info;
     private boolean privacyStatus; //隐私保护状态 启用为1
     private String route;
+    private int time;
+    private int energy;
+    @TableField(exist = false)
+    private String lastStation;
+    @TableField(exist = false)
+    private String nextStation;
 }

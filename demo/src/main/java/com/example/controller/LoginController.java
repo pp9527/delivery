@@ -1,21 +1,15 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.bean.*;
+import com.example.bean.Order;
 import com.example.service.*;
 import net.sf.json.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: pwz
@@ -62,6 +56,12 @@ public class LoginController {
 
     @GetMapping("/main.html")
     public String mainPage(Model model) {
+        List<Order> all = orderService.getAll();
+        for (Order order : all) {
+            List<String> lastAndNext = orderService.getLastAndNext(order.getRoute());
+            order.setLastStation(lastAndNext.get(0));
+            order.setNextStation(lastAndNext.get(1));
+        }
 //        Order order = orderService.getById(id);
 //        查询当前活跃订单
         List<Order> activeOrders = orderService.getActiveOrders();
@@ -91,8 +91,8 @@ public class LoginController {
 //        查询无人车站点到用户的路径
         List<List<List<Double>>> allCarToCustomerPath = carToCustomerService.getAllCarToCustomerPath();
 
-
-        model.addAttribute("activeOrders", activeOrders);
+        model.addAttribute("allOrders", all);
+        model.addAttribute("activeOrdersNum", activeOrders.size());
         model.addAttribute("stationNames", stationName);
         model.addAttribute("stationLongitudesAndLatitudes", stationLongitudesAndLatitude);
         model.addAttribute("pathLists", path);
@@ -102,5 +102,7 @@ public class LoginController {
 
         return "main";
     }
+
+
 
 }

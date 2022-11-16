@@ -90,9 +90,9 @@
             <ul class="nav nav-pills nav-stacked custom-nav">
                 <li class="active"><a href="/main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
                 <li><a th:href="@{/orders}"><i class="fa fa-book"></i> <span>Order Management</span></a></li>
-                <li><a th:href="@{/safety}"><i class="fa fa-lock"></i> <span>Safety Management</span></a></li>
-                <li><a th:href="@{/ai}"><i class="fa fa-laptop"></i> <span>Ai Management</span></a></li>
-                <li><a th:href="@{/}"><i class="fa fa-sign-in"></i> <span>Log Out</span></a></li>
+                <li><a th:href="@{/safety}"><i class="fa fa-lock"></i> <span>Security Management</span></a></li>
+                <li><a th:href="@{/ai}"><i class="fa fa-laptop"></i> <span>Ai App Management</span></a></li>
+<!--                <li><a th:href="@{/}"><i class="fa fa-sign-in"></i> <span>Log Out</span></a></li>-->
             </ul>
             <!--sidebar nav end-->
 
@@ -126,11 +126,11 @@
 <!--        </form>-->
 
         <!--search th:action="@{/ajax/uploadFile}"  end-->
-        <form id="form" class="col-md-2" style="line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
-            <input style="display: none" name="file" type="file" id="file">
+        <form id="form" class="col-md-2" style="margin-right: 40px;line-height: 50px;" th:target="frame" enctype="multipart/form-data" method="post">
+            <input style="visibility: hidden;margin-left: 70px" name="file" type="file" id="file">
             <div class="col-md-12" style="height: 100%;">
 <!--                <input type="button" value="上传" id="btn"/>-->
-                <button id="btn" class="btn btn-info" style="padding: 0 8px 0 8px;height: 30px;">upload workflow</button>
+                <button id="btn" class="btn btn-info" style="position: absolute;top: -40px;z-index: 100;padding: 0 8px 0 8px;height: 30px;">Upload Workflow</button>
             </div>
         </form>
         <iframe style="display: none" src="" fragment="0" name="frame"></iframe>
@@ -365,7 +365,8 @@
             setTimeout(function(){toast.style.display = "none"},2000);
             selectFile();
             //清空file标签的value，否则再次提交此文件时，onchange事件就不触发了
-            $('#file').val('');
+            // $('#file').val('');
+            file.style.visibility = "visible";
         });
     });
 
@@ -407,11 +408,5 @@
     }
 </script>
 </div>
-
-
-
-
-
-
 </body>
 </html>
