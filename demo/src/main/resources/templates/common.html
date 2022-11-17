@@ -91,7 +91,7 @@
                 <li class="active"><a href="/main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
                 <li><a th:href="@{/orders}"><i class="fa fa-book"></i> <span>Order Management</span></a></li>
                 <li><a th:href="@{/safety}"><i class="fa fa-lock"></i> <span>Security Management</span></a></li>
-                <li><a th:href="@{/ai}"><i class="fa fa-laptop"></i> <span>Ai App Management</span></a></li>
+                <li><a th:href="@{/ai}"><i class="fa fa-laptop"></i> <span>AI App Management</span></a></li>
 <!--                <li><a th:href="@{/}"><i class="fa fa-sign-in"></i> <span>Log Out</span></a></li>-->
             </ul>
             <!--sidebar nav end-->
@@ -351,6 +351,13 @@
     // submit.onclick = function () {
     //     toast.style.display = "flex";
     // }
+    // 动态改变侧边导航栏样式
+    $('.nav>li').click(function (){
+        console.log(this);
+        $(this).addClass("active").siblings().removeClass("active");
+        // let index = $(this).index();
+        // $(".Content>div").eq(index).show().siblings().hide();
+    })
 
     $(function () {
         //按钮的点击事件

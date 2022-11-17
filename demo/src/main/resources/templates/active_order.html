@@ -81,7 +81,7 @@
                                 Filters<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Unshipped</a></li>
-                                <li><a href="#">In transit</a></li>
+                                <li><a href="#">In Transit</a></li>
                                 <li><a href="#">Timeout</a></li>
                                 <li><a href="#">Finished</a></li>
                             </ul>
@@ -92,7 +92,7 @@
                 <div class="row" style="height:690px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
-                            <div class="panel newPanel" th:each="order:${allOrders}">
+                            <div class="panel newPanel" th:onclick="getLocaltion([[${order.id}]]);" th:each="order:${allOrders}">
                                 <div class="panel-body">
                                     <div class="row">
                                         <h4 class="col-md-4"><strong>OrderId: [[${order.orderId}]]</strong></h4>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="row col-md-12">
-                                <h4 style="text-align: center"><strong>Current speed</strong></h4>
+                                <h4 style="text-align: center"><strong>Speed</strong></h4>
                             </div>
                             <div class="row col-md-12">
                                 <p style="text-align: center">[[${info.get("drone").speed}]]m/s</p>
@@ -188,7 +188,7 @@
                             <a class="my_style_a2 my_style_a1" href="#Vehicle" data-toggle="tab">Vehicle Information</a>
                         </li>
                         <li class="col-md-3" style="padding: 0;text-align: center">
-                            <a class="my_style_a2 my_style_a1" href="#Customer-information" data-toggle="tab">Customer information</a>
+                            <a class="my_style_a2 my_style_a1" href="#Customer-information" data-toggle="tab">Customer Information</a>
                         </li>
                         <li class="col-md-3" style="padding: 0;text-align: center">
                             <a class="my_style_a2 my_style_a1" href="#Documents" data-toggle="tab">Notes</a>
@@ -267,6 +267,11 @@
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 <script>
+
+    function getLocaltion(el) {
+        console.log(el)
+        window.location.href = `http://localhost:8080/main/` + el;
+    }
 
     //将json字符串转为数组 : 获取无人机路线数组
     // var Latitude2 = $('#Longitude2').val()

@@ -92,19 +92,20 @@ public class OpenFaasUtils {
      */
     public static String getShortestEnergyInTimePath1(String startStation, String endStation, int droneId
             , int carId, int deadline , int weight, String carToUserDistance) {
-        log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergyInTime***");
-        RestTemplate restTemplate = new RestTemplate();
-        //        openfaas请求url
-        String url = "http://192.168.50.253:31112/function/faas-servicecomp-et";
-        log.info("request -> openfaas: " + url);
-        String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
-                + deadline + "," + weight + "," + carToUserDistance;
-        HttpEntity<String> entity = new HttpEntity<>(body, null);
-        log.info("request body: " + body);
-        String s = restTemplate.postForObject(url, entity, String.class);
-        log.info("request successful! response body: " + s);
-        log.info("*******openfaas request end!*******");
-        return s;
+//        log.info("***openfaas request start! -> ServiceComposition -> ShortestEnergyInTime***");
+//        RestTemplate restTemplate = new RestTemplate();
+//        //        openfaas请求url
+//        String url = "http://192.168.50.253:31112/function/faas-servicecomp-et";
+//        log.info("request -> openfaas: " + url);
+//        String body = startStation + "," + endStation + "," + droneId + "," + carId + ","
+//                + deadline + "," + weight + "," + carToUserDistance;
+//        HttpEntity<String> entity = new HttpEntity<>(body, null);
+//        log.info("request body: " + body);
+//        String s = restTemplate.postForObject(url, entity, String.class);
+//        log.info("request successful! response body: " + s);
+//        log.info("*******openfaas request end!*******");
+
+        return null;
     }
 
     /* ResourceAllocation */

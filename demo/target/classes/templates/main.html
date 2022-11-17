@@ -72,7 +72,7 @@
                                 Filters<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Unshipped</a></li>
-                                <li><a href="#">In transit</a></li>
+                                <li><a href="#">In Transit</a></li>
                                 <li><a href="#">Timeout</a></li>
                                 <li><a href="#">Finished</a></li>
                             </ul>
@@ -83,7 +83,7 @@
                 <div class="row" style="height:690px;overflow:auto; position: relative;margin-right: 1px;">
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
-                            <div class="panel newPanel" th:each="order:${allOrders}">
+                            <div class="panel newPanel" th:onclick="getLocaltion([[${order.id}]]);" th:each="order:${allOrders}">
                                 <div class="panel-body">
                                         <div class="row">
                                             <h4 class="col-md-4"><strong>OrderId: [[${order.orderId}]]</strong></h4>
@@ -169,6 +169,14 @@
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+
+<script>
+
+    function getLocaltion(el) {
+        console.log(el)
+        window.location.href = `http://localhost:8080/main/` + el;
+    }
+</script>
 <script>
 
     getFileStatus();
@@ -357,6 +365,8 @@
 
 </script>
 
+
+
 <div th:replace="common :: commonscript"></div>
 
 <!--easy pie chart-->
@@ -391,7 +401,6 @@
 <script src="/js/calendar/evnt.calendar.init.js"></script>
 <script src="/js/calendar/moment-2.2.1.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-
 
 
 

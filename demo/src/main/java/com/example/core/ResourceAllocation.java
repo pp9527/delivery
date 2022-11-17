@@ -126,10 +126,10 @@ public class ResourceAllocation {
                         f = 1;
                         path = OpenFaasUtils.getShortestEnergyInTimePath2(order.getStartStation(), order.getConsignee(),
                                 uavType - 1, ugvType - 1, order.getDeadline(), weigh, carToUserDistance3);
+                        if (path == null) return null;
                         String[] split4 = path.split(",");
                         route = new ArrayList<>(Arrays.asList(split4));
                     }
-                    if (route == null) return null;
                     break;
             }
             if (f == 1) {
