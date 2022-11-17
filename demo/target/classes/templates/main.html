@@ -172,6 +172,10 @@
 
 <script>
 
+    $('#main').addClass("active").siblings().removeClass("active");
+        // let index = $(this).index();
+        // $(".Content>div").eq(index).show().siblings().hide();
+
     function getLocaltion(el) {
         console.log(el)
         window.location.href = `http://localhost:8080/main/` + el;

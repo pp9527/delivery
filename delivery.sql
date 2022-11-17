@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: delivery
 Target Host: localhost
 Target Database: delivery
-Date: 2022/11/16 21:49:53
+Date: 2022/11/17 15:56:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -224,8 +224,8 @@ INSERT INTO `drone_station` VALUES ('15', 'D14', '117.202916', '31.723304', null
 INSERT INTO `drone_station` VALUES ('16', 'D15', '117.222616', '31.717974', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `drone_station` VALUES ('17', 'D16', '117.207786', '31.729351', null, '1', '1', '1', '2', '1', '3');
 INSERT INTO `order_record` VALUES ('31', '1', 'W1', '117.240473', '31.713253', '117.240473', '31.713253', '10001', 'U1', '15', '15', '2.00000', 'book', '30', '1', 'phone number: 15780864456', '0', 'W1->D7->D16->D15->C6->U1', '16', '286');
-INSERT INTO `order_record` VALUES ('32', '1', 'D1', '117.231199', '31.770856', '117.230213', '31.770655', '10002', 'U2', '12', '12', '1.50000', 'apple', '30', '0', 'Please give priority to delivery', '1', 'D1->W1->D5->D6->C5->U2', '22', '204');
-INSERT INTO `order_record` VALUES ('33', '1', 'W1', '117.231199', '31.770856', '117.232973', '31.770100', '10003', 'U2', '18', '18', '4.00000', 'banana', '25', '2', 'no information', '1', 'W1->D5->D6->C5->U2', '11', '139');
+INSERT INTO `order_record` VALUES ('32', '1', 'D1', '117.231199', '31.770856', '117.231579', '31.769931', '10002', 'U2', '12', '12', '1.50000', 'apple', '30', '0', 'Please give priority to delivery', '1', 'D1->W1->D5->D6->C5->U2', '22', '204');
+INSERT INTO `order_record` VALUES ('33', '1', 'W1', '117.231199', '31.770856', '117.230994', '31.769877', '10003', 'U2', '18', '18', '4.00000', 'banana', '25', '2', 'no information', '1', 'W1->D5->D6->C5->U2', '11', '139');
 INSERT INTO `order_record` VALUES ('34', '1', 'W1', '117.240855', '31.759800', '117.241455', '31.760697', '10004', 'U4', '12', '15', '1.50000', 'bread', '30', '3', 'phone number: 12345678901', '1', 'W1->D5->D6->C5->U4', '18', '134');
 INSERT INTO `order_record` VALUES ('35', '1', 'D1', '117.240473', '31.713253', '117.240473', '31.713253', '10005', 'U1', '20', '20', '1.80000', 'iphone', '25', '1', 'phone number: 18324569875', '0', 'D1->D4->D7->C11->U1', '22', '201');
 INSERT INTO `order_record` VALUES ('36', '1', 'D13', '117.240855', '31.759800', '117.240855', '31.759800', '10006', 'U4', '23', '23', '2.00000', 'apple', '30', '2', 'Please give priority to delivery', '0', 'D13->D9->D12->C5->U4', '20', '187');

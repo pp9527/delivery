@@ -267,7 +267,7 @@
 <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js" ></script>
 <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
 <script>
-
+    $('#main').addClass("active").siblings().removeClass("active");
     function getLocaltion(el) {
         console.log(el)
         window.location.href = `http://localhost:8080/main/` + el;

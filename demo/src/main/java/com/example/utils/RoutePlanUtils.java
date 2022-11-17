@@ -328,7 +328,6 @@ public class RoutePlanUtils {
 //                    "s, 能耗：" + timeAndEnergy[1] + "j");
         }
         if (res.size() == 0) {
-            System.out.println("All schemes have timed out！Please modify the order information!");
             return null;
         }
         return res;
@@ -431,10 +430,10 @@ public class RoutePlanUtils {
     public static int loadJudge(Drone drone, Car car, int weigh) {
         // 无人机无人车负载是否能承受
         if (weigh > drone.getMaxLoad()) {
-            System.out.println("Item is too heavy, please choose a larger vehicle!");
+            System.out.println("The weight of the goods exceeds the maximum payload of the UAV/UAV. Please reselect the type of UAV/UAV.");
             return -1;
         } else if (weigh > car.getMaxLoad()) {
-            System.out.println("Item is too heavy, please choose a larger vehicle!");
+            System.out.println("The weight of the goods exceeds the maximum payload of the UAV/UAV. Please reselect the type of UAV/UAV.");
             return -2;
         } else {
             return 1;

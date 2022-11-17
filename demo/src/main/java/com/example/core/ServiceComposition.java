@@ -39,7 +39,7 @@ public class ServiceComposition {
     CarToCustomerService carToCustomerService;
 
     /**
-     * @return List<List<Double>>
+     * @return List<List < Double>>
      * @Description: 服务组合   根据不同优化目标选择对应路径规划算法  返回前台所需坐标集合
      * @author pwz
      * @date 2022/10/13 16:46
@@ -69,7 +69,7 @@ public class ServiceComposition {
                 case "distance":        // 地杰斯特拉最短路径
                     if (environmentFlag == 0) {
                         // 使用本地服务
-                    route = routePlanUtils.getShortestDistanceRoute(order.getStartStation(), order.getConsignee());
+                        route = routePlanUtils.getShortestDistanceRoute(order.getStartStation(), order.getConsignee());
                     } else {
                         //使用openfaas服务
                         int source = GraphUtils.getSequenceByName(order.getStartStation());
@@ -82,8 +82,8 @@ public class ServiceComposition {
                 case "time":           // 选择总时间最短的路线
                     if (environmentFlag == 0) {
                         // 使用本地服务
-                    route = routePlanUtils.getShortestTimeRoute(order.getStartStation(), order.getConsignee(),
-                            drone, car, weigh);
+                        route = routePlanUtils.getShortestTimeRoute(order.getStartStation(), order.getConsignee(),
+                                drone, car, weigh);
                     } else {
                         //使用openfaas服务
                         String carToUserDistance1 = GuideRoutePlanUtils.getCarToUserDistance(
@@ -99,8 +99,8 @@ public class ServiceComposition {
                 case "energy":          // 选择总能耗最小的路线
                     if (environmentFlag == 0) {
                         // 使用本地服务
-                    route = routePlanUtils.getShortestEnergyRoute(order.getStartStation(), order.getConsignee(),
-                            drone, car, weigh);
+                        route = routePlanUtils.getShortestEnergyRoute(order.getStartStation(), order.getConsignee(),
+                                drone, car, weigh);
                     } else {
                         //使用openfaas服务
                         String carToUserDistance2 = GuideRoutePlanUtils.getCarToUserDistance(
@@ -116,8 +116,12 @@ public class ServiceComposition {
                 case "energyInTime":      // 选择时间约束下总能耗最小的路线
                     if (environmentFlag == 0) {
                         // 使用本地服务
-                    route = routePlanUtils.getShortestEnergyRouteUnderTimeConstraint(order.getStartStation(),
-                            order.getConsignee(), drone, car, order.getDeadline() * 60, weigh);
+                        route = routePlanUtils.getShortestEnergyRouteUnderTimeConstraint(order.getStartStation(),
+                                order.getConsignee(), drone, car, order.getDeadline() * 60, weigh);
+                        if (route == null) {
+                            System.out.println("All service composition plan cannot satisfy the deadline constraint, please modify the order deadline constraint.");
+                            return null;
+                        }
                     } else {
                         //使用openfaas服务
                         String carToUserDistance3 = GuideRoutePlanUtils.getCarToUserDistance(
@@ -140,8 +144,9 @@ public class ServiceComposition {
                 timeAndEnergy = routePlanUtils.getTimeAndEnergy(route, order.getConsignee(), drone, car, weigh);
             }
             route.remove(route.size() - 1);
-            System.out.println("The final scheme is：" + route + ", total time：" +
-                    timeAndEnergy[0] + "s, total energy：" + timeAndEnergy[1] + "j");
+            System.out.println("The optimal service composition plan has been generated：" + route + ", " +
+                    "Estimated delivery time：" + timeAndEnergy[0] + "s, Estimated Delivery Energy Consumption："
+                    + timeAndEnergy[1] + "j");
             res = routePlanUtils.stationNameToRouteLocation(route, timeAndEnergy);
         }
         return res;
