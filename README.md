@@ -19,3 +19,4 @@
 	+	The openfaas service-related class, OpenFaasUtils, under the utils package, needs to be modified for your own deployed service. If you are unable to deploy openfaas, we offer a way to run it locally:  Modify the ServiceComposition, ResourceAllocation, and SecurityService in the core package, set the openFaasFlag to 0, and restart the project to use the local service. 
 	+	Project operation requires multiple requests for Autonavi background service, please ensure that your network is unobstructed.  
 	+	We provide free js api key with access limit for your research, you can also apply for a new js api key, just change the key in the page to your own. 
+	+	url: localhost:8081
