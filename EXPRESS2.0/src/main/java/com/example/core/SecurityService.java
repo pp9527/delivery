@@ -16,7 +16,7 @@ public class SecurityService {
 
     public static Order getSafetyLocation(int type, Order order, double[] location) {
         // 是否请求openfaas服务 0：使用本地服务  1：请求openfaas
-        int openFaasFlag = 1;
+        int openFaasFlag = 0;
         if (type == 0) {
             // 关闭隐私保护
             order.setPrivacyLongitude(location[0]);
