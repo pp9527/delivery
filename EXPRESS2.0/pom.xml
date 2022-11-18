@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>EXPRESS-2.0</artifactId>
-    <version>1.2</version>
-    <name>EXPRESS-2.0</name>
-    <description>EXPRESS-2.0</description>
+    <artifactId>EXPRESS2.0</artifactId>
+    <version>v1.3</version>
+    <name>EXPRESS2.0</name>
+    <description>EXPRESS2.0</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
