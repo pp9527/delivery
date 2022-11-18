@@ -84,9 +84,9 @@
                     <div class="row col-md-12" style="margin-top: 20px;padding-right: 0px;">
                         <div class="col-md-12" style="padding: 0px;">
                             <div class="panel newPanel" th:onclick="getLocaltion([[${order.id}]]);" th:each="order:${allOrders}">
-                                <div class="panel-body">
+                                <div class="panel-body" style="margin-left: 10px;padding-right: 0">
                                         <div class="row">
-                                            <h4 class="col-md-4"><strong>OrderId: [[${order.orderId}]]</strong></h4>
+                                            <h4 class="col-md-5"><strong>Order ID: [[${order.orderId}]]</strong></h4>
                                             <h4 class="col-md-offset-9" style="padding: 0px;">
                                             <a class="btn btn-primary" id="order[[{order.id}}]]" style="border-radius: 15px;font-size: 15px;padding: 2px;"
                                                   th:if="${order.status} == 0" th:href="@{'/main/'+${order.id}}">
@@ -177,8 +177,7 @@
         // $(".Content>div").eq(index).show().siblings().hide();
 
     function getLocaltion(el) {
-        console.log(el)
-        window.location.href = `http://localhost:8080/main/` + el;
+        window.location.href = `main/` + el;
     }
 </script>
 <script>
